@@ -6,6 +6,7 @@ use App\Models\Loan;
 use App\Models\Member;
 use App\Models\CollectionItem;
 use App\Models\Branch;
+use App\Models\Payment;
 use App\Services\FineCalculator;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -164,6 +165,10 @@ class LoanController extends Controller
         $validated = $request->validate([
             'return_branch_id' => 'required|exists:branches,id',
             'condition' => 'nullable|in:good,damaged,lost',
+            'fine_option' => 'nullable|in:pay_full,pay_partial,defer',
+            'payment_amount' => 'nullable|required_if:fine_option,pay_partial|numeric|min:1',
+            'payment_method' => 'nullable|required_if:fine_option,pay_full,pay_partial|in:cash,transfer,edc',
+            'payment_reference' => 'nullable|string|max:100',
         ]);
 
         $item = $loan->item;
@@ -172,12 +177,48 @@ class LoanController extends Controller
         $fineCalculator = app(FineCalculator::class);
         $fineAmount = $fineCalculator->calculateFine($loan);
 
+        // Process fine payment if applicable
+        $paidAmount = 0;
+        if ($fineAmount > 0 && isset($validated['fine_option'])) {
+            $paymentAmount = match($validated['fine_option']) {
+                'pay_full' => $fineAmount,
+                'pay_partial' => $validated['payment_amount'] ?? 0,
+                'defer' => 0,
+                default => 0
+            };
+
+            if ($paymentAmount > 0) {
+                // Create payment record
+                $paymentNo = 'PAY-' . date('Ymd') . '-' . str_pad(Payment::count() + 1, 4, '0', STR_PAD_LEFT);
+
+                Payment::create([
+                    'payment_no' => $paymentNo,
+                    'loan_id' => $loan->id,
+                    'member_id' => $loan->member_id,
+                    'branch_id' => $loan->loan_branch_id,
+                    'received_by' => Auth::id(),
+                    'amount' => $paymentAmount,
+                    'payment_method' => $validated['payment_method'],
+                    'payment_reference' => $validated['payment_reference'] ?? null,
+                    'status' => 'paid',
+                    'notes' => 'Pembayaran denda saat pengembalian',
+                ]);
+
+                $paidAmount = $paymentAmount;
+            }
+        }
+
+        // Determine loan status
+        $remainingFine = $fineAmount - $paidAmount;
+        $loanStatus = $remainingFine > 0 ? 'overdue' : 'returned';
+
         // Update loan
         $loan->update([
             'return_date' => now(),
             'return_branch_id' => $validated['return_branch_id'],
             'fine' => $fineAmount,
-            'status' => $fineAmount > 0 ? 'overdue' : 'returned',
+            'paid_fine' => $paidAmount,
+            'status' => $loanStatus,
             'metadata->return_condition' => $validated['condition'] ?? 'good',
         ]);
 
@@ -193,9 +234,19 @@ class LoanController extends Controller
             $item->update(['branch_id' => $validated['return_branch_id']]);
         }
 
+        // Build message
         $message = 'Peminjaman berhasil dikembalikan.';
         if ($fineAmount > 0) {
-            $message .= ' Denda: Rp ' . number_format($fineAmount);
+            if ($paidAmount >= $fineAmount) {
+                $message .= ' Denda lunas: Rp ' . number_format($fineAmount, 0, ',', '.');
+            } elseif ($paidAmount > 0) {
+                $message .= ' Denda: Rp ' . number_format($fineAmount, 0, ',', '.') .
+                           ', dibayar: Rp ' . number_format($paidAmount, 0, ',', '.') .
+                           ', sisa: Rp ' . number_format($remainingFine, 0, ',', '.');
+            } else {
+                $message .= ' Denda ditangguhkan: Rp ' . number_format($fineAmount, 0, ',', '.') .
+                           ' (ditambahkan ke tunggakan)';
+            }
         }
 
         return redirect()

@@ -12,11 +12,24 @@
 ```
 Phase 1: Foundation      [██████████] 100%
 Phase 2: Core Features   [██████████] 100%
-Phase 3: Advanced        [█████░░░░░] 40%
+Phase 3: Advanced        [██████░░░░] 50%
 Phase 4: Polish          [░░░░░░░░░░] 0%
 ```
 
 **Last Updated:** 2026-01-28
+
+**Recent Updates:**
+- ✅ **SLiMS-style Flexible Fine Payment** (2026-01-28)
+  - Bayar Lunas option during return
+  - Bayar Sebagian option with remainder tracking
+  - Tangguhkan option for deferred payment
+  - Updated return form UI with Alpine.js
+  - Integrated payment processing in LoanController
+- ✅ **Removed "Denda" menu from Circulation** (follows SLiMS approach)
+- ✅ **Notification System** (email + in-app)
+- ✅ **Transfer Module** (inter-branch transfers)
+- ✅ **Settings Module** (configurable system settings)
+- ✅ **Reports Module** (comprehensive reporting)
 
 ---
 
@@ -277,6 +290,7 @@ Phase 4: Polish          [░░░░░░░░░░] 0%
   - [x] FineController (payment, history, waive)
   - [x] Payment model relationships
   - [x] Loan model accessors (days_overdue, calculated_fine, remaining_fine)
+  - [x] Flexible fine payment integration in return flow
 
 - [x] **Frontend (Admin)**
   - [x] Payment form (create.blade.php)
@@ -284,6 +298,7 @@ Phase 4: Polish          [░░░░░░░░░░] 0%
   - [x] Member fines (member-fines.blade.php)
   - [x] Fine payment buttons in loan detail
   - [x] Fine summary in member detail
+  - [x] Fine payment options in return form
 
 - [x] **Features**
   - [x] Automatic fine calculation
@@ -292,6 +307,10 @@ Phase 4: Polish          [░░░░░░░░░░] 0%
   - [x] Fine waiver functionality
   - [x] Multiple payment methods (cash, transfer, EDC)
   - [x] Holiday/weekend exclusion
+  - [x] **SLiMS-style flexible fine payment during return**:
+    - [x] Bayar Lunas option (pay full fine at return)
+    - [x] Bayar Sebagian option (partial payment, remainder tracked)
+    - [x] Tangguhkan option (defer payment to later)
 
 ### 2.6 Modul Sirkulasi - Peminjaman (Loan)
 
@@ -330,10 +349,14 @@ Phase 4: Polish          [░░░░░░░░░░] 0%
   - [x] Validate loan
   - [x] Calculate overdue (menggunakan FineCalculator)
   - [x] Calculate fine (menggunakan FineCalculator)
-  - [x] Update loan status
+  - [x] **Flexible fine payment options**:
+    - [x] Pay full fine at return
+    - [x] Pay partial fine (remainder tracked as overdue)
+    - [x] Defer payment (add to outstanding fines)
+  - [x] Update loan status based on remaining fine
+  - [x] Create Payment record for fine payments
   - [x] Update item status
   - [x] Update item location (branch transfer)
-  - [x] Create fine record (otomatis)
   - [ ] Activity logging
   - [ ] Print receipt (PDF)
 
@@ -342,9 +365,15 @@ Phase 4: Polish          [░░░░░░░░░░] 0%
   - [x] Loan details display
   - [x] Overdue display (days, fine)
   - [x] Condition check (good, damaged, lost)
-  - [x] Fine payment modal
+  - [x] **Fine payment options UI**:
+    - [x] Radio buttons for payment options
+    - [x] Payment amount input (for partial payment)
+    - [x] Payment method selection (cash/transfer/EDC)
+    - [x] Reference number input
+    - [x] Interactive show/hide with Alpine.js
   - [x] Return summary
   - [x] Confirm & process
+  - [x] Success message with payment details
   - [ ] Print receipt
 
 ### 2.8 Modul Sirkulasi - Perpanjangan (Renewal)

@@ -3,56 +3,67 @@
 @section('title', 'Peminjaman Baru')
 
 @section('content')
-<div class="mb-6">
-    <div class="flex items-center justify-between mb-4">
+<!-- Page Header -->
+<div class="mb-8">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900">Peminjaman Baru</h1>
-            <p class="mt-1 text-sm text-gray-500">Input data peminjaman koleksi</p>
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4 4"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Peminjaman Baru</h1>
+                    <p class="text-sm text-gray-500 mt-0.5">Input data peminjaman koleksi</p>
+                </div>
+            </div>
         </div>
-        <a href="{{ route('loans.index') }}" class="text-blue-700 hover:text-blue-900">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <a href="{{ route('loans.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
             </svg>
+            Kembali
         </a>
     </div>
 </div>
 
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6" x-data="loanForm()">
     <!-- Loan Form -->
-    <div class="bg-white shadow rounded-lg">
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         <form method="POST" action="{{ route('loans.store') }}" class="p-6" @submit.prevent="submitForm">
             @csrf
 
             <div class="space-y-6">
                 <!-- Member Search -->
                 <div>
-                    <label for="member_search" class="block text-sm font-medium text-gray-700 mb-1.5">Cari Anggota</label>
+                    <label for="member_search" class="block text-sm font-medium text-gray-700 mb-2">Cari Anggota</label>
                     <div class="relative">
                         <input type="text" id="member_search" x-model="memberSearch" @input="searchMember"
-                            class="w-full px-4 py-3 pl-10 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent transition"
+                            class="w-full px-4 py-2.5 pl-10 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 transition"
                             placeholder="No. Anggota atau NIK">
-                        <svg class="w-5 h-5 text-gray-400 absolute left-3 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                         </svg>
                     </div>
 
                     <!-- Search Results -->
-                    <div x-show="memberResults.length > 0" class="mt-2 border border-gray-200 rounded-lg divide-y divide-gray-200 max-h-48 overflow-y-auto">
+                    <div x-show="memberResults.length > 0" class="mt-2 border border-gray-200 rounded-xl divide-y divide-gray-200 max-h-48 overflow-y-auto">
                         <template x-for="member in memberResults" :key="member.id">
-                            <div @click="selectMember(member)" class="p-3 hover:bg-gray-50 cursor-pointer">
+                            <div @click="selectMember(member)" class="p-3 hover:bg-gray-50 cursor-pointer transition">
                                 <div class="flex items-center justify-between">
                                     <div>
                                         <p class="text-sm font-medium text-gray-900" x-text="member.name"></p>
                                         <p class="text-xs text-gray-500" x-text="member.member_no"></p>
                                     </div>
-                                    <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-800" x-text="member.type"></span>
+                                    <span class="text-xs px-2 py-1 rounded-full bg-blue-50 text-blue-700" x-text="member.type"></span>
                                 </div>
                             </div>
                         </template>
                     </div>
 
                     <!-- Selected Member -->
-                    <div x-show="selectedMember" class="mt-3 p-4 bg-blue-50 rounded-lg">
+                    <div x-show="selectedMember" class="mt-3 p-4 bg-blue-50 rounded-xl border border-blue-100">
                         <div class="flex items-start justify-between">
                             <div>
                                 <p class="text-sm font-medium text-gray-900" x-text="selectedMember?.name"></p>
@@ -77,33 +88,33 @@
 
                 <!-- Item Search -->
                 <div>
-                    <label for="item_search" class="block text-sm font-medium text-gray-700 mb-1.5">Cari Item / Barcode</label>
+                    <label for="item_search" class="block text-sm font-medium text-gray-700 mb-2">Cari Item / Barcode</label>
                     <div class="relative">
                         <input type="text" id="item_search" x-model="itemSearch" @input="searchItem"
-                            class="w-full px-4 py-3 pl-10 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent transition"
+                            class="w-full px-4 py-2.5 pl-10 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 transition"
                             placeholder="Scan barcode atau ketik">
-                        <svg class="w-5 h-5 text-gray-400 absolute left-3 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
                         </svg>
                     </div>
 
                     <!-- Search Results -->
-                    <div x-show="itemResults.length > 0" class="mt-2 border border-gray-200 rounded-lg divide-y divide-gray-200 max-h-48 overflow-y-auto">
+                    <div x-show="itemResults.length > 0" class="mt-2 border border-gray-200 rounded-xl divide-y divide-gray-200 max-h-48 overflow-y-auto">
                         <template x-for="item in itemResults" :key="item.id">
-                            <div @click="selectItem(item)" class="p-3 hover:bg-gray-50 cursor-pointer">
+                            <div @click="selectItem(item)" class="p-3 hover:bg-gray-50 cursor-pointer transition">
                                 <div class="flex items-center justify-between">
                                     <div>
                                         <p class="text-sm font-medium text-gray-900" x-text="item.collection?.title"></p>
                                         <p class="text-xs text-gray-500" x-text="item.barcode"></p>
                                     </div>
-                                    <span class="text-xs px-2 py-1 rounded-full bg-green-100 text-green-800">Tersedia</span>
+                                    <span class="text-xs px-2 py-1 rounded-full bg-green-50 text-green-700">Tersedia</span>
                                 </div>
                             </div>
                         </template>
                     </div>
 
                     <!-- Selected Item -->
-                    <div x-show="selectedItem" class="mt-3 p-4 bg-green-50 rounded-lg">
+                    <div x-show="selectedItem" class="mt-3 p-4 bg-green-50 rounded-xl border border-green-100">
                         <div class="flex items-start justify-between">
                             <div class="flex-1">
                                 <p class="text-sm font-medium text-gray-900" x-text="selectedItem?.collection?.title"></p>
@@ -128,9 +139,9 @@
 
                 <!-- Branch -->
                 <div>
-                    <label for="loan_branch_id" class="block text-sm font-medium text-gray-700 mb-1.5">Branch Peminjaman</label>
+                    <label for="loan_branch_id" class="block text-sm font-medium text-gray-700 mb-2">Branch Peminjaman</label>
                     <select id="loan_branch_id" name="loan_branch_id" required
-                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent transition">
+                        class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 transition">
                         <option value="">Pilih Branch</option>
                         @foreach($branches ?? [] as $branch)
                             <option value="{{ $branch->id }}">{{ $branch->name }}</option>
@@ -142,12 +153,12 @@
                 </div>
             </div>
 
-            <div class="mt-6 flex items-center justify-end space-x-3">
-                <a href="{{ route('loans.index') }}" class="px-6 py-3 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition">
+            <div class="mt-8 flex items-center justify-end gap-3 pt-6 border-t border-gray-100">
+                <a href="{{ route('loans.index') }}" class="px-5 py-2.5 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-xl transition font-medium">
                     Batal
                 </a>
                 <button type="submit" :disabled="!canSubmit"
-                    class="px-6 py-3 bg-blue-800 hover:bg-blue-900 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-800 transition-all duration-200">
+                    class="px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-400 text-white font-medium rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl">
                     Proses Peminjaman
                 </button>
             </div>
@@ -157,7 +168,7 @@
     <!-- Preview & Info -->
     <div class="space-y-6">
         <!-- Loan Period Info -->
-        <div class="bg-white shadow rounded-lg p-6">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
             <h3 class="text-lg font-semibold text-gray-900 mb-4">Periode Peminjaman</h3>
             <div x-show="selectedItem" class="space-y-3">
                 <div class="flex items-center justify-between text-sm">
@@ -182,12 +193,12 @@
         </div>
 
         <!-- Member Status -->
-        <div class="bg-white shadow rounded-lg p-6">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
             <h3 class="text-lg font-semibold text-gray-900 mb-4">Status Anggota</h3>
             <div x-show="selectedMember" class="space-y-3">
                 <div class="flex items-center justify-between text-sm">
                     <span class="text-gray-500">Status</span>
-                    <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800" x-text="selectedMember?.status"></span>
+                    <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700" x-text="selectedMember?.status"></span>
                 </div>
                 <div class="flex items-center justify-between text-sm">
                     <span class="text-gray-500">Pinjaman Aktif</span>

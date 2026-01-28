@@ -198,11 +198,70 @@
                 </div>
 
                 @if($loan->isOverdue())
-                <div class="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-                    <p class="text-sm text-yellow-800">
+                <div class="mb-4 p-4 bg-yellow-50 border border-yellow-200 rounded-xl" x-data="{ fineOption: 'pay_full', showPaymentAmount: false }">
+                    <p class="text-sm text-yellow-800 mb-3">
                         Denda keterlambatan: <strong>Rp {{ number_format($loan->calculated_fine, 0, ',', '.') }}</strong>
                         ({{ $loan->days_overdue }} hari)
                     </p>
+
+                    <!-- Fine Payment Options -->
+                    <div class="space-y-2 mb-3">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Opsi Pembayaran Denda</label>
+
+                        <label class="flex items-center p-3 bg-white border border-yellow-300 rounded-lg cursor-pointer hover:bg-yellow-100 transition">
+                            <input type="radio" name="fine_option" value="pay_full" class="mr-3" checked x-model="fineOption">
+                            <div class="flex-1">
+                                <span class="text-sm font-medium text-gray-900">Bayar Lunas</span>
+                                <p class="text-xs text-gray-500">Bayar penuh denda saat ini</p>
+                            </div>
+                            <span class="text-sm font-bold text-green-700">Rp {{ number_format($loan->calculated_fine, 0, ',', '.') }}</span>
+                        </label>
+
+                        <label class="flex items-center p-3 bg-white border border-yellow-300 rounded-lg cursor-pointer hover:bg-yellow-100 transition">
+                            <input type="radio" name="fine_option" value="pay_partial" class="mr-3" x-model="fineOption" @click="showPaymentAmount = true">
+                            <div class="flex-1">
+                                <span class="text-sm font-medium text-gray-900">Bayar Sebagian</span>
+                                <p class="text-xs text-gray-500">Bayar sebagian, sisanya ditagih nanti</p>
+                            </div>
+                        </label>
+
+                        <div x-show="fineOption === 'pay_partial'" class="ml-6 mt-2" x-transition>
+                            <label class="block text-sm text-gray-600 mb-1">Jumlah Pembayaran</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500 font-medium">Rp</span>
+                                <input type="number" name="payment_amount" min="1" max="{{ $loan->calculated_fine }}"
+                                    class="w-full pl-10 px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                                    placeholder="0" required>
+                            </div>
+                        </div>
+
+                        <label class="flex items-center p-3 bg-white border border-yellow-300 rounded-lg cursor-pointer hover:bg-yellow-100 transition">
+                            <input type="radio" name="fine_option" value="defer" class="mr-3" x-model="fineOption" @click="showPaymentAmount = false">
+                            <div class="flex-1">
+                                <span class="text-sm font-medium text-gray-900">Tangguhkan</span>
+                                <p class="text-xs text-gray-500">Denda ditambahkan ke tunggakan anggota</p>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- Payment Method (jika pilih bayar) -->
+                    <div x-show="fineOption !== 'defer'" class="pt-3 border-t border-yellow-300" x-transition>
+                        <label for="payment_method" class="block text-sm font-medium text-gray-700 mb-1.5">Metode Pembayaran</label>
+                        <select id="payment_method" name="payment_method"
+                            class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition">
+                            <option value="cash">Tunai</option>
+                            <option value="transfer">Transfer Bank</option>
+                            <option value="edc">EDC/Kartu</option>
+                        </select>
+                    </div>
+
+                    <!-- Reference Number (untuk transfer/EDC) -->
+                    <div x-show="fineOption !== 'defer'" class="mt-3" x-transition>
+                        <label for="payment_reference" class="block text-sm font-medium text-gray-700 mb-1.5">No. Referensi</label>
+                        <input type="text" id="payment_reference" name="payment_reference"
+                            class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition"
+                            placeholder="Nomor referensi/bukti pembayaran (opsional)">
+                    </div>
                 </div>
                 @endif
 

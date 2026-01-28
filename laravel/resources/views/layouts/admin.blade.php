@@ -93,9 +93,6 @@
                             @can('reservations.view')
                             <a href="{{ route('reservations.index') }}" class="block px-4 py-2.5 text-sm rounded-lg transition {{ request()->routeIs('reservations.*') ? 'bg-blue-600/20 text-blue-300' : 'text-gray-400 hover:text-white hover:bg-white/10' }}">Reservasi</a>
                             @endcan
-                            @canany(['payments.view', 'payments.view-any'])
-                            <a href="{{ route('loans.index') }}?filter=overdue" class="block px-4 py-2.5 text-sm rounded-lg transition {{ request()->routeIs('fines.*') ? 'bg-blue-600/20 text-blue-300' : 'text-gray-400 hover:text-white hover:bg-white/10' }}">Denda</a>
-                            @endcanany
                         </div>
                     </div>
                     @endcan
