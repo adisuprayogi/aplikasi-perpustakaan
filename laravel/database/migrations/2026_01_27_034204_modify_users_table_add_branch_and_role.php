@@ -1,0 +1,42 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignId('branch_id')->nullable()->after('id')->constrained()->nullOnDelete();
+            $table->enum('role', ['super_admin', 'branch_admin', 'circulation_staff', 'catalog_staff', 'report_viewer', 'member'])->default('member')->after('email');
+            $table->string('phone', 20)->nullable()->after('role');
+            $table->text('avatar')->nullable()->after('phone');
+            $table->boolean('is_active')->default(true)->after('avatar');
+            $table->timestamp('last_login_at')->nullable()->after('is_active');
+            $table->string('last_login_ip', 45)->nullable()->after('last_login_at');
+            $table->softDeletes();
+
+            // Indexes
+            $table->index('role');
+            $table->index('branch_id');
+            $table->index('is_active');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign(['branch_id']);
+            $table->dropColumn(['branch_id', 'role', 'phone', 'avatar', 'is_active', 'last_login_at', 'last_login_ip']);
+            $table->dropSoftDeletes();
+        });
+    }
+};
