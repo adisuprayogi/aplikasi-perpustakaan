@@ -55,6 +55,38 @@
     </div>
 </div>
 
+<!-- Quick Actions - Role Based -->
+@if(isset($quickActions) && count($quickActions) > 0)
+<div class="mb-8">
+    <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center">
+            <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+        </div>
+        <div>
+            <h2 class="text-xl font-bold text-gray-900">Aksi Cepat</h2>
+            <p class="text-sm text-gray-500">Menu penting untuk {{ auth()->user()->roles->first()->name ?? 'user' }}</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        @foreach($quickActions as $action)
+        @can($action['permission'] ?? '*')
+        <a href="{{ route($action['route']) }}" class="group flex flex-col items-center p-5 bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-{{ $action['color'] }}-200">
+            <div class="w-14 h-14 bg-gradient-to-br from-{{ $action['color'] }}-500 to-{{ $action['color'] }}-600 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow-lg">
+                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $action['icon'] }}"/>
+                </svg>
+            </div>
+            <h3 class="text-sm font-semibold text-gray-900 text-center group-hover:text-{{ $action['color'] }}-600 transition-colors line-clamp-2">{{ $action['title'] }}</h3>
+        </a>
+        @endcan
+        @endforeach
+    </div>
+</div>
+@endif
+
 <!-- Primary Stats Grid - Same as OPAC Style -->
 @if(isset($stats) && count($stats) > 0)
 <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">

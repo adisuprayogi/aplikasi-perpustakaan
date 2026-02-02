@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Book - Aplikasi Perpustakaan Digital</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px;
+            color: #333;
+            background: white;
+        }
+
+        h1 {
+            color: #1e40af;
+            border-bottom: 3px solid #1e40af;
+            padding-bottom: 10px;
+            page-break-after: avoid;
+        }
+
+        h2 {
+            color: #1e40af;
+            margin-top: 40px;
+            page-break-after: avoid;
+        }
+
+        h3 {
+            color: #3b82f6;
+            margin-top: 25px;
+            page-break-after: avoid;
+        }
+
+        h4 {
+            color: #64748b;
+            margin-top: 20px;
+            page-break-after: avoid;
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #e5e7eb;
+            margin: 30px 0;
+        }
+
+        .toc {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+
+        .toc h2 {
+            margin-top: 0;
+            color: #1e40af;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .toc li {
+            padding: 5px 0;
+        }
+
+        .toc a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        .screenshot-container {
+            margin: 30px 0;
+            text-align: center;
+            page-break-inside: avoid;
+        }
+
+        .screenshot-container img {
+            max-width: 100%;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 15px 0;
+        }
+
+        .caption {
+            font-style: italic;
+            color: #64748b;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            page-break-inside: avoid;
+        }
+
+        th, td {
+            border: 1px solid #e5e7eb;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #1e40af;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        .feature-list {
+            background: #fefce8;
+            padding: 20px;
+            border-left: 4px solid #eab308;
+            margin: 20px 0;
+        }
+
+        .feature-list ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        @media print {
+            body {
+                padding: 20px;
+            }
+
+            .screenshot-container {
+                page-break-inside: avoid;
+            }
+
+            h1, h2, h3, h4 {
+                page-break-after: avoid;
+            }
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>MANUAL BOOK</h1>
+    <div class="subtitle">Aplikasi Perpustakaan Digital</div>
+
+    <hr>
+
+    <div class="toc">
+        <h2>Daftar Isi</h2>
+        <ul>
+            <li><a href="#pendahuluan">1. Pendahuluan</a></li>
+            <li><a href="#halaman-publik">2. Halaman Publik</a>
+                <ul>
+                    <li><a href="#opac">OPAC (Online Public Access Catalog)</a></li>
+                    <li><a href="#digital-library">Digital Library</a></li>
+                    <li><a href="#repository">Repository</a></li>
+                    <li><a href="#login">Halaman Login</a></li>
+                </ul>
+            </li>
+            <li><a href="#dashboard">3. Dashboard Admin</a></li>
+            <li><a href="#koleksi">4. Manajemen Koleksi</a></li>
+            <li><a href="#anggota">5. Manajemen Anggota</a></li>
+            <li><a href="#sirkulasi">6. Sirkulasi & Peminjaman</a></li>
+            <li><a href="#laporan">7. Laporan</a></li>
+            <li><a href="#pengaturan">8. Pengaturan & Admin</a></li>
+            <li><a href="#mobile">9. Tampilan Mobile</a></li>
+            <li><a href="#ringkasan">10. Ringkasan Screenshot</a></li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <h2 id="pendahuluan">Pendahuluan</h2>
+    <p>Aplikasi Perpustakaan Digital adalah sistem manajemen perpustakaan terintegrasi yang mencakup:</p>
+    <ul>
+        <li>Katalog buku online (OPAC)</li>
+        <li>Manajemen koleksi fisik dan digital</li>
+        <li>Sistem sirkulasi (peminjaman & pengembalian)</li>
+        <li>Manajemen anggota dan denda</li>
+        <li>Laporan statistik dan analitik</li>
+        <li>Repository institusi</li>
+    </ul>
+
+    <hr>
+
+    <h2 id="halaman-publik">Halaman Publik</h2>
+
+    <h3 id="opac">OPAC (Online Public Access Catalog)</h3>
+    <p>OPAC memungkinkan pengunjung untuk mencari dan menelusuri katalog koleksi perpustakaan.</p>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/01-opac-homepage.png" alt="OPAC Homepage">
+        <div class="caption">Gambar 1: Halaman Beranda OPAC</div>
+    </div>
+
+    <div class="feature-list">
+        <strong>Fitur utama halaman OPAC:</strong>
+        <ul>
+            <li>Search bar untuk pencarian cepat</li>
+            <li>Akses ke pencarian lanjutan</li>
+            <li>Navigasi ke Digital Library dan Repository</li>
+        </ul>
+    </div>
+
+    <h4>Pencarian OPAC</h4>
+    <p>Pengguna dapat mencari koleksi berdasarkan judul, penulis, ISBN, atau kata kunci.</p>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/02-opac-search-results.png" alt="OPAC Search Results">
+        <div class="caption">Gambar 2: Hasil Pencarian OPAC</div>
+    </div>
+
+    <div class="feature-list">
+        <strong>Hasil pencarian menampilkan:</strong>
+        <ul>
+            <li>Daftar koleksi yang sesuai</li>
+            <li>Informasi judul, penulis, dan kategori</li>
+            <li>Status ketersediaan</li>
+        </ul>
+    </div>
+
+    <h4>Pencarian Lanjutan</h4>
+    <p>Untuk pencarian lebih spesifik, gunakan fitur Advanced Search.</p>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/03-opac-advanced-search.png" alt="OPAC Advanced Search">
+        <div class="caption">Gambar 3: Pencarian Lanjutan OPAC</div>
+    </div>
+
+    <div class="feature-list">
+        <strong>Filter pencarian lanjutan:</strong>
+        <ul>
+            <li>Kategori/koleksi</li>
+            <li>Bahasa</li>
+            <li>Tahun terbit</li>
+            <li>Penerbit</li>
+        </ul>
+    </div>
+
+    <h3 id="digital-library">Digital Library</h3>
+    <p>Digital Library menyediakan akses ke koleksi digital seperti e-book, jurnal, dan artikel.</p>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/04-digital-library.png" alt="Digital Library">
+        <div class="caption">Gambar 4: Halaman Digital Library</div>
+    </div>
+
+    <div class="feature-list">
+        <strong>Fitur:</strong>
+        <ul>
+            <li>Browser kategori digital</li>
+            <li>Download file digital</li>
+            <li>Preview dokumen</li>
+        </ul>
+    </div>
+
+    <h3 id="repository">Repository</h3>
+    <p>Repository menyimpan karya ilmiah, skripsi, tesis, dan publikasi institusi.</p>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/05-repository.png" alt="Repository">
+        <div class="caption">Gambar 5: Halaman Repository</div>
+    </div>
+
+    <div class="feature-list">
+        <strong>Kategori repository:</strong>
+        <ul>
+            <li>Skripsi</li>
+            <li>Tesis</li>
+            <li>Disertasi</li>
+            <li>Jurnal</li>
+            <li>Prosiding</li>
+        </ul>
+    </div>
+
+    <h3 id="login">Halaman Login</h3>
+    <p>Untuk mengakses fitur admin, staf harus login terlebih dahulu.</p>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/06-login-page.png" alt="Login Page">
+        <div class="caption">Gambar 6: Halaman Login</div>
+    </div>
+
+    <div class="feature-list">
+        <strong>Kredensial default:</strong>
+        <ul>
+            <li>Email: <code>admin@library.test</code></li>
+            <li>Password: <code>password123</code></li>
+        </ul>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2 id="dashboard">Dashboard Admin</h2>
+    <p>Dashboard menampilkan ringkasan statistik dan visualisasi data perpustakaan.</p>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/07-dashboard.png" alt="Dashboard">
+        <div class="caption">Gambar 7: Dashboard Admin</div>
+    </div>
+
+    <h3>Statistik Dashboard</h3>
+    <p>Ringkasan statistik penting ditampilkan dalam bentuk kartu:</p>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/08-dashboard-stats.png" alt="Dashboard Stats">
+        <div class="caption">Gambar 8: Kartu Statistik Dashboard</div>
+    </div>
+
+    <div class="feature-list">
+        <strong>Statistik yang ditampilkan:</strong>
+        <ul>
+            <li>Total Koleksi</li>
+            <li>Total Anggota</li>
+            <li>Peminjaman Aktif</li>
+            <li>Denda Tertunda</li>
+        </ul>
+    </div>
+
+    <h3>Grafik Dashboard</h3>
+    <p>Visualisasi data untuk analisis tren dan pola:</p>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/09-dashboard-charts.png" alt="Dashboard Charts">
+        <div class="caption">Gambar 9: Grafik Dashboard</div>
+    </div>
+
+    <div class="feature-list">
+        <strong>Grafik tersedia:</strong>
+        <ul>
+            <li>Tren Sirkulasi (Line Chart)</li>
+            <li>Koleksi berdasarkan Kategori (Doughnut Chart)</li>
+            <li>Anggota berdasarkan Tipe (Doughnut Chart)</li>
+            <li>Item Populer (Bar Chart)</li>
+        </ul>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2 id="koleksi">Manajemen Koleksi</h2>
+    <p>Menu Koleksi mengelola semua item fisik di perpustakaan (buku, majalah, multimedia).</p>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/10-collections-list.png" alt="Collections List">
+        <div class="caption">Gambar 10: Daftar Koleksi</div>
+    </div>
+
+    <div class="feature-list">
+        <strong>Fitur manajemen koleksi:</strong>
+        <ul>
+            <li>Pencarian dan filter</li>
+            <li>Import/Export data</li>
+            <li>Manajemen item (copy)</li>
+            <li>Label barcode</li>
+            <li>Status ketersediaan</li>
+        </ul>
+    </div>
+
+    <h4>Tambah Koleksi Baru</h4>
+    <p>Formulir untuk menambah koleksi baru ke sistem:</p>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/12-collections-create.png" alt="Collections Create">
+        <div class="caption">Gambar 11: Form Tambah Koleksi</div>
+    </div>
+
+    <div class="feature-list">
+        <strong>Field yang diisi:</strong>
+        <ul>
+            <li>Judul</li>
+            <li>Penulis/Pengarang</li>
+            <li>ISBN/ISSN</li>
+            <li>Penerbit</li>
+            <li>Tahun terbit</li>
+            <li>Kategori</li>
+            <li>Jumlah copy</li>
+            <li>Lokasi rak</li>
+        </ul>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2 id="anggota">Manajemen Anggota</h2>
+    <p>Menu Anggota mengelola data anggota perpustakaan.</p>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/13-members-list.png" alt="Members List">
+        <div class="caption">Gambar 12: Daftar Anggota</div>
+    </div>
+
+    <div class="feature-list">
+        <strong>Informasi anggota:</strong>
+        <ul>
+            <li>Nama dan ID anggota</li>
+            <li>Tipe anggota (Siswa, Guru, Staf)</li>
+            <li>Status keanggotaan</li>
+            <li>Masa berlaku</li>
+        </ul>
+    </div>
+
+    <h4>Tambah Anggota Baru</h4>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/15-members-create.png" alt="Members Create">
+        <div class="caption">Gambar 13: Form Tambah Anggota</div>
+    </div>
+
+    <div class="feature-list">
+        <strong>Data anggota:</strong>
+        <ul>
+            <li>Informasi pribadi (nama, email, telepon)</li>
+            <li>Tipe anggota</li>
+            <li>Tanggal bergabung</li>
+            <li>Batas peminjaman</li>
+        </ul>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2 id="sirkulasi">Sirkulasi & Peminjaman</h2>
+    <p>Sistem sirkulasi mengelola peminjaman dan pengembalian koleksi.</p>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/16-loans-list.png" alt="Loans List">
+        <div class="caption">Gambar 14: Daftar Peminjaman</div>
+    </div>
+
+    <div class="feature-list">
+        <strong>Status peminjaman:</strong>
+        <ul>
+            <li>Aktif: Sedang dipinjam</li>
+            <li>Kembali: Sudah dikembalikan</li>
+            <li>Terlambat: Lewat jatuh tempo</li>
+        </ul>
+    </div>
+
+    <h4>Buat Peminjaman Baru</h4>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/18-loans-create.png" alt="Loans Create">
+        <div class="caption">Gambar 15: Form Peminjaman Baru</div>
+    </div>
+
+    <div class="feature-list">
+        <strong>Langkah peminjaman:</strong>
+        <ol>
+            <li>Pilih anggota</li>
+            <li>Scan/input barcode koleksi</li>
+            <li>Sistem hitung tanggal jatuh tempo</li>
+            <li>Konfirmasi peminjaman</li>
+        </ol>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2 id="laporan">Laporan</h2>
+    <p>Sistem menyediakan berbagai laporan untuk analisis dan audit.</p>
+
+    <h3>Laporan Peminjaman</h3>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/19-reports-loans.png" alt="Reports Loans">
+        <div class="caption">Gambar 16: Laporan Peminjaman</div>
+    </div>
+
+    <div class="feature-list">
+        <strong>Laporan peminjaman dapat difilter berdasarkan:</strong>
+        <ul>
+            <li>Rentang tanggal</li>
+            <li>Status peminjaman</li>
+            <li>Kategori koleksi</li>
+            <li>Tipe anggota</li>
+        </ul>
+    </div>
+
+    <h3>Laporan Keterlambatan</h3>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/20-reports-overdue.png" alt="Reports Overdue">
+        <div class="caption">Gambar 17: Laporan Keterlambatan</div>
+    </div>
+
+    <div class="feature-list">
+        <strong>Laporan ini menampilkan:</strong>
+        <ul>
+            <li>Anggota yang terlambat mengembalikan</li>
+            <li>Hari keterlambatan</li>
+            <li>Denda yang harus dibayar</li>
+        </ul>
+    </div>
+
+    <h3>Laporan Denda</h3>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/21-reports-fines.png" alt="Reports Fines">
+        <div class="caption">Gambar 18: Laporan Denda</div>
+    </div>
+
+    <div class="feature-list">
+        <strong>Informasi denda:</strong>
+        <ul>
+            <li>Total denda per anggota</li>
+            <li>Status pembayaran</li>
+            <li>Riwayat pembayaran</li>
+        </ul>
+    </div>
+
+    <h3>Laporan Koleksi</h3>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/22-reports-collections.png" alt="Reports Collections">
+        <div class="caption">Gambar 19: Laporan Koleksi</div>
+    </div>
+
+    <div class="feature-list">
+        <strong>Statistik koleksi:</strong>
+        <ul>
+            <li>Koleksi per kategori</li>
+            <li>Koleksi tersedia vs dipinjam</li>
+            <li>Koleksi rusak/hilang</li>
+        </ul>
+    </div>
+
+    <h3>Laporan Anggota</h3>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/23-reports-members.png" alt="Reports Members">
+        <div class="caption">Gambar 20: Laporan Anggota</div>
+    </div>
+
+    <div class="feature-list">
+        <strong>Analisis anggota:</strong>
+        <ul>
+            <li>Pertumbuhan anggota</li>
+            <li>Anggota aktif vs tidak aktif</li>
+            <li>Peminjaman per anggota</li>
+        </ul>
+    </div>
+
+    <h3>Laporan Cabang</h3>
+    <p>Untuk sistem multi-cabang:</p>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/24-reports-branches.png" alt="Reports Branches">
+        <div class="caption">Gambar 21: Laporan Perbandingan Cabang</div>
+    </div>
+
+    <div class="feature-list">
+        <strong>Perbandingan performa antar cabang:</strong>
+        <ul>
+            <li>Total anggota</li>
+            <li>Peminjaman aktif</li>
+            <li>Kunjungan</li>
+            <li>Denda terkumpul</li>
+        </ul>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2 id="pengaturan">Pengaturan & Admin</h2>
+
+    <h3>Manajemen Cabang</h3>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/25-branches-list.png" alt="Branches List">
+        <div class="caption">Gambar 22: Daftar Cabang</div>
+    </div>
+
+    <p>Untuk perpustakaan dengan multiple cabang/lokasi.</p>
+
+    <h3>Aturan Peminjaman</h3>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/26-loan-rules.png" alt="Loan Rules">
+        <div class="caption">Gambar 23: Aturan Peminjaman</div>
+    </div>
+
+    <div class="feature-list">
+        <strong>Konfigurasi aturan:</strong>
+        <ul>
+            <li>Masa peminjaman per tipe anggota</li>
+            <li>Batas item yang dapat dipinjam</li>
+            <li>Denda per hari keterlambatan</li>
+            <li>Masa perpanjangan</li>
+        </ul>
+    </div>
+
+    <h3>Pengaturan Aplikasi</h3>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/27-settings.png" alt="Settings">
+        <div class="caption">Gambar 24: Pengaturan Aplikasi</div>
+    </div>
+
+    <div class="feature-list">
+        <strong>Konfigurasi sistem:</strong>
+        <ul>
+            <li>Nama perpustakaan</li>
+            <li>Alamat dan kontak</li>
+            <li>Aturan default</li>
+            <li>Pengaturan notifikasi</li>
+        </ul>
+    </div>
+
+    <h3>Manajemen Pengguna</h3>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/28-users-list.png" alt="Users List">
+        <div class="caption">Gambar 25: Daftar Pengguna Sistem</div>
+    </div>
+
+    <div class="feature-list">
+        <strong>Manajemen akses:</strong>
+        <ul>
+            <li>Administrator</li>
+            <li>Staff</li>
+            <li>Petugas</li>
+            <li>Assign permissions</li>
+        </ul>
+    </div>
+
+    <h3>File Digital</h3>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/29-digital-files-list.png" alt="Digital Files List">
+        <div class="caption">Gambar 26: Daftar File Digital</div>
+    </div>
+
+    <div class="feature-list">
+        <strong>Upload dan kelola file digital:</strong>
+        <ul>
+            <li>E-book</li>
+            <li>Jurnal</li>
+            <li>Audio/Video</li>
+        </ul>
+    </div>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/30-digital-files-create.png" alt="Digital Files Create">
+        <div class="caption">Gambar 27: Upload File Digital</div>
+    </div>
+
+    <h3>Repository</h3>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/31-repositories-list.png" alt="Repositories List">
+        <div class="caption">Gambar 28: Daftar Repository</div>
+    </div>
+
+    <p>Kelola karya ilmiah dan publikasi.</p>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/32-repositories-create.png" alt="Repositories Create">
+        <div class="caption">Gambar 29: Tambah Repository Baru</div>
+    </div>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/33-repository-public.png" alt="Repository Public">
+        <div class="caption">Gambar 30: Tampilan Repository Publik</div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2 id="mobile">Tampilan Mobile</h2>
+    <p>Aplikasi responsif dan dapat diakses melalui berbagai perangkat mobile.</p>
+
+    <h3>OPAC Mobile</h3>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/34-mobile-opac-home.png" alt="Mobile OPAC">
+        <div class="caption">Gambar 31: OPAC Tampilan Mobile</div>
+    </div>
+
+    <h3>Digital Library Mobile</h3>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/35-mobile-digital-library.png" alt="Mobile Digital Library">
+        <div class="caption">Gambar 32: Digital Library Tampilan Mobile</div>
+    </div>
+
+    <h3>Dashboard Mobile</h3>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/36-mobile-dashboard.png" alt="Mobile Dashboard">
+        <div class="caption">Gambar 33: Dashboard Tampilan Mobile</div>
+    </div>
+
+    <h3>Koleksi Mobile</h3>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/37-mobile-collections.png" alt="Mobile Collections">
+        <div class="caption">Gambar 34: Koleksi Tampilan Mobile</div>
+    </div>
+
+    <h3>Peminjaman Mobile</h3>
+
+    <div class="screenshot-container">
+        <img src="laravel/screenshots/38-mobile-loans.png" alt="Mobile Loans">
+        <div class="caption">Gambar 35: Peminjaman Tampilan Mobile</div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2 id="ringkasan">Ringkasan Screenshot</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Screenshot</th>
+                <th>Deskripsi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>1</td><td>01-opac-homepage</td><td>Halaman beranda OPAC</td></tr>
+            <tr><td>2</td><td>02-opac-search-results</td><td>Hasil pencarian OPAC</td></tr>
+            <tr><td>3</td><td>03-opac-advanced-search</td><td>Pencarian lanjutan OPAC</td></tr>
+            <tr><td>4</td><td>04-digital-library</td><td>Halaman Digital Library</td></tr>
+            <tr><td>5</td><td>05-repository</td><td>Halaman Repository</td></tr>
+            <tr><td>6</td><td>06-login-page</td><td>Halaman Login</td></tr>
+            <tr><td>7</td><td>07-dashboard</td><td>Dashboard Admin</td></tr>
+            <tr><td>8</td><td>08-dashboard-stats</td><td>Statistik Dashboard</td></tr>
+            <tr><td>9</td><td>09-dashboard-charts</td><td>Grafik Dashboard</td></tr>
+            <tr><td>10</td><td>10-collections-list</td><td>Daftar Koleksi</td></tr>
+            <tr><td>11</td><td>12-collections-create</td><td>Tambah Koleksi</td></tr>
+            <tr><td>12</td><td>13-members-list</td><td>Daftar Anggota</td></tr>
+            <tr><td>13</td><td>15-members-create</td><td>Tambah Anggota</td></tr>
+            <tr><td>14</td><td>16-loans-list</td><td>Daftar Peminjaman</td></tr>
+            <tr><td>15</td><td>18-loans-create</td><td>Buat Peminjaman</td></tr>
+            <tr><td>16</td><td>19-reports-loans</td><td>Laporan Peminjaman</td></tr>
+            <tr><td>17</td><td>20-reports-overdue</td><td>Laporan Keterlambatan</td></tr>
+            <tr><td>18</td><td>21-reports-fines</td><td>Laporan Denda</td></tr>
+            <tr><td>19</td><td>22-reports-collections</td><td>Laporan Koleksi</td></tr>
+            <tr><td>20</td><td>23-reports-members</td><td>Laporan Anggota</td></tr>
+            <tr><td>21</td><td>24-reports-branches</td><td>Laporan Cabang</td></tr>
+            <tr><td>22</td><td>25-branches-list</td><td>Daftar Cabang</td></tr>
+            <tr><td>23</td><td>26-loan-rules</td><td>Aturan Peminjaman</td></tr>
+            <tr><td>24</td><td>27-settings</td><td>Pengaturan Aplikasi</td></tr>
+            <tr><td>25</td><td>28-users-list</td><td>Daftar Pengguna</td></tr>
+            <tr><td>26</td><td>29-digital-files-list</td><td>Daftar File Digital</td></tr>
+            <tr><td>27</td><td>30-digital-files-create</td><td>Upload File Digital</td></tr>
+            <tr><td>28</td><td>31-repositories-list</td><td>Daftar Repository</td></tr>
+            <tr><td>29</td><td>32-repositories-create</td><td>Tambah Repository</td></tr>
+            <tr><td>30</td><td>33-repository-public</td><td>Repository Publik</td></tr>
+            <tr><td>31</td><td>34-mobile-opac-home</td><td>OPAC Mobile</td></tr>
+            <tr><td>32</td><td>35-mobile-digital-library</td><td>Digital Library Mobile</td></tr>
+            <tr><td>33</td><td>36-mobile-dashboard</td><td>Dashboard Mobile</td></tr>
+            <tr><td>34</td><td>37-mobile-collections</td><td>Koleksi Mobile</td></tr>
+            <tr><td>35</td><td>38-mobile-loans</td><td>Peminjaman Mobile</td></tr>
+        </tbody>
+    </table>
+
+    <hr>
+
+    <p style="text-align: center; color: #64748b; font-style: italic;">
+        <em>Manual Book ini dibuat secara otomatis menggunakan Playwright Screenshot Automation</em><br><br>
+        <strong>Dokumentasi ini mencakup 35 screenshot dari seluruh fitur Aplikasi Perpustakaan Digital</strong>
+    </p>
+
+</body>
+</html>

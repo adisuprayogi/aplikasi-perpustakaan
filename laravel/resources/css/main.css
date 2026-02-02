@@ -1,1 +1,37 @@
 @import "tailwindcss";
+
+/* Mobile Bottom Navigation Padding */
+@supports (padding: max(0px)) {
+    .pb-safe {
+        padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    }
+}
+
+/* Add padding to main content on mobile to avoid being hidden by bottom nav */
+@media (max-width: 1024px) {
+    main {
+        padding-bottom: 80px !important;
+    }
+}
+
+/* Smooth scrolling for mobile app-like feel */
+@media (max-width: 1024px) {
+    html {
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Better touch targets */
+    button, a {
+        min-height: 44px;
+        min-width: 44px;
+    }
+}
+
+/* Hide scrollbar but keep functionality */
+@media (max-width: 1024px) {
+    ::-webkit-scrollbar {
+        width: 0px;
+        background: transparent;
+    }
+}

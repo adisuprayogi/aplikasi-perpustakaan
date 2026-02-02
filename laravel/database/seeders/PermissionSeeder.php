@@ -99,6 +99,25 @@ class PermissionSeeder extends Seeder
 
             // Activity Logs
             'logs.view',
+
+            // Digital Library
+            'digital_files.view',
+            'digital_files.create',
+            'digital_files.edit',
+            'digital_files.delete',
+            'digital_files.download',
+
+            // Transfers
+            'transfers.view',
+            'transfers.create',
+            'transfers.manage',
+
+            // Institutional Repository
+            'repositories.view',
+            'repositories.create',
+            'repositories.edit',
+            'repositories.delete',
+            'repositories.moderate',
         ];
 
         foreach ($permissions as $permission) {
@@ -141,6 +160,17 @@ class PermissionSeeder extends Seeder
                 'reports.fines',
                 'reports.circulation',
                 'settings.view',
+                'digital_files.view',
+                'digital_files.create',
+                'digital_files.edit',
+                'digital_files.delete',
+                'transfers.view',
+                'transfers.create',
+                'transfers.manage',
+                'repositories.view',
+                'repositories.create',
+                'repositories.edit',
+                'repositories.moderate',
             ],
 
             'circulation_staff' => [
@@ -173,6 +203,12 @@ class PermissionSeeder extends Seeder
                 'subjects.manage',
                 'publishers.manage',
                 'classifications.manage',
+                'digital_files.view',
+                'digital_files.create',
+                'digital_files.edit',
+                'repositories.view',
+                'repositories.create',
+                'repositories.edit',
             ],
 
             'report_viewer' => [

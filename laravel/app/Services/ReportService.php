@@ -427,4 +427,269 @@ class ReportService
             'loan_count' => $loan->loan_count,
         ])->toArray();
     }
+
+    /**
+     * Export loan report to CSV.
+     */
+    public function exportLoanReportCsv(string $startDate, string $endDate, ?int $branchId = null): string
+    {
+        $stats = $this->getLoanStats($startDate, $endDate, $branchId);
+        $filename = 'loan_report_' . $startDate . '_to_' . $endDate . '.csv';
+        $filepath = storage_path('app/temp/' . $filename);
+
+        $handle = fopen($filepath, 'w');
+        fputcsv($handle, ['Loan Report', '']);
+        fputcsv($handle, ['Period', $startDate . ' to ' . $endDate]);
+        fputcsv($handle, ['Generated At', now()->format('Y-m-d H:i:s')]);
+        fputcsv($handle, ['']);
+
+        fputcsv($handle, ['Metric', 'Value']);
+        fputcsv($handle, ['Total Loans', $stats['total_loans']]);
+        fputcsv($handle, ['Active Loans', $stats['active_loans']]);
+        fputcsv($handle, ['Completed Loans', $stats['completed_loans']]);
+        fputcsv($handle, ['Overdue Loans', $stats['overdue_loans']]);
+        fputcsv($handle, ['Total Renewals', $stats['total_renewals']]);
+        fputcsv($handle, ['Avg Loan Duration (days)', number_format($stats['average_loan_duration'] ?? 0, 2)]);
+
+        fputcsv($handle, ['']);
+        fputcsv($handle, ['Loans by Member Type', '']);
+        foreach ($stats['loans_by_member_type'] as $type => $data) {
+            fputcsv($handle, [$type, $data['count'], $data['percentage'] . '%']);
+        }
+
+        fclose($handle);
+
+        return $filepath;
+    }
+
+    /**
+     * Export overdue report to CSV.
+     */
+    public function exportOverdueReportCsv(string $startDate, string $endDate, ?int $branchId = null): string
+    {
+        $stats = $this->getOverdueReport($startDate, $endDate, $branchId);
+        $filename = 'overdue_report_' . $startDate . '_to_' . $endDate . '.csv';
+        $filepath = storage_path('app/temp/' . $filename);
+
+        $handle = fopen($filepath, 'w');
+        fputcsv($handle, ['Overdue Report', '']);
+        fputcsv($handle, ['Period', $startDate . ' to ' . $endDate]);
+        fputcsv($handle, ['Generated At', now()->format('Y-m-d H:i:s')]);
+        fputcsv($handle, ['']);
+
+        fputcsv($handle, ['Metric', 'Value']);
+        fputcsv($handle, ['Total Overdue', $stats['total_overdue']]);
+        fputcsv($handle, ['Total Fine Amount', 'Rp ' . number_format($stats['total_fine_amount'], 0, ',', '.')]);
+        fputcsv($handle, ['Total Paid Fines', 'Rp ' . number_format($stats['total_paid_fines'], 0, ',', '.')]);
+        fputcsv($handle, ['Total Remaining Fines', 'Rp ' . number_format($stats['total_remaining_fines'], 0, ',', '.')]);
+        fputcsv($handle, ['Average Overdue Days', number_format($stats['average_overdue_days'] ?? 0, 1)]);
+
+        fputcsv($handle, ['']);
+        fputcsv($handle, ['Member Name', 'Item Title', 'Due Date', 'Days Overdue', 'Fine Amount']);
+
+        foreach ($stats['overdue_loans'] as $loan) {
+            fputcsv($handle, [
+                $loan->member->name,
+                $loan->item?->collection?->title ?? 'Unknown',
+                $loan->due_date->format('Y-m-d'),
+                $loan->days_overdue ?? 0,
+                'Rp ' . number_format($loan->calculated_fine ?? 0, 0, ',', '.'),
+            ]);
+        }
+
+        fclose($handle);
+
+        return $filepath;
+    }
+
+    /**
+     * Export fine report to CSV.
+     */
+    public function exportFineReportCsv(string $startDate, string $endDate, ?int $branchId = null): string
+    {
+        $stats = $this->getFineReport($startDate, $endDate, $branchId);
+        $filename = 'fine_report_' . $startDate . '_to_' . $endDate . '.csv';
+        $filepath = storage_path('app/temp/' . $filename);
+
+        $handle = fopen($filepath, 'w');
+        fputcsv($handle, ['Fine Report', '']);
+        fputcsv($handle, ['Period', $startDate . ' to ' . $endDate]);
+        fputcsv($handle, ['Generated At', now()->format('Y-m-d H:i:s')]);
+        fputcsv($handle, ['']);
+
+        fputcsv($handle, ['Metric', 'Value']);
+        fputcsv($handle, ['Total Payments', $stats['total_payments']]);
+        fputcsv($handle, ['Total Amount', 'Rp ' . number_format($stats['total_amount'], 0, ',', '.')]);
+
+        fputcsv($handle, ['']);
+        fputcsv($handle, ['Payments by Method', '']);
+        foreach ($stats['payments_by_method'] as $method => $data) {
+            fputcsv($handle, [ucfirst($method), $data['count'], 'Rp ' . number_format($data['amount'], 0, ',', '.')]);
+        }
+
+        fclose($handle);
+
+        return $filepath;
+    }
+
+    /**
+     * Export collection report to CSV.
+     */
+    public function exportCollectionReportCsv(?int $branchId = null): string
+    {
+        $stats = $this->getCollectionStats($branchId);
+        $filename = 'collection_report_' . now()->format('Y-m-d') . '.csv';
+        $filepath = storage_path('app/temp/' . $filename);
+
+        $handle = fopen($filepath, 'w');
+        fputcsv($handle, ['Collection Report', '']);
+        fputcsv($handle, ['Generated At', now()->format('Y-m-d H:i:s')]);
+        fputcsv($handle, ['']);
+
+        fputcsv($handle, ['Metric', 'Value']);
+        fputcsv($handle, ['Total Collections', $stats['total_collections']]);
+        fputcsv($handle, ['Total Items', $stats['total_items']]);
+
+        fputcsv($handle, ['']);
+        fputcsv($handle, ['Collections by Type', '']);
+        foreach ($stats['by_type'] as $type => $data) {
+            fputcsv($handle, [ucfirst($type), $data['count'] . ' collections', $data['items'] . ' items']);
+        }
+
+        fclose($handle);
+
+        return $filepath;
+    }
+
+    /**
+     * Export member report to CSV.
+     */
+    public function exportMemberReportCsv(?int $branchId = null): string
+    {
+        $stats = $this->getMemberStats($branchId);
+        $filename = 'member_report_' . now()->format('Y-m-d') . '.csv';
+        $filepath = storage_path('app/temp/' . $filename);
+
+        $handle = fopen($filepath, 'w');
+        fputcsv($handle, ['Member Report', '']);
+        fputcsv($handle, ['Generated At', now()->format('Y-m-d H:i:s')]);
+        fputcsv($handle, ['']);
+
+        fputcsv($handle, ['Metric', 'Value']);
+        fputcsv($handle, ['Total Members', $stats['total_members']]);
+        fputcsv($handle, ['Active Members', $stats['active_members']]);
+        fputcsv($handle, ['Inactive Members', $stats['inactive_members']]);
+        fputcsv($handle, ['Suspended Members', $stats['suspended_members']]);
+        fputcsv($handle, ['New This Month', $stats['new_this_month']]);
+        fputcsv($handle, ['Expired Members', $stats['expired_members']]);
+
+        fputcsv($handle, ['']);
+        fputcsv($handle, ['Members by Type', '']);
+        foreach ($stats['by_type'] as $type => $count) {
+            fputcsv($handle, [ucfirst($type), $count]);
+        }
+
+        fclose($handle);
+
+        return $filepath;
+    }
+
+    /**
+     * Get branch comparison report.
+     */
+    public function getBranchComparisonReport(): array
+    {
+        $branches = \App\Models\Branch::where('is_active', true)->get();
+
+        $comparison = $branches->map(function ($branch) {
+            return [
+                'id' => $branch->id,
+                'name' => $branch->name,
+                'type' => $branch->type,
+                'total_members' => $this->getTotalMembers($branch->id),
+                'active_members' => $this->getActiveMembers($branch->id),
+                'total_collections' => $this->getTotalCollections($branch->id),
+                'total_items' => $this->getTotalItems($branch->id),
+                'active_loans' => $this->getActiveLoans($branch->id),
+                'overdue_loans' => $this->getOverdueLoans($branch->id),
+                'loans_this_month' => $this->getLoansByBranchThisMonth($branch->id),
+                'returns_this_month' => $this->getReturnsByBranchThisMonth($branch->id),
+            ];
+        });
+
+        return [
+            'branches' => $comparison,
+            'summary' => [
+                'total_branches' => $branches->count(),
+                'total_members_all' => $this->getTotalMembers(null),
+                'total_items_all' => $this->getTotalItems(null),
+                'total_loans_all' => \App\Models\Loan::count(),
+            ],
+        ];
+    }
+
+    /**
+     * Get loans by branch this month.
+     */
+    private function getLoansByBranchThisMonth(int $branchId): int
+    {
+        return \App\Models\Loan::where('loan_branch_id', $branchId)
+            ->whereMonth('loan_date', now()->month)
+            ->whereYear('loan_date', now()->year)
+            ->count();
+    }
+
+    /**
+     * Get returns by branch this month.
+     */
+    private function getReturnsByBranchThisMonth(int $branchId): int
+    {
+        return \App\Models\Loan::where('return_branch_id', $branchId)
+            ->whereNotNull('return_date')
+            ->whereMonth('return_date', now()->month)
+            ->whereYear('return_date', now()->year)
+            ->count();
+    }
+
+    /**
+     * Export branch comparison report to CSV.
+     */
+    public function exportBranchComparisonReportCsv(): string
+    {
+        $stats = $this->getBranchComparisonReport();
+        $filename = 'branch_comparison_report_' . now()->format('Y-m-d') . '.csv';
+        $filepath = storage_path('app/temp/' . $filename);
+
+        $handle = fopen($filepath, 'w');
+        fputcsv($handle, ['Branch Comparison Report', '']);
+        fputcsv($handle, ['Generated At', now()->format('Y-m-d H:i:s')]);
+        fputcsv($handle, ['']);
+
+        fputcsv($handle, ['Branch Name', 'Type', 'Total Members', 'Active Members', 'Total Items', 'Active Loans', 'Overdue', 'Loans This Month', 'Returns This Month']);
+
+        foreach ($stats['branches'] as $branch) {
+            fputcsv($handle, [
+                $branch['name'],
+                $branch['type'],
+                $branch['total_members'],
+                $branch['active_members'],
+                $branch['total_items'],
+                $branch['active_loans'],
+                $branch['overdue_loans'],
+                $branch['loans_this_month'],
+                $branch['returns_this_month'],
+            ]);
+        }
+
+        fputcsv($handle, ['']);
+        fputcsv($handle, ['Summary', '']);
+        fputcsv($handle, ['Total Branches', $stats['summary']['total_branches']]);
+        fputcsv($handle, ['Total Members (All Branches)', $stats['summary']['total_members_all']]);
+        fputcsv($handle, ['Total Items (All Branches)', $stats['summary']['total_items_all']]);
+        fputcsv($handle, ['Total Loans (All Branches)', $stats['summary']['total_loans_all']]);
+
+        fclose($handle);
+
+        return $filepath;
+    }
 }

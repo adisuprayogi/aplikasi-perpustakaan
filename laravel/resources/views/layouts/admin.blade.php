@@ -7,6 +7,65 @@
     <link rel="stylesheet" href="{{ asset('dist/css/main.css') }}">
     <script defer src="{{ asset('dist/js/main.js') }}"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        /* Pull to Refresh Styles */
+        .ptr-container {
+            position: relative;
+            overflow: hidden;
+        }
+        .ptr-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0) 100%);
+            overflow: hidden;
+            transition: height 0.2s ease-out;
+            z-index: 100;
+        }
+        .ptr-indicator(ptr-loading) {
+            height: 60px;
+        }
+        .ptr-spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid rgba(59, 130, 246, 0.2);
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: ptr-spin 0.8s linear infinite;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        .ptr-indicator(ptr-loading) .ptr-spinner,
+        .ptr-indicator(ptr-pulled) .ptr-spinner {
+            opacity: 1;
+            transform: scale(1);
+        }
+        @keyframes ptr-spin {
+            to { transform: rotate(360deg); }
+        }
+        .ptr-icon {
+            width: 28px;
+            height: 28px;
+            color: #3b82f6;
+            opacity: 0;
+            transform: rotate(0deg) scale(0.5);
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        .ptr-indicator(ptr-pulled) .ptr-icon {
+            opacity: 1;
+            transform: rotate(180deg) scale(1);
+        }
+        @media (min-width: 1024px) {
+            .ptr-container { overflow: visible; }
+            .ptr-indicator { display: none; }
+        }
+    </style>
 </head>
 <body class="bg-gray-50 h-full" x-data="{ mobileMenuOpen: false, profileOpen: false }">
     <div class="flex h-full">
@@ -136,6 +195,28 @@
                     </a>
                     @endcan
 
+                    <!-- Digital Library -->
+                    @can('digital_files.view')
+                    <a href="{{ route('digital-files.index') }}"
+                       class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs('digital-files.*') ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
+                        <svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        Perpustakaan Digital
+                    </a>
+                    @endcan
+
+                    <!-- Institutional Repository -->
+                    @can('repositories.view')
+                    <a href="{{ route('repositories.index') }}"
+                       class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs('repositories.*') ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
+                        <svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z"/>
+                        </svg>
+                        Repository
+                    </a>
+                    @endcan
+
                     <!-- Loan Rules -->
                     @can('loan-rules.view')
                     <a href="{{ route('loan-rules.index') }}"
@@ -186,6 +267,7 @@
                             <a href="{{ route('reports.fines') }}" class="block px-4 py-2.5 text-sm rounded-lg transition {{ request()->routeIs('reports.fines') ? 'bg-blue-600/20 text-blue-300' : 'text-gray-400 hover:text-white hover:bg-white/10' }}">Laporan Denda</a>
                             <a href="{{ route('reports.collections') }}" class="block px-4 py-2.5 text-sm rounded-lg transition {{ request()->routeIs('reports.collections') ? 'bg-blue-600/20 text-blue-300' : 'text-gray-400 hover:text-white hover:bg-white/10' }}">Laporan Koleksi</a>
                             <a href="{{ route('reports.members') }}" class="block px-4 py-2.5 text-sm rounded-lg transition {{ request()->routeIs('reports.members') ? 'bg-blue-600/20 text-blue-300' : 'text-gray-400 hover:text-white hover:bg-white/10' }}">Laporan Anggota</a>
+                            <a href="{{ route('reports.branches') }}" class="block px-4 py-2.5 text-sm rounded-lg transition {{ request()->routeIs('reports.branches') ? 'bg-blue-600/20 text-blue-300' : 'text-gray-400 hover:text-white hover:bg-white/10' }}">Perbandingan Cabang</a>
                         </div>
                     </div>
 
@@ -303,8 +385,16 @@
             </header>
 
             <!-- Page Content -->
-            <main class="flex-1 overflow-y-auto">
-                <div class="p-6 lg:p-8">
+            <main class="flex-1 overflow-y-auto" id="main-content">
+                <!-- Pull to Refresh Indicator -->
+                <div class="ptr-indicator" id="ptr-indicator" style="display: none;">
+                    <svg class="ptr-icon" id="ptr-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                    <div class="ptr-spinner" id="ptr-spinner" style="display: none;"></div>
+                </div>
+
+                <div class="p-6 lg:p-8" id="main-container">
                     <!-- Flash Messages -->
                     @if(session('success'))
                     <div x-data="{ show: true }" x-show="show" x-transition:enter="transition ease-out duration-300"
@@ -398,6 +488,149 @@
         </div>
     </div>
 
+    <!-- Mobile Bottom Navigation (Visible on small screens only) -->
+    <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 pb-safe">
+        <div class="grid grid-cols-4 items-center justify-items-center py-2">
+            <!-- Home -->
+            <a href="{{ route('dashboard') }}" class="flex flex-col items-center py-2 px-3 {{ request()->routeIs('dashboard') ? 'text-blue-600' : 'text-gray-500' }}">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                </svg>
+                <span class="text-[10px] mt-1 font-medium">Beranda</span>
+            </a>
+
+            <!-- Search -->
+            <a href="{{ route('collections.index') }}" class="flex flex-col items-center py-2 px-3 {{ request()->routeIs('collections.*') ? 'text-blue-600' : 'text-gray-500' }}">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+                <span class="text-[10px] mt-1 font-medium">Koleksi</span>
+            </a>
+
+            <!-- Loans (for circulation staff/admin) -->
+            @canany(['loans.create', 'loans.view'])
+            <a href="{{ route('loans.index') }}" class="flex flex-col items-center py-2 px-3 {{ request()->routeIs('loans.*') ? 'text-blue-600' : 'text-gray-500' }}">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+                </svg>
+                <span class="text-[10px] mt-1 font-medium">Sirkulasi</span>
+            </a>
+            @else
+            <!-- Digital Library (for non-circulation roles) -->
+            <a href="{{ route('digital-files.index') }}" class="flex flex-col items-center py-2 px-3 {{ request()->routeIs('digital-files.*') ? 'text-blue-600' : 'text-gray-500' }}">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                <span class="text-[10px] mt-1 font-medium">Digital</span>
+            </a>
+            @endcanany
+
+            <!-- More Menu (Opens mobile sidebar) -->
+            <button @click="mobileMenuOpen = true" class="flex flex-col items-center py-2 px-3 text-gray-500">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+                <span class="text-[10px] mt-1 font-medium">Menu</span>
+            </button>
+        </div>
+    </nav>
+
     @stack('scripts')
+
+    <!-- Pull to Refresh Script -->
+    <script>
+    (function() {
+        if (window.innerWidth >= 1024) return; // Only on mobile
+
+        const mainContent = document.getElementById('main-content');
+        const indicator = document.getElementById('ptr-indicator');
+        const icon = document.getElementById('ptr-icon');
+        const spinner = document.getElementById('ptr-spinner');
+        const mainContainer = document.getElementById('main-container');
+
+        let startY = 0;
+        let currentY = 0;
+        let isDragging = false;
+        let isRefreshing = false;
+        const threshold = 80;
+        const maxPull = 120;
+
+        mainContent.addEventListener('touchstart', function(e) {
+            if (isRefreshing || mainContent.scrollTop > 0) return;
+            startY = e.touches[0].clientY;
+            isDragging = true;
+        }, { passive: true });
+
+        mainContent.addEventListener('touchmove', function(e) {
+            if (!isDragging || isRefreshing || mainContent.scrollTop > 0) return;
+
+            currentY = e.touches[0].clientY;
+            const diff = currentY - startY;
+
+            if (diff > 0 && diff < maxPull) {
+                e.preventDefault();
+                const pullDistance = Math.min(diff * 0.5, maxPull);
+                const progress = pullDistance / threshold;
+
+                indicator.style.display = 'flex';
+                indicator.style.height = pullDistance + 'px';
+                mainContainer.style.transform = `translateY(${pullDistance}px)`;
+                mainContainer.style.transition = 'none';
+
+                if (progress >= 1) {
+                    indicator.setAttribute('ptr-pulled', '');
+                    icon.style.display = 'none';
+                    spinner.style.display = 'block';
+                } else {
+                    indicator.removeAttribute('ptr-pulled');
+                    icon.style.display = 'block';
+                    spinner.style.display = 'none';
+                }
+            }
+        }, { passive: false });
+
+        mainContent.addEventListener('touchend', function(e) {
+            if (!isDragging || isRefreshing) return;
+            isDragging = false;
+
+            const pullDistance = parseFloat(indicator.style.height) || 0;
+
+            if (pullDistance >= threshold) {
+                // Trigger refresh
+                isRefreshing = true;
+                indicator.setAttribute('ptr-loading', '');
+                indicator.style.height = '60px';
+                mainContainer.style.transition = 'transform 0.3s ease-out';
+                mainContainer.style.transform = 'translateY(60px)';
+
+                // Reload page after brief delay
+                setTimeout(() => {
+                    window.location.reload();
+                }, 500);
+            } else {
+                // Reset
+                resetIndicator();
+            }
+        }, { passive: true });
+
+        function resetIndicator() {
+            indicator.style.height = '0px';
+            indicator.style.display = 'none';
+            indicator.removeAttribute('ptr-pulled');
+            indicator.removeAttribute('ptr-loading');
+            icon.style.display = 'block';
+            spinner.style.display = 'none';
+            mainContainer.style.transition = 'transform 0.3s ease-out';
+            mainContainer.style.transform = 'translateY(0)';
+        }
+
+        // Reset on orientation change
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 1024) {
+                resetIndicator();
+            }
+        });
+    })();
+    </script>
 </body>
 </html>

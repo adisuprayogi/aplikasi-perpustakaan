@@ -198,7 +198,7 @@
                 </div>
 
                 @if($loan->isOverdue())
-                <div class="mb-4 p-4 bg-yellow-50 border border-yellow-200 rounded-xl" x-data="{ fineOption: 'pay_full', showPaymentAmount: false }">
+                <div class="mb-4 p-4 bg-yellow-50 border border-yellow-200 rounded-xl" x-data="{ fineOption: 'pay_full' }" x-init="$watch('fineOption', value => {})">
                     <p class="text-sm text-yellow-800 mb-3">
                         Denda keterlambatan: <strong>Rp {{ number_format($loan->calculated_fine, 0, ',', '.') }}</strong>
                         ({{ $loan->days_overdue }} hari)
@@ -209,7 +209,7 @@
                         <label class="block text-sm font-medium text-gray-700 mb-2">Opsi Pembayaran Denda</label>
 
                         <label class="flex items-center p-3 bg-white border border-yellow-300 rounded-lg cursor-pointer hover:bg-yellow-100 transition">
-                            <input type="radio" name="fine_option" value="pay_full" class="mr-3" checked x-model="fineOption">
+                            <input type="radio" name="fine_option" value="pay_full" :checked="fineOption === 'pay_full'" @change="fineOption = 'pay_full'" class="mr-3 accent-yellow-600">
                             <div class="flex-1">
                                 <span class="text-sm font-medium text-gray-900">Bayar Lunas</span>
                                 <p class="text-xs text-gray-500">Bayar penuh denda saat ini</p>
@@ -218,7 +218,7 @@
                         </label>
 
                         <label class="flex items-center p-3 bg-white border border-yellow-300 rounded-lg cursor-pointer hover:bg-yellow-100 transition">
-                            <input type="radio" name="fine_option" value="pay_partial" class="mr-3" x-model="fineOption" @click="showPaymentAmount = true">
+                            <input type="radio" name="fine_option" value="pay_partial" :checked="fineOption === 'pay_partial'" @change="fineOption = 'pay_partial'" class="mr-3 accent-yellow-600">
                             <div class="flex-1">
                                 <span class="text-sm font-medium text-gray-900">Bayar Sebagian</span>
                                 <p class="text-xs text-gray-500">Bayar sebagian, sisanya ditagih nanti</p>
@@ -236,7 +236,7 @@
                         </div>
 
                         <label class="flex items-center p-3 bg-white border border-yellow-300 rounded-lg cursor-pointer hover:bg-yellow-100 transition">
-                            <input type="radio" name="fine_option" value="defer" class="mr-3" x-model="fineOption" @click="showPaymentAmount = false">
+                            <input type="radio" name="fine_option" value="defer" :checked="fineOption === 'defer'" @change="fineOption = 'defer'" class="mr-3 accent-yellow-600">
                             <div class="flex-1">
                                 <span class="text-sm font-medium text-gray-900">Tangguhkan</span>
                                 <p class="text-xs text-gray-500">Denda ditambahkan ke tunggakan anggota</p>

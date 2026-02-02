@@ -10,18 +10,20 @@ use App\Models\Classification;
 use App\Models\Gmd;
 use App\Models\Subject;
 use App\Models\Author;
+use App\Services\BarcodeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class CollectionController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     */
-    public function __construct()
+    private BarcodeService $barcodeService;
+
+    public function __construct(BarcodeService $barcodeService)
     {
-        $this->middleware('permission:collections.view')->only(['index', 'show']);
+        $this->barcodeService = $barcodeService;
+
+        $this->middleware('permission:collections.view')->only(['index', 'show', 'generateLabel']);
         $this->middleware('permission:collections.create')->only(['create', 'store']);
         $this->middleware('permission:collections.edit')->only(['edit', 'update']);
         $this->middleware('permission:collections.delete')->only('destroy');
@@ -247,5 +249,124 @@ class CollectionController extends Controller
         return redirect()
             ->route('collections.index')
             ->with('success', 'Koleksi berhasil dihapus.');
+    }
+
+    /**
+     * Upload or update cover image.
+     */
+    public function uploadCover(Request $request, Collection $collection)
+    {
+        $request->validate([
+            'cover_image' => 'required|image|max:2048', // Max 2MB
+        ]);
+
+        // Delete old cover if exists
+        if ($collection->cover_image && Storage::disk('public')->exists($collection->cover_image)) {
+            Storage::disk('public')->delete($collection->cover_image);
+        }
+        if ($collection->thumbnail && Storage::disk('public')->exists($collection->thumbnail)) {
+            Storage::disk('public')->delete($collection->thumbnail);
+        }
+
+        // Upload new cover
+        $path = $request->file('cover_image')->store('covers', 'public');
+        $collection->update(['cover_image' => $path]);
+
+        // Use same file as thumbnail for now (in production, resize it)
+        $thumbnailPath = $request->file('cover_image')->store('thumbnails', 'public');
+        $collection->update(['thumbnail' => $thumbnailPath]);
+
+        return back()->with('success', 'Cover berhasil diupload.');
+    }
+
+    /**
+     * Remove cover image.
+     */
+    public function removeCover(Collection $collection)
+    {
+        // Delete files
+        if ($collection->cover_image && Storage::disk('public')->exists($collection->cover_image)) {
+            Storage::disk('public')->delete($collection->cover_image);
+        }
+        if ($collection->thumbnail && Storage::disk('public')->exists($collection->thumbnail)) {
+            Storage::disk('public')->delete($collection->thumbnail);
+        }
+
+        $collection->update([
+            'cover_image' => null,
+            'thumbnail' => null,
+        ]);
+
+        return back()->with('success', 'Cover berhasil dihapus.');
+    }
+
+    /**
+     * Generate barcode for collection item.
+     */
+    public function generateBarcode(CollectionItem $item)
+    {
+        $barcodePath = $this->barcodeService->generateForCollectionItem(
+            $item->id,
+            $item->collection->call_number ?? 'ITEM-' . $item->id
+        );
+
+        return response()->json([
+            'barcode_url' => $this->barcodeService->getBarcodeUrl($barcodePath),
+            'barcode_code' => $this->barcodeService->formatItemBarcode(
+                $item->id,
+                $item->collection->call_number ?? 'ITEM-' . $item->id
+            ),
+        ]);
+    }
+
+    /**
+     * Generate QR code for collection item.
+     */
+    public function generateQrCode(CollectionItem $item)
+    {
+        $qrPath = $this->barcodeService->generateQrForCollectionItem(
+            $item->id,
+            $item->collection->title
+        );
+
+        return response()->json([
+            'qr_url' => $this->barcodeService->getQrCodeUrl($qrPath),
+        ]);
+    }
+
+    /**
+     * Generate printable label for collection item.
+     */
+    public function generateLabel(CollectionItem $item)
+    {
+        $html = $this->barcodeService->generateLabelHtml(
+            $item->id,
+            $item->collection->title,
+            $item->collection->authors[0] ?? 'Unknown',
+            $item->collection->call_number ?? $item->barcode
+        );
+
+        return response($html)
+            ->header('Content-Type', 'text/html')
+            ->header('Content-Disposition', 'inline; filename="label_' . $item->id . '.html"');
+    }
+
+    /**
+     * Show labels page for printing.
+     */
+    public function labels(Request $request)
+    {
+        $items = CollectionItem::query()
+            ->with('collection')
+            ->when($request->branch_id, function ($q, $branchId) {
+                return $q->where('branch_id', $branchId);
+            })
+            ->when($request->status, function ($q, $status) {
+                return $q->where('status', $status);
+            })
+            ->latest()
+            ->paginate(50);
+
+        return view('admin.collections.labels', compact('items'));
     }
 }

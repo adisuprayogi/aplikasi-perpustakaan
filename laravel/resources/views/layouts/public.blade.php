@@ -6,6 +6,61 @@
     <title>@yield('title', 'OPAC') - Perpustakaan</title>
     <link rel="stylesheet" href="{{ asset('dist/css/main.css') }}">
     <script defer src="{{ asset('dist/js/main.js') }}"></script>
+    <style>
+        /* Pull to Refresh Styles */
+        .ptr-container {
+            position: relative;
+            overflow: hidden;
+        }
+        .ptr-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0) 100%);
+            overflow: hidden;
+            transition: height 0.2s ease-out;
+            z-index: 100;
+        }
+        .ptr-spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid rgba(59, 130, 246, 0.2);
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: ptr-spin 0.8s linear infinite;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        .ptr-indicator(ptr-loading) .ptr-spinner,
+        .ptr-indicator(ptr-pulled) .ptr-spinner {
+            opacity: 1;
+            transform: scale(1);
+        }
+        @keyframes ptr-spin {
+            to { transform: rotate(360deg); }
+        }
+        .ptr-icon {
+            width: 28px;
+            height: 28px;
+            color: #3b82f6;
+            opacity: 0;
+            transform: rotate(0deg) scale(0.5);
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        .ptr-indicator(ptr-pulled) .ptr-icon {
+            opacity: 1;
+            transform: rotate(180deg) scale(1);
+        }
+        @media (min-width: 1024px) {
+            .ptr-indicator { display: none !important; }
+        }
+    </style>
 </head>
 <body class="bg-gray-50 min-h-screen" x-data="{ mobileMenuOpen: false, searchOpen: false }">
     <!-- Header -->
@@ -27,6 +82,8 @@
                     <a href="{{ route('opac.index') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition {{ request()->routeIs('opac.index') ? 'text-white bg-blue-600' : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50' }}">Beranda</a>
                     <a href="{{ route('opac.search') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition {{ request()->routeIs('opac.search') ? 'text-white bg-blue-600' : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50' }}">Cari</a>
                     <a href="{{ route('opac.advanced') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition {{ request()->routeIs('opac.advanced') ? 'text-white bg-blue-600' : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50' }}">Pencarian Lanjutan</a>
+                    <a href="{{ route('digital-library.index') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition {{ request()->routeIs('digital-library.*') ? 'text-white bg-emerald-600' : 'text-gray-700 hover:text-emerald-600 hover:bg-emerald-50' }}">Perpustakaan Digital</a>
+                    <a href="{{ route('repository.index') }}" class="px-4 py-2 text-sm font-medium rounded-lg transition {{ request()->routeIs('repository.*') ? 'text-white bg-purple-600' : 'text-gray-700 hover:text-purple-600 hover:bg-purple-50' }}">Repository</a>
                 </nav>
 
                 <!-- Right Side -->
@@ -71,6 +128,8 @@
                 <a href="{{ route('opac.index') }}" class="block px-4 py-2 text-sm font-medium rounded-lg transition {{ request()->routeIs('opac.index') ? 'text-white bg-blue-600' : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50' }}">Beranda</a>
                 <a href="{{ route('opac.search') }}" class="block px-4 py-2 text-sm font-medium rounded-lg transition {{ request()->routeIs('opac.search') ? 'text-white bg-blue-600' : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50' }}">Cari</a>
                 <a href="{{ route('opac.advanced') }}" class="block px-4 py-2 text-sm font-medium rounded-lg transition {{ request()->routeIs('opac.advanced') ? 'text-white bg-blue-600' : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50' }}">Pencarian Lanjutan</a>
+                <a href="{{ route('digital-library.index') }}" class="block px-4 py-2 text-sm font-medium rounded-lg transition {{ request()->routeIs('digital-library.*') ? 'text-white bg-emerald-600' : 'text-gray-700 hover:text-emerald-600 hover:bg-emerald-50' }}">Perpustakaan Digital</a>
+                <a href="{{ route('repository.index') }}" class="block px-4 py-2 text-sm font-medium rounded-lg transition {{ request()->routeIs('repository.*') ? 'text-white bg-purple-600' : 'text-gray-700 hover:text-purple-600 hover:bg-purple-50' }}">Repository</a>
                 @auth
                 <a href="{{ route('dashboard') }}" class="block px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium text-center">Dashboard</a>
                 @else
@@ -81,8 +140,18 @@
     </header>
 
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        @yield('content')
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" id="main-content">
+        <!-- Pull to Refresh Indicator -->
+        <div class="ptr-indicator" id="ptr-indicator" style="display: none;">
+            <svg class="ptr-icon" id="ptr-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+            </svg>
+            <div class="ptr-spinner" id="ptr-spinner" style="display: none;"></div>
+        </div>
+
+        <div id="main-container">
+            @yield('content')
+        </div>
     </main>
 
     <!-- Footer -->
@@ -181,5 +250,101 @@
     </footer>
 
     @stack('scripts')
+
+    <!-- Pull to Refresh Script -->
+    <script>
+    (function() {
+        if (window.innerWidth >= 1024) return; // Only on mobile
+
+        const mainContent = document.getElementById('main-content');
+        const indicator = document.getElementById('ptr-indicator');
+        const icon = document.getElementById('ptr-icon');
+        const spinner = document.getElementById('ptr-spinner');
+        const mainContainer = document.getElementById('main-container');
+
+        let startY = 0;
+        let currentY = 0;
+        let isDragging = false;
+        let isRefreshing = false;
+        const threshold = 80;
+        const maxPull = 120;
+
+        document.addEventListener('touchstart', function(e) {
+            if (isRefreshing || window.scrollY > 0) return;
+            startY = e.touches[0].clientY;
+            isDragging = true;
+        }, { passive: true });
+
+        document.addEventListener('touchmove', function(e) {
+            if (!isDragging || isRefreshing || window.scrollY > 0) return;
+
+            currentY = e.touches[0].clientY;
+            const diff = currentY - startY;
+
+            if (diff > 0 && diff < maxPull) {
+                e.preventDefault();
+                const pullDistance = Math.min(diff * 0.5, maxPull);
+                const progress = pullDistance / threshold;
+
+                indicator.style.display = 'flex';
+                indicator.style.height = pullDistance + 'px';
+                mainContainer.style.transform = `translateY(${pullDistance}px)`;
+                mainContainer.style.transition = 'none';
+
+                if (progress >= 1) {
+                    indicator.setAttribute('ptr-pulled', '');
+                    icon.style.display = 'none';
+                    spinner.style.display = 'block';
+                } else {
+                    indicator.removeAttribute('ptr-pulled');
+                    icon.style.display = 'block';
+                    spinner.style.display = 'none';
+                }
+            }
+        }, { passive: false });
+
+        document.addEventListener('touchend', function(e) {
+            if (!isDragging || isRefreshing) return;
+            isDragging = false;
+
+            const pullDistance = parseFloat(indicator.style.height) || 0;
+
+            if (pullDistance >= threshold) {
+                // Trigger refresh
+                isRefreshing = true;
+                indicator.setAttribute('ptr-loading', '');
+                indicator.style.height = '60px';
+                mainContainer.style.transition = 'transform 0.3s ease-out';
+                mainContainer.style.transform = 'translateY(60px)';
+
+                // Reload page after brief delay
+                setTimeout(() => {
+                    window.location.reload();
+                }, 500);
+            } else {
+                // Reset
+                resetIndicator();
+            }
+        }, { passive: true });
+
+        function resetIndicator() {
+            indicator.style.height = '0px';
+            indicator.style.display = 'none';
+            indicator.removeAttribute('ptr-pulled');
+            indicator.removeAttribute('ptr-loading');
+            icon.style.display = 'block';
+            spinner.style.display = 'none';
+            mainContainer.style.transition = 'transform 0.3s ease-out';
+            mainContainer.style.transform = 'translateY(0)';
+        }
+
+        // Reset on orientation change
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 1024) {
+                resetIndicator();
+            }
+        });
+    })();
+    </script>
 </body>
 </html>

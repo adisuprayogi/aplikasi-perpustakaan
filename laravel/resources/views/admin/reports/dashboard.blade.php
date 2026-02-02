@@ -2,6 +2,10 @@
 
 @section('title', 'Dashboard Laporan')
 
+@push('styles')
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+@endpush
+
 @section('content')
 <!-- Page Header -->
 <div class="mb-8">
@@ -61,24 +65,272 @@
     </div>
 </div>
 
-<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+<!-- Circulation Trends Chart -->
+<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-8">
+    <h3 class="text-lg font-semibold text-gray-900 mb-6">Tren Sirkulasi (12 Bulan Terakhir)</h3>
+    <div class="h-80">
+        <canvas id="circulationChart"></canvas>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Collections by Type Chart -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h3 class="text-lg font-semibold text-gray-900 mb-6">Koleksi berdasarkan Tipe</h3>
+        <div class="h-64">
+            <canvas id="collectionTypeChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Members by Type Chart -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h3 class="text-lg font-semibold text-gray-900 mb-6">Anggota berdasarkan Tipe</h3>
+        <div class="h-64">
+            <canvas id="memberTypeChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Popular Items Chart -->
+<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mt-6">
     <h3 class="text-lg font-semibold text-gray-900 mb-6">Koleksi Terpopuler</h3>
-    <div class="space-y-3">
-        @forelse($stats['popular_items'] as $index => $item)
-            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
-                <div class="flex items-center">
-                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-sm">
-                        {{ $index + 1 }}
+    <div class="h-80">
+        <canvas id="popularItemsChart"></canvas>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+    <!-- Popular Items List -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">Daftar Koleksi Terpopuler</h3>
+        <div class="space-y-3">
+            @forelse($stats['popular_items'] as $index => $item)
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-sm">
+                            {{ $index + 1 }}
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-900">{{ $item['title'] }}</p>
+                        </div>
                     </div>
+                    <p class="text-lg font-bold text-indigo-600">{{ $item['loan_count'] }}</p>
+                </div>
+            @empty
+                <p class="text-gray-500 text-center py-8">Belum ada data peminjaman</p>
+            @endforelse
+        </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h3 class="text-lg font-semibold text-gray-900 mb-6">Ringkasan Cepat</h3>
+        <div class="space-y-4">
+            <div class="flex items-center justify-between p-4 bg-blue-50 rounded-xl">
+                <div class="flex items-center">
+                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
                     <div class="ml-3">
-                        <p class="text-sm font-medium text-gray-900">{{ $item['title'] }}</p>
+                        <p class="text-sm text-gray-600">Total Anggota</p>
+                        <p class="text-lg font-bold text-gray-900">{{ number_format($stats['total_members']) }}</p>
                     </div>
                 </div>
-                <p class="text-lg font-bold text-indigo-600">{{ $item['loan_count'] }}</p>
             </div>
-        @empty
-            <p class="text-gray-500 text-center py-8">Belum ada data peminjaman</p>
-        @endforelse
+            <div class="flex items-center justify-between p-4 bg-purple-50 rounded-xl">
+                <div class="flex items-center">
+                    <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    </svg>
+                    <div class="ml-3">
+                        <p class="text-sm text-gray-600">Total Koleksi</p>
+                        <p class="text-lg font-bold text-gray-900">{{ number_format($stats['total_collections']) }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center justify-between p-4 bg-green-50 rounded-xl">
+                <div class="flex items-center">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <div class="ml-3">
+                        <p class="text-sm text-gray-600">Peminjaman Selesai</p>
+                        <p class="text-lg font-bold text-gray-900">{{ number_format($stats['active_loans'] + $stats['returns_today']) }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+// Circulation Trends Chart
+const ctxCirculation = document.getElementById('circulationChart');
+if (ctxCirculation) {
+    const circulationData = @js($circulationTrends);
+
+    new Chart(ctxCirculation, {
+        type: 'line',
+        data: {
+            labels: circulationData.map(d => d.month),
+            datasets: [
+                {
+                    label: 'Peminjaman',
+                    data: circulationData.map(d => d.loans),
+                    borderColor: 'rgb(59, 130, 246)',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                },
+                {
+                    label: 'Pengembalian',
+                    data: circulationData.map(d => d.returns),
+                    borderColor: 'rgb(16, 185, 129)',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                },
+                {
+                    label: 'Terlambat',
+                    data: circulationData.map(d => d.overdue),
+                    borderColor: 'rgb(239, 68, 68)',
+                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+
+// Collections by Type Chart (Pie)
+const ctxCollectionType = document.getElementById('collectionTypeChart');
+if (ctxCollectionType) {
+    const collectionData = @js($collectionStats['by_type'] ?? []);
+
+    const labels = Object.keys(collectionData).map(type => {
+        const typeMap = { 'book': 'Buku', 'journal': 'Jurnal', 'reference': 'Referensi', 'other': 'Lainnya' };
+        return typeMap[type] || type;
+    });
+    const data = Object.values(collectionData).map(item => item.count);
+
+    new Chart(ctxCollectionType, {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: [
+                    'rgb(59, 130, 246)',
+                    'rgb(139, 92, 246)',
+                    'rgb(16, 185, 129)',
+                    'rgb(245, 158, 11)'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right'
+                }
+            }
+        }
+    });
+}
+
+// Members by Type Chart (Pie)
+const ctxMemberType = document.getElementById('memberTypeChart');
+if (ctxMemberType) {
+    const memberData = @js($memberStats['by_type'] ?? []);
+
+    const labels = Object.keys(memberData).map(type => {
+        const typeMap = { 'student': 'Mahasiswa', 'lecturer': 'Dosen', 'staff': 'Staff', 'external': 'Eksternal' };
+        return typeMap[type] || type;
+    });
+    const data = Object.values(memberData);
+
+    new Chart(ctxMemberType, {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: [
+                    'rgb(59, 130, 246)',
+                    'rgb(16, 185, 129)',
+                    'rgb(245, 158, 11)',
+                    'rgb(239, 68, 68)'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right'
+                }
+            }
+        }
+    });
+}
+
+// Popular Items Chart (Bar)
+const ctxPopularItems = document.getElementById('popularItemsChart');
+if (ctxPopularItems) {
+    const popularItems = @js($stats['popular_items'] ?? []);
+
+    new Chart(ctxPopularItems, {
+        type: 'bar',
+        data: {
+            labels: popularItems.map(item => item.title.length > 30 ? item.title.substring(0, 30) + '...' : item.title),
+            datasets: [{
+                label: 'Jumlah Peminjaman',
+                data: popularItems.map(item => item.loan_count),
+                backgroundColor: 'rgba(59, 130, 246, 0.8)',
+                borderColor: 'rgb(59, 130, 246)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                },
+                x: {
+                    ticks: {
+                        maxRotation: 45,
+                        minRotation: 45
+                    }
+                }
+            }
+        }
+    });
+}
+</script>
+@endpush

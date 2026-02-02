@@ -30,16 +30,27 @@
     </div>
 </div>
 
-<div class="max-w-7xl px-4 sm:px-6 lg:px-8">
+<div class="max-w-7xl px-3 sm:px-6 lg:px-8">
 
         <!-- Tabs -->
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-            <div class="border-b border-gray-200">
-                <nav class="-mb-px flex space-x-8 px-6 overflow-x-auto" role="tablist">
+            <!-- Mobile Tab Selector -->
+            <div class="sm:hidden border-b border-gray-200 p-4">
+                <label for="mobile-tab-select" class="sr-only">Pilih Tab</label>
+                <select id="mobile-tab-select" onchange="switchTab(this.value)" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 bg-white text-gray-900 font-medium">
+                    @foreach($groups as $key => $label)
+                        <option value="{{ $key }}" {{ $activeTab === $key ? 'selected' : '' }}>{{ $label }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <!-- Desktop Tab Navigation -->
+            <div class="hidden sm:block border-b border-gray-200">
+                <nav class="-mb-px flex space-x-6 md:space-x-8 px-4 sm:px-6 overflow-x-auto" role="tablist">
                     @foreach($groups as $key => $label)
                         <button type="button"
                                 onclick="switchTab('{{ $key }}')"
-                                class="tab-btn whitespace-nowrap py-4 px-1 text-sm font-medium transition-colors duration-200 {{ $activeTab === $key ? 'active' : 'text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
+                                class="tab-btn whitespace-nowrap py-4 px-2 md:px-1 text-sm font-medium transition-colors duration-200 {{ $activeTab === $key ? 'active' : 'text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
                             {{ $label }}
                         </button>
                     @endforeach
@@ -51,13 +62,13 @@
                 @csrf
                 <input type="hidden" name="current_tab" id="current_tab" value="{{ $activeTab }}">
 
-                <div class="p-6">
+                <div class="p-4 sm:p-6">
                     <!-- Library Info Tab -->
                     <div id="tab-library_info" class="tab-content {{ $activeTab === 'library_info' ? 'active' : '' }}">
-                        <div class="space-y-6">
+                        <div class="space-y-4 sm:space-y-6">
                             <div>
-                                <h3 class="text-lg font-medium leading-6 text-gray-900">Informasi Perpustakaan</h3>
-                                <p class="mt-1 text-sm text-gray-500">Informasi dasar perpustakaan Anda.</p>
+                                <h3 class="text-base sm:text-lg font-medium leading-6 text-gray-900">Informasi Perpustakaan</h3>
+                                <p class="mt-1 text-xs sm:text-sm text-gray-500">Informasi dasar perpustakaan Anda.</p>
                             </div>
 
                             <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
@@ -105,10 +116,10 @@
 
                     <!-- Loan Settings Tab -->
                     <div id="tab-loan" class="tab-content {{ $activeTab === 'loan' ? 'active' : '' }}">
-                        <div class="space-y-6">
+                        <div class="space-y-4 sm:space-y-6">
                             <div>
-                                <h3 class="text-lg font-medium leading-6 text-gray-900">Pengaturan Peminjaman</h3>
-                                <p class="mt-1 text-sm text-gray-500">Konfigurasi default untuk peminjaman.</p>
+                                <h3 class="text-base sm:text-lg font-medium leading-6 text-gray-900">Pengaturan Peminjaman</h3>
+                                <p class="mt-1 text-xs sm:text-sm text-gray-500">Konfigurasi default untuk peminjaman.</p>
                             </div>
 
                             <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
@@ -159,10 +170,10 @@
 
                     <!-- Fine Settings Tab -->
                     <div id="tab-fine" class="tab-content {{ $activeTab === 'fine' ? 'active' : '' }}">
-                        <div class="space-y-6">
+                        <div class="space-y-4 sm:space-y-6">
                             <div>
-                                <h3 class="text-lg font-medium leading-6 text-gray-900">Pengaturan Denda</h3>
-                                <p class="mt-1 text-sm text-gray-500">Konfigurasi perhitungan denda keterlambatan.</p>
+                                <h3 class="text-base sm:text-lg font-medium leading-6 text-gray-900">Pengaturan Denda</h3>
+                                <p class="mt-1 text-xs sm:text-sm text-gray-500">Konfigurasi perhitungan denda keterlambatan.</p>
                             </div>
 
                             <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
@@ -212,10 +223,10 @@
 
                     <!-- Reservation Settings Tab -->
                     <div id="tab-reservation" class="tab-content {{ $activeTab === 'reservation' ? 'active' : '' }}">
-                        <div class="space-y-6">
+                        <div class="space-y-4 sm:space-y-6">
                             <div>
-                                <h3 class="text-lg font-medium leading-6 text-gray-900">Pengaturan Reservasi</h3>
-                                <p class="mt-1 text-sm text-gray-500">Konfigurasi sistem reservasi.</p>
+                                <h3 class="text-base sm:text-lg font-medium leading-6 text-gray-900">Pengaturan Reservasi</h3>
+                                <p class="mt-1 text-xs sm:text-sm text-gray-500">Konfigurasi sistem reservasi.</p>
                             </div>
 
                             <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
@@ -253,10 +264,10 @@
 
                     <!-- Email Settings Tab -->
                     <div id="tab-email" class="tab-content {{ $activeTab === 'email' ? 'active' : '' }}">
-                        <div class="space-y-6">
+                        <div class="space-y-4 sm:space-y-6">
                             <div>
-                                <h3 class="text-lg font-medium leading-6 text-gray-900">Pengaturan Email</h3>
-                                <p class="mt-1 text-sm text-gray-500">Konfigurasi email untuk notifikasi.</p>
+                                <h3 class="text-base sm:text-lg font-medium leading-6 text-gray-900">Pengaturan Email</h3>
+                                <p class="mt-1 text-xs sm:text-sm text-gray-500">Konfigurasi email untuk notifikasi.</p>
                             </div>
 
                             <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
@@ -294,10 +305,10 @@
 
                     <!-- OPAC Settings Tab -->
                     <div id="tab-opac" class="tab-content {{ $activeTab === 'opac' ? 'active' : '' }}">
-                        <div class="space-y-6">
+                        <div class="space-y-4 sm:space-y-6">
                             <div>
-                                <h3 class="text-lg font-medium leading-6 text-gray-900">Pengaturan OPAC</h3>
-                                <p class="mt-1 text-sm text-gray-500">Konfigurasi tampilan katalog publik.</p>
+                                <h3 class="text-base sm:text-lg font-medium leading-6 text-gray-900">Pengaturan OPAC</h3>
+                                <p class="mt-1 text-xs sm:text-sm text-gray-500">Konfigurasi tampilan katalog publik.</p>
                             </div>
 
                             <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
@@ -334,19 +345,21 @@
                 </div>
 
                 <!-- Actions -->
-                <div class="bg-gray-50 px-6 py-4 flex items-center justify-between">
-                    <form method="POST" action="{{ route('settings.reset') }}" onsubmit="return confirm('Apakah Anda yakin ingin mereset pengaturan ke nilai default?');">
-                        @csrf
-                        <button type="submit"
-                                class="text-sm text-red-600 hover:text-red-800">
-                            Reset ke Default
-                        </button>
-                    </form>
+                <div class="bg-gray-50 px-4 sm:px-6 py-4">
+                    <div class="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-3">
+                        <form method="POST" action="{{ route('settings.reset') }}" onsubmit="return confirm('Apakah Anda yakin ingin mereset pengaturan ke nilai default?');" class="w-full sm:w-auto">
+                            @csrf
+                            <button type="submit"
+                                    class="w-full sm:w-auto text-sm text-red-600 hover:text-red-800 font-medium py-2 sm:py-0">
+                                Reset ke Default
+                            </button>
+                        </form>
 
-                    <button type="submit"
-                            class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition">
-                        Simpan Pengaturan
-                    </button>
+                        <button type="submit"
+                                class="w-full sm:w-auto px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition font-medium text-sm">
+                            Simpan Pengaturan
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -371,6 +384,12 @@ function switchTab(tabKey) {
 
     // Update current tab input
     document.getElementById('current_tab').value = tabKey;
+
+    // Update mobile select dropdown
+    const mobileSelect = document.getElementById('mobile-tab-select');
+    if (mobileSelect) {
+        mobileSelect.value = tabKey;
+    }
 
     // Find and activate the button
     const buttons = document.querySelectorAll('.tab-btn');
