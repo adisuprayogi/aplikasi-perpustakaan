@@ -1,0 +1,109 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - generic [ref=e4]:
+      - img [ref=e6]
+      - link "Perpustakaan Sistem Informasi" [ref=e9] [cursor=pointer]:
+        - /url: http://localhost:8000/dashboard
+        - img [ref=e11]
+        - generic [ref=e13]:
+          - text: Perpustakaan
+          - paragraph [ref=e14]: Sistem Informasi
+    - navigation [ref=e15]:
+      - generic [ref=e16]:
+        - link "Dashboard" [ref=e17] [cursor=pointer]:
+          - /url: http://localhost:8000/dashboard
+          - img [ref=e18]
+          - text: Dashboard
+        - generic [ref=e20]:
+          - button "Sirkulasi" [ref=e21]:
+            - generic [ref=e22]:
+              - img [ref=e23]
+              - text: Sirkulasi
+            - img [ref=e25]
+          - generic [ref=e27]:
+            - link "Daftar Peminjaman" [ref=e28] [cursor=pointer]:
+              - /url: http://localhost:8000/loans
+            - link "Peminjaman Baru" [ref=e29] [cursor=pointer]:
+              - /url: http://localhost:8000/loans/create
+            - link "Reservasi" [ref=e30] [cursor=pointer]:
+              - /url: http://localhost:8000/reservations
+        - paragraph [ref=e32]: Master Data
+        - link "Anggota" [ref=e33] [cursor=pointer]:
+          - /url: http://localhost:8000/members
+          - img [ref=e34]
+          - text: Anggota
+        - link "Koleksi" [ref=e36] [cursor=pointer]:
+          - /url: http://localhost:8000/collections
+          - img [ref=e37]
+          - text: Koleksi
+    - generic [ref=e41]:
+      - generic [ref=e42]: P
+      - generic [ref=e43]:
+        - paragraph [ref=e44]: Pustakawan FKIP
+        - paragraph [ref=e45]: Perpustakaan FKIP
+  - generic [ref=e46]:
+    - banner [ref=e47]:
+      - generic [ref=e49]:
+        - button [ref=e50]:
+          - img [ref=e51]
+        - button "P Pustakawan FKIP circulation_staff" [ref=e55]:
+          - generic [ref=e56]: P
+          - generic [ref=e57]:
+            - paragraph [ref=e58]: Pustakawan FKIP
+            - paragraph [ref=e59]: circulation_staff
+          - img [ref=e60]
+    - main [ref=e62]:
+      - generic [ref=e63]:
+        - generic [ref=e65]:
+          - generic [ref=e67]:
+            - img [ref=e69]
+            - generic [ref=e71]:
+              - heading "Peminjaman Baru" [level=1] [ref=e72]
+              - paragraph [ref=e73]: Input data peminjaman koleksi
+          - link "Kembali" [ref=e74] [cursor=pointer]:
+            - /url: http://localhost:8000/loans
+            - img [ref=e75]
+            - text: Kembali
+        - generic [ref=e77]:
+          - generic [ref=e79]:
+            - generic [ref=e80]:
+              - generic [ref=e81]:
+                - generic [ref=e82]: Cari Anggota
+                - generic [ref=e83]:
+                  - textbox "Cari Anggota" [ref=e84]:
+                    - /placeholder: No. Anggota atau NIK
+                  - img [ref=e85]
+              - generic [ref=e87]:
+                - generic [ref=e88]: Scan Barcode / Cari Item
+                - generic [ref=e89]:
+                  - textbox "Scan Barcode / Cari Item" [ref=e90]:
+                    - /placeholder: Scan barcode...
+                  - img [ref=e91]
+              - generic [ref=e93]:
+                - generic [ref=e94]: Branch Peminjaman
+                - combobox "Branch Peminjaman" [ref=e95]:
+                  - option "Pilih Branch" [selected]
+                  - option "Perpustakaan Fakultas Ekonomi"
+                  - option "Perpustakaan Fakultas Hukum"
+                  - option "Perpustakaan Fakultas Teknik"
+                  - option "Perpustakaan FKIP"
+                  - option "Perpustakaan Pusat"
+            - generic [ref=e96]:
+              - link "Batal" [ref=e97] [cursor=pointer]:
+                - /url: http://localhost:8000/loans
+              - button "Proses Peminjaman" [disabled] [ref=e98]
+          - generic [ref=e99]:
+            - generic [ref=e100]:
+              - heading "Periode Peminjaman" [level=3] [ref=e101]
+              - generic [ref=e102]:
+                - img [ref=e103]
+                - paragraph [ref=e105]: Pilih item untuk melihat periode
+            - generic [ref=e106]:
+              - heading "Status Anggota" [level=3] [ref=e107]
+              - generic [ref=e108]:
+                - img [ref=e109]
+                - paragraph [ref=e111]: Pilih anggota untuk melihat status
+```

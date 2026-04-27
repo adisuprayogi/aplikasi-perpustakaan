@@ -5,19 +5,24 @@ import { test, expect } from '@playwright/test';
  * Tests for collection management (CRUD operations)
  */
 
+const BASE_URL = process.env.BASE_URL || 'http://localhost:8000';
+
 // Helper function to login
 async function login(page) {
-  await page.goto('/login');
+  await page.goto(`${BASE_URL}/login`);
   await page.getByLabel('Email').fill('admin@library.test');
   await page.getByLabel('Password').fill('password123');
-  await page.getByRole('button', { name: /Masuk|Log/i }).click();
-  await expect(page).toHaveURL(/\/dashboard/);
+  await page.getByRole('button', { name: 'Masuk' }).click();
+  await page.waitForURL(/\/dashboard/, { timeout: 10000 });
+  await page.waitForLoadState('networkidle');
 }
 
 test.describe('Collections', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, context }) => {
+    // Clear all cookies and storage before each test
+    await context.clearCookies();
     await login(page);
-    await page.goto('/collections');
+    await page.goto(`${BASE_URL}/collections`);
   });
 
   test('should display collections list', async ({ page }) => {
@@ -60,7 +65,7 @@ test.describe('Collections', () => {
 
   test('should create new collection', async ({ page }) => {
     // Navigate to create page
-    await page.goto('/collections/create');
+    await page.goto(`${BASE_URL}/collections/create`);
 
     // Generate unique test data
     const timestamp = Date.now();
@@ -151,7 +156,7 @@ test.describe('Collection Edit', () => {
   });
 
   test('should edit existing collection', async ({ page }) => {
-    await page.goto('/collections');
+    await page.goto(`${BASE_URL}/collections`);
 
     // Find first collection with edit button
     const editButton = page.locator('a[href*="/collections/"]').filter({ hasText: /edit|ubah/i }).first();
@@ -185,7 +190,7 @@ test.describe('Collection Items', () => {
 
   test('should display collection items', async ({ page }) => {
     // Navigate to collections
-    await page.goto('/collections');
+    await page.goto(`${BASE_URL}/collections`);
 
     // Find first collection
     const firstCollection = page.locator('.collection-item, tbody tr').first();
@@ -214,7 +219,7 @@ test.describe('Collection Items', () => {
 
   test('should add new item to collection', async ({ page }) => {
     // Navigate to a collection detail page
-    await page.goto('/collections');
+    await page.goto(`${BASE_URL}/collections`);
 
     const firstCollection = page.locator('.collection-item, tbody tr').first();
     const hasCollections = await firstCollection.count() > 0;

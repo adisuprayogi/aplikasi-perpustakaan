@@ -27,7 +27,7 @@ async function login(page) {
   await page.goto('/login');
   await page.getByLabel('Email').fill(ADMIN_EMAIL);
   await page.getByLabel('Password').fill(ADMIN_PASSWORD);
-  await page.getByRole('button', { name: /Masuk|Log/i }).click();
+  await page.getByRole('button', { name: 'Masuk' }).click();
   await page.waitForURL(/\/dashboard/, { timeout: 5000 });
   await page.waitForLoadState('networkidle');
 }

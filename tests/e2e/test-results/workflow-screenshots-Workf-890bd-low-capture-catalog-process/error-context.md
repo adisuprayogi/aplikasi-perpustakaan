@@ -1,0 +1,354 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - generic [ref=e4]:
+      - img [ref=e6]
+      - link "Perpustakaan Sistem Informasi" [ref=e9] [cursor=pointer]:
+        - /url: http://localhost:8000/dashboard
+        - img [ref=e11]
+        - generic [ref=e13]:
+          - text: Perpustakaan
+          - paragraph [ref=e14]: Sistem Informasi
+    - navigation [ref=e15]:
+      - generic [ref=e16]:
+        - link "Dashboard" [ref=e17] [cursor=pointer]:
+          - /url: http://localhost:8000/dashboard
+          - img [ref=e18]
+          - text: Dashboard
+        - paragraph [ref=e21]: Master Data
+        - link "Koleksi" [ref=e22] [cursor=pointer]:
+          - /url: http://localhost:8000/collections
+          - img [ref=e23]
+          - text: Koleksi
+        - link "Perpustakaan Digital" [ref=e25] [cursor=pointer]:
+          - /url: http://localhost:8000/digital-files
+          - img [ref=e26]
+          - text: Perpustakaan Digital
+        - link "Repository" [ref=e28] [cursor=pointer]:
+          - /url: http://localhost:8000/repositories
+          - img [ref=e29]
+          - text: Repository
+    - generic [ref=e33]:
+      - generic [ref=e34]: C
+      - generic [ref=e35]:
+        - paragraph [ref=e36]: Catalog Staff
+        - paragraph [ref=e37]: Perpustakaan Pusat
+  - generic [ref=e38]:
+    - banner [ref=e39]:
+      - generic [ref=e41]:
+        - button [ref=e42]:
+          - img [ref=e43]
+        - button "C Catalog Staff catalog_staff" [ref=e47]:
+          - generic [ref=e48]: C
+          - generic [ref=e49]:
+            - paragraph [ref=e50]: Catalog Staff
+            - paragraph [ref=e51]: catalog_staff
+          - img [ref=e52]
+    - main [ref=e54]:
+      - generic [ref=e55]:
+        - generic [ref=e57]:
+          - generic [ref=e58]:
+            - heading "Tambah Koleksi Baru" [level=1] [ref=e59]
+            - paragraph [ref=e60]: Input data bibliografis koleksi
+          - link [ref=e61] [cursor=pointer]:
+            - /url: http://localhost:8000/collections
+            - img [ref=e62]
+        - generic [ref=e65]:
+          - generic [ref=e66]:
+            - generic [ref=e67]:
+              - heading "Informasi Dasar" [level=3] [ref=e68]
+              - generic [ref=e69]:
+                - generic [ref=e70]:
+                  - generic [ref=e71]: Judul
+                  - textbox "Judul" [active] [ref=e72]:
+                    - /placeholder: Judul lengkap koleksi
+                    - text: Test Book Title
+                - generic [ref=e73]:
+                  - generic [ref=e74]: Gambar Sampul
+                  - button "Gambar Sampul" [ref=e75]
+                  - paragraph [ref=e76]: "Format: JPG, PNG, WEBP. Maksimal 2MB"
+                - generic [ref=e77]:
+                  - generic [ref=e78]: Penulis
+                  - listbox "Penulis" [ref=e79]:
+                    - option "Pendidikan" [ref=e80]
+                    - option "Filsafat Pendidikan" [ref=e81]
+                    - option "Psikologi Pendidikan" [ref=e82]
+                    - option "Manajemen Pendidikan" [ref=e83]
+                    - option "Kurikulum" [ref=e84]
+                    - option "Metode Pembelajaran" [ref=e85]
+                    - option "Teknik" [ref=e86]
+                    - option "Teknik Mesin" [ref=e87]
+                    - option "Teknik Sipil" [ref=e88]
+                    - option "Teknik Elektro" [ref=e89]
+                    - option "Teknik Kimia" [ref=e90]
+                    - option "Teknik Industri" [ref=e91]
+                    - option "Teknik Lingkungan" [ref=e92]
+                    - option "Hukum" [ref=e93]
+                    - option "Hukum Pidana" [ref=e94]
+                    - option "Hukum Perdata" [ref=e95]
+                    - option "Hukum Internasional" [ref=e96]
+                    - option "Hukum Administrasi" [ref=e97]
+                    - option "Hukum Bisnis" [ref=e98]
+                    - option "Ekonomi" [ref=e99]
+                    - option "Ekonomi Makro" [ref=e100]
+                    - option "Ekonomi Mikro" [ref=e101]
+                    - option "Ekonomi Pembangunan" [ref=e102]
+                    - option "Akuntansi" [ref=e103]
+                    - option "Manajemen" [ref=e104]
+                    - option "Pemasaran" [ref=e105]
+                    - option "Keuangan" [ref=e106]
+                    - option "Manajemen SDM" [ref=e107]
+                    - option "Sains" [ref=e108]
+                    - option "Matematika" [ref=e109]
+                    - option "Fisika" [ref=e110]
+                    - option "Kimia" [ref=e111]
+                    - option "Biologi" [ref=e112]
+                    - option "Ilmu Kebumian" [ref=e113]
+                    - option "Ilmu Komputer" [ref=e114]
+                    - option "Sastra" [ref=e115]
+                    - option "Sastra Indonesia" [ref=e116]
+                    - option "Sastra Inggris" [ref=e117]
+                    - option "Sastra Arab" [ref=e118]
+                    - option "Sastra Jepang" [ref=e119]
+                    - option "Teknologi" [ref=e120]
+                    - option "Teknologi Informasi" [ref=e121]
+                    - option "Kecerdasan Buatan" [ref=e122]
+                    - option "Sains Data" [ref=e123]
+                    - option "Computing Awan" [ref=e124]
+                    - option "Ilmu Sosial" [ref=e125]
+                    - option "Sosiologi" [ref=e126]
+                    - option "Psikologi" [ref=e127]
+                    - option "Antropologi" [ref=e128]
+                    - option "Ilmu Politik" [ref=e129]
+                    - option "Ilmu Komunikasi" [ref=e130]
+                    - option "Agama" [ref=e131]
+                    - option "Studi Islam" [ref=e132]
+                    - option "Studi Kristen" [ref=e133]
+                    - option "Studi Hindu" [ref=e134]
+                    - option "Studi Buddha" [ref=e135]
+                    - option "Seni" [ref=e136]
+                    - option "Seni Rupa" [ref=e137]
+                    - option "Musik" [ref=e138]
+                    - option "Teater" [ref=e139]
+                    - option "Tari" [ref=e140]
+                  - paragraph [ref=e141]: Hold Ctrl/Cmd untuk memilih multiple
+                - generic [ref=e142]:
+                  - generic [ref=e143]: ISBN
+                  - textbox "ISBN" [ref=e144]:
+                    - /placeholder: 978-...
+                - generic [ref=e145]:
+                  - generic [ref=e146]: ISSN
+                  - textbox "ISSN" [ref=e147]:
+                    - /placeholder: ...
+                - generic [ref=e148]:
+                  - generic [ref=e149]: Penerbit
+                  - combobox "Penerbit" [ref=e150]:
+                    - option "Pilih Penerbit" [selected]
+                    - option "Erlangga"
+                    - option "Gramedia Pustaka Utama"
+                    - option "Penerbit Universitas Indonesia"
+                    - option "Prenada Media"
+                    - option "Raja Grafindo Persada"
+                    - option "Salemba Empat"
+                    - option "Bumi Aksara"
+                    - option "PT Remaja Rosdakarya"
+                    - option "Pustaka Pelajar"
+                    - option "Andi Offset"
+                    - option "Gadjah Mada University Press"
+                    - option "Pearson Education"
+                    - option "McGraw-Hill Education"
+                    - option "Springer"
+                    - option "Elsevier"
+                    - option "Cambridge University Press"
+                    - option "Oxford University Press"
+                    - option "Wiley"
+                    - option "Routledge"
+                    - option "Taylor & Francis"
+                - generic [ref=e151]:
+                  - generic [ref=e152]: Tahun Terbit
+                  - spinbutton "Tahun Terbit" [ref=e153]
+                - generic [ref=e154]:
+                  - generic [ref=e155]: Edisi
+                  - textbox "Edisi" [ref=e156]:
+                    - /placeholder: Edisi 1
+                - generic [ref=e157]:
+                  - generic [ref=e158]: Jumlah Halaman
+                  - spinbutton "Jumlah Halaman" [ref=e159]
+                - generic [ref=e160]:
+                  - generic [ref=e161]: Bahasa
+                  - textbox "Bahasa" [ref=e162]:
+                    - /placeholder: Indonesia
+                    - text: Indonesia
+            - generic [ref=e163]:
+              - heading "Klasifikasi" [level=3] [ref=e164]
+              - generic [ref=e165]:
+                - generic [ref=e166]:
+                  - generic [ref=e167]: Tipe Koleksi
+                  - combobox "Tipe Koleksi" [ref=e168]:
+                    - option "Pilih Tipe" [selected]
+                    - option "Buku Teks (BK)"
+                    - option "Referensi (REF)"
+                    - option "Jurnal Ilmiah (JN)"
+                    - option "Skripsi/Tesis/Disertasi (SK)"
+                    - option "Multimedia (MM)"
+                    - option "Peta (PM)"
+                    - option "Naskah Publikasi (NP)"
+                    - option "Karya Seni (KS)"
+                - generic [ref=e169]:
+                  - generic [ref=e170]: Klasifikasi DDC
+                  - combobox "Klasifikasi DDC" [ref=e171]:
+                    - option "Pilih Klasifikasi" [selected]
+                    - option "000 - Karya Umum"
+                    - option "100 - Filsafat & Psikologi"
+                    - option "200 - Agama"
+                    - option "300 - Ilmu Sosial"
+                    - option "340 - Hukum"
+                    - option "341 - Hukum Internasional"
+                    - option "345 - Hukum Pidana"
+                    - option "346 - Hukum Perdata"
+                    - option "370 - Pendidikan"
+                    - option "370.1 - Filsafat Pendidikan"
+                    - option "370.15 - Psikologi Pendidikan"
+                    - option "371 - Manajemen Sekolah"
+                    - option "371.3 - Metode Pengajaran"
+                    - option "372 - Pendidikan Dasar"
+                    - option "400 - Bahasa"
+                    - option "500 - Sains"
+                    - option "510 - Matematika"
+                    - option "530 - Fisika"
+                    - option "540 - Kimia"
+                    - option "550 - Ilmu Kebumian"
+                    - option "570 - Biologi"
+                    - option "600 - Teknologi"
+                    - option "620 - Teknik Rekayasa"
+                    - option "621 - Teknik Mesin"
+                    - option "624 - Teknik Sipil"
+                    - option "629 - Teknik Elektro"
+                    - option "657 - Akuntansi"
+                    - option "658 - Manajemen"
+                    - option "700 - Seni & Rekreasi"
+                    - option "800 - Sastra"
+                    - option "810 - Sastra Amerika"
+                    - option "820 - Sastra Inggris"
+                    - option "899 - Sastra Indonesia"
+                    - option "900 - Sejarah & Geografi"
+                - generic [ref=e172]:
+                  - generic [ref=e173]: GMD
+                  - combobox "GMD" [ref=e174]:
+                    - option "Pilih GMD" [selected]
+                    - option "Buku Teks"
+                    - option "Teks"
+                    - option "Jurnal"
+                    - option "Majalah"
+                    - option "Naskah"
+                    - option "CD-ROM"
+                    - option "DVD"
+                    - option "VCD"
+                    - option "Blu-ray"
+                    - option "Videokaset"
+                    - option "Audio Kaset"
+                    - option "Audio CD"
+                    - option "File Audio"
+                    - option "Peta"
+                    - option "Globe"
+                    - option "Bagan/Chart"
+                    - option "Karya Seni"
+                    - option "Foto"
+                    - option "Slide"
+                    - option "Film"
+                    - option "Model"
+                    - option "Kit"
+                    - option "Mikrofilm"
+                    - option "File Komputer"
+                    - option "E-Book"
+                    - option "Sumber Daya Internet"
+                    - option "Lainnya"
+            - generic [ref=e175]:
+              - generic [ref=e176]: Subjek
+              - listbox "Subjek" [ref=e177]:
+                - option "Pendidikan" [ref=e178]
+                - option "Filsafat Pendidikan" [ref=e179]
+                - option "Psikologi Pendidikan" [ref=e180]
+                - option "Manajemen Pendidikan" [ref=e181]
+                - option "Kurikulum" [ref=e182]
+                - option "Metode Pembelajaran" [ref=e183]
+                - option "Teknik" [ref=e184]
+                - option "Teknik Mesin" [ref=e185]
+                - option "Teknik Sipil" [ref=e186]
+                - option "Teknik Elektro" [ref=e187]
+                - option "Teknik Kimia" [ref=e188]
+                - option "Teknik Industri" [ref=e189]
+                - option "Teknik Lingkungan" [ref=e190]
+                - option "Hukum" [ref=e191]
+                - option "Hukum Pidana" [ref=e192]
+                - option "Hukum Perdata" [ref=e193]
+                - option "Hukum Internasional" [ref=e194]
+                - option "Hukum Administrasi" [ref=e195]
+                - option "Hukum Bisnis" [ref=e196]
+                - option "Ekonomi" [ref=e197]
+                - option "Ekonomi Makro" [ref=e198]
+                - option "Ekonomi Mikro" [ref=e199]
+                - option "Ekonomi Pembangunan" [ref=e200]
+                - option "Akuntansi" [ref=e201]
+                - option "Manajemen" [ref=e202]
+                - option "Pemasaran" [ref=e203]
+                - option "Keuangan" [ref=e204]
+                - option "Manajemen SDM" [ref=e205]
+                - option "Sains" [ref=e206]
+                - option "Matematika" [ref=e207]
+                - option "Fisika" [ref=e208]
+                - option "Kimia" [ref=e209]
+                - option "Biologi" [ref=e210]
+                - option "Ilmu Kebumian" [ref=e211]
+                - option "Ilmu Komputer" [ref=e212]
+                - option "Sastra" [ref=e213]
+                - option "Sastra Indonesia" [ref=e214]
+                - option "Sastra Inggris" [ref=e215]
+                - option "Sastra Arab" [ref=e216]
+                - option "Sastra Jepang" [ref=e217]
+                - option "Teknologi" [ref=e218]
+                - option "Teknologi Informasi" [ref=e219]
+                - option "Kecerdasan Buatan" [ref=e220]
+                - option "Sains Data" [ref=e221]
+                - option "Computing Awan" [ref=e222]
+                - option "Ilmu Sosial" [ref=e223]
+                - option "Sosiologi" [ref=e224]
+                - option "Psikologi" [ref=e225]
+                - option "Antropologi" [ref=e226]
+                - option "Ilmu Politik" [ref=e227]
+                - option "Ilmu Komunikasi" [ref=e228]
+                - option "Agama" [ref=e229]
+                - option "Studi Islam" [ref=e230]
+                - option "Studi Kristen" [ref=e231]
+                - option "Studi Hindu" [ref=e232]
+                - option "Studi Buddha" [ref=e233]
+                - option "Seni" [ref=e234]
+                - option "Seni Rupa" [ref=e235]
+                - option "Musik" [ref=e236]
+                - option "Teater" [ref=e237]
+                - option "Tari" [ref=e238]
+              - paragraph [ref=e239]: Hold Ctrl/Cmd untuk memilih multiple
+            - generic [ref=e240]:
+              - generic [ref=e241]: Abstrak
+              - textbox "Abstrak" [ref=e242]:
+                - /placeholder: Ringkasan isi koleksi
+            - generic [ref=e243]:
+              - generic [ref=e244]: Deskripsi
+              - textbox "Deskripsi" [ref=e245]:
+                - /placeholder: Deskripsi lengkap
+            - generic [ref=e246]:
+              - heading "Item / Copy" [level=3] [ref=e247]
+              - generic [ref=e248]:
+                - generic [ref=e249]:
+                  - generic [ref=e250]: Jumlah Copy
+                  - spinbutton "Jumlah Copy" [ref=e251]: "1"
+                - generic [ref=e252]:
+                  - generic [ref=e253]: Harga
+                  - spinbutton "Harga" [ref=e254]
+          - generic [ref=e255]:
+            - link "Batal" [ref=e256] [cursor=pointer]:
+              - /url: http://localhost:8000/collections
+            - button "Simpan Koleksi" [ref=e257]
+```

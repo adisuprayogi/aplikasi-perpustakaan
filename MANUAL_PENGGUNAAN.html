@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panduan Penggunaan Aplikasi Perpustakaan</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+            color: #333;
+            background: white;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px 0;
+        }
+
+        h1 {
+            color: #1e40af;
+            border-bottom: 3px solid #1e40af;
+            padding-bottom: 10px;
+            page-break-after: avoid;
+            font-size: 2em;
+        }
+
+        h2 {
+            color: #1e40af;
+            margin-top: 50px;
+            page-break-after: avoid;
+            font-size: 1.5em;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #3b82f6;
+            margin-top: 30px;
+            page-break-after: avoid;
+            font-size: 1.3em;
+        }
+
+        h4 {
+            color: #64748b;
+            margin-top: 20px;
+            page-break-after: avoid;
+            font-size: 1.1em;
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #e5e7eb;
+            margin: 30px 0;
+        }
+
+        .toc {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+            border: 1px solid #e2e8f0;
+        }
+
+        .toc h2 {
+            margin-top: 0;
+            color: #1e40af;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .toc li {
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .toc li:last-child {
+            border-bottom: none;
+        }
+
+        .toc a {
+            color: #3b82f6;
+            text-decoration: none;
+            display: block;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        .toc ul ul {
+            padding-left: 25px;
+            margin-top: 8px;
+        }
+
+        .toc ul ul li {
+            border-bottom: none;
+            padding: 4px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            page-break-inside: avoid;
+            font-size: 0.95em;
+        }
+
+        th {
+            background: #1e40af;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 10px 12px;
+            border: 1px solid #e5e7eb;
+        }
+
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        code {
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin: 0 2px;
+        }
+
+        .badge-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .badge-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .badge-warning {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 5px;
+        }
+
+        .screenshot-container {
+            margin: 30px 0;
+            page-break-inside: avoid;
+        }
+
+        .screenshot-container img {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .screenshot-caption {
+            font-style: italic;
+            color: #64748b;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .info-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .info-box.info {
+            background: #dbeafe;
+            border-left-color: #3b82f6;
+        }
+
+        .step {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #3b82f6;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .step h4 {
+            margin-top: 0;
+            color: #3b82f6;
+        }
+
+        @media print {
+            body {
+                padding: 20px;
+            }
+
+            h1, h2, h3, h4 {
+                page-break-after: avoid;
+            }
+
+            table {
+                page-break-inside: avoid;
+            }
+
+            .screenshot-container {
+                page-break-inside: avoid;
+            }
+
+            .step {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>PANDUAN PENGGUNAAN APLIKASI PERPUSTAKAAN</h1>
+    <div class="subtitle">Untuk Anggota Perpustakaan</div>
+    <hr>
+
+    <div class="toc">
+        <h2>Daftar Isi</h2>
+        <ul>
+            <li><a href="#pendahuluan">1. Pendahuluan</a></li>
+            <li><a href="#fitur-publik-tanpa-login">2. Fitur Publik (Tanpa Login)</a>
+                <ul>
+                    <li><a href="#opac---pencarian-buku">OPAC - Pencarian Buku</a></li>
+                    <li><a href="#perpustakaan-digital">Perpustakaan Digital</a></li>
+                    <li><a href="#repository-institusi">Repository Institusi</a></li>
+                </ul>
+            </li>
+            <li><a href="#login--registrasi">3. Login & Registrasi</a></li>
+            <li><a href="#dashboard">4. Dashboard</a></li>
+            <li><a href="#peminjaman-saya">5. Peminjaman Saya</a></li>
+            <li><a href="#reservasi-buku">6. Reservasi Buku</a></li>
+            <li><a href="#profil-saya">7. Profil Saya</a></li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <h2 id="pendahuluan">Pendahuluan</h2>
+    <p>Selamat datang di <strong>Aplikasi Perpustakaan Digital</strong>!</p>
+    <p>Aplikasi ini memungkinkan Anda untuk:</p>
+    <ul>
+        <li><span class="emoji">🔍</span> Mencari dan menelusuri koleksi buku secara online</li>
+        <li><span class="emoji">📚</span> Meminjam buku fisik dari perpustakaan</li>
+        <li><span class="emoji">📝</span> Mereservasi buku yang sedang dipinjam</li>
+        <li><span class="emoji">📊</span> Memantau riwayat peminjaman Anda</li>
+        <li><span class="emoji">📁</span> Mengakses perpustakaan digital (e-book, jurnal)</li>
+        <li><span class="emoji">📦</span> Mengakses repository institusi (skripsi, tesis)</li>
+    </ul>
+
+    <hr>
+
+    <h2 id="fitur-publik-tanpa-login">Fitur Publik (Tanpa Login)</h2>
+
+    <h3 id="opac---pencarian-buku">OPAC - Pencarian Buku</h3>
+    <p>OPAC (Online Public Access Catalog) adalah katalog online untuk mencari koleksi buku tanpa perlu login.</p>
+
+    <div class="screenshot-container">
+        <img src="screenshots/public/opac.png" alt="OPAC - Halaman Pencarian Buku" loading="lazy">
+        <div class="screenshot-caption">Gambar: Tampilan Halaman OPAC</div>
+    </div>
+
+    <h4>Cara Mencari Buku</h4>
+    <div class="step">
+        <h4>Langkah 1: Buka Halaman OPAC</h4>
+        <p>Kunjungi <code>https://library.tazkia.ac.id/opac</code></p>
+    </div>
+    <div class="step">
+        <h4>Langkah 2: Ketik Kata Kunci</h4>
+        <p>Masukkan judul, penulis, atau kata kunci di kotak pencarian</p>
+    </div>
+    <div class="step">
+        <h4>Langkah 3: Klik Cari</h4>
+        <p>Klik tombol <strong>Cari</strong> atau tekan Enter</p>
+    </div>
+
+    <div class="screenshot-container">
+        <img src="screenshots/public/opac-search.png" alt="OPAC - Hasil Pencarian" loading="lazy">
+        <div class="screenshot-caption">Gambar: Tampilan Hasil Pencarian Buku</div>
+    </div>
+
+    <h4>Hasil Pencarian Menampilkan:</h4>
+    <ul>
+        <li><strong>Judul buku</strong> - Judul lengkap buku</li>
+        <li><strong>Penulis</strong> - Nama penulis/pengarang</li>
+        <li><strong>Penerbit</strong> - Nama penerbit</li>
+        <li><strong>Tahun</strong> - Tahun terbit</li>
+        <li><strong>Status</strong> - Ketersediaan (Tersedia/Dipinjam)</li>
+    </ul>
+
+    <h3 id="perpustakaan-digital">Perpustakaan Digital</h3>
+    <p>Perpustakaan Digital menyediakan akses ke koleksi digital seperti e-book, jurnal, skripsi, dan tesis.</p>
+
+    <div class="screenshot-container">
+        <img src="screenshots/public/digital-library.png" alt="Perpustakaan Digital" loading="lazy">
+        <div class="screenshot-caption">Gambar: Tampilan Perpustakaan Digital</div>
+    </div>
+
+    <h4>Menelusuri Koleksi Digital:</h4>
+    <ol>
+        <li>Buka halaman <strong>Perpustakaan Digital</strong></li>
+        <li>Koleksi ditampilkan dalam bentuk grid</li>
+        <li>Gunakan <strong>Filter</strong> untuk menyaring kategori dan tipe file</li>
+    </ol>
+
+    <h4>Membaca/Download File:</h4>
+    <ol>
+        <li>Klik pada file yang diinginkan</li>
+        <li>Pilih <strong>Preview</strong> untuk baca langsung di browser</li>
+        <li>Atau pilih <strong>Download</strong> untuk simpan ke perangkat Anda</li>
+    </ol>
+
+    <h3 id="repository-institusi">Repository Institusi</h3>
+    <p>Repository menyimpan karya ilmiah mahasiswa, dosen, dan staf.</p>
+
+    <div class="screenshot-container">
+        <img src="screenshots/public/repository.png" alt="Repository Institusi" loading="lazy">
+        <div class="screenshot-caption">Gambar: Tampilan Repository Institusi</div>
+    </div>
+
+    <h4>Mencari Dokumen:</h4>
+    <ol>
+        <li>Buka halaman <strong>Repository</strong></li>
+        <li>Ketik judul, penulis, atau kata kunci</li>
+        <li>Klik <strong>Cari</strong></li>
+    </ol>
+
+    <hr>
+
+    <h2 id="login--registrasi">Login & Registrasi</h2>
+
+    <div class="screenshot-container">
+        <img src="screenshots/public/login.png" alt="Halaman Login" loading="lazy">
+        <div class="screenshot-caption">Gambar: Halaman Login Aplikasi</div>
+    </div>
+
+    <h4>Cara Login:</h4>
+    <ol>
+        <li>Buka halaman Login</li>
+        <li>Masukkan <strong>Email</strong> yang terdaftar</li>
+        <li>Masukkan <strong>Password</strong></li>
+        <li>Klik tombol <strong>Masuk</strong></li>
+    </ol>
+
+    <div class="info-box info">
+        <strong>Lupa Password?</strong><br>
+        Klik link <strong>"Lupa Password?"</strong> di halaman login untuk reset password.
+    </div>
+
+    <hr>
+
+    <h2 id="dashboard">Dashboard</h2>
+    <p>Setelah login, Anda akan diarahkan ke <strong>Dashboard</strong>.</p>
+
+    <p>Dashboard memberikan informasi cepat:</p>
+    <ul>
+        <li><span class="emoji">📚</span> <strong>Buku Dipinjam</strong> - Jumlah buku yang sedang dipinjam</li>
+        <li><span class="emoji">📅</span> <strong>Jatuh Tempo</strong> - Tanggal pengembalian paling dekat</li>
+        <li><span class="emoji">⚠️</span> <strong>Terlambat</strong> - Jumlah buku terlambat (jika ada)</li>
+        <li><span class="emoji">💰</span> <strong>Denda</strong> - Total denda yang harus dibayar (jika ada)</li>
+    </ul>
+
+    <hr>
+
+    <h2 id="peminjaman-saya">Peminjaman Saya</h2>
+    <p>Lihat daftar buku yang sedang dan pernah Anda pinjam.</p>
+
+    <h4>Mengakses Peminjaman Saya:</h4>
+    <ol>
+        <li>Klik menu <strong>Peminjaman</strong> di sidebar</li>
+        <li>Daftar peminjaman ditampilkan dengan tab:
+            <ul>
+                <li><strong>Aktif</strong> - Buku yang sedang dipinjam</li>
+                <li><strong>Riwayat</strong> - Buku yang sudah dikembalikan</li>
+            </ul>
+        </li>
+    </ol>
+
+    <h4>Informasi Peminjaman Aktif:</h4>
+    <ul>
+        <li><span class="emoji">📖</span> <strong>Judul Buku</strong></li>
+        <li><span class="emoji">📅</span> <strong>Tanggal Pinjam</strong></li>
+        <li><span class="emoji">⏰</span> <strong>Jatuh Tempo</strong> - Batas pengembalian</li>
+        <li><span class="emoji">📍</span> <strong>Lokasi</strong> - Cabang perpustakaan</li>
+        <li><span class="emoji">🔁</span> <strong>Jumlah Perpanjangan</strong></li>
+        <li><span class="emoji">⚠️</span> <strong>Status</strong> - Aktif / Terlambat</li>
+    </ul>
+
+    <h4>Memperpanjang Peminjaman:</h4>
+    <ol>
+        <li>Buka halaman <strong>Peminjaman</strong></li>
+        <li>Cari buku yang ingin diperpanjang</li>
+        <li>Klik tombol <strong>Perpanjang</strong></li>
+        <li>Sistem akan menghitung tanggal baru</li>
+    </ol>
+
+    <div class="info-box">
+        <strong>Syarat Perpanjangan:</strong><br>
+        • Maksimal 2x perpanjangan<br>
+        • Tidak ada anggota lain yang memesan<br>
+        • Tidak terlambat mengembalikan
+    </div>
+
+    <hr>
+
+    <h2 id="reservasi-buku">Reservasi Buku</h2>
+    <p>Reservasi adalah memesan buku yang sedang tidak tersedia.</p>
+
+    <h4>Membuat Reservasi:</h4>
+    <ol>
+        <li>Cari buku yang ingin direservasi melalui OPAC</li>
+        <li>Pastikan status buku <strong>"Dipinjam"</strong></li>
+        <li>Klik tombol <strong>Reservasi</strong></li>
+        <li>Sistem akan mengkonfirmasi</li>
+    </ol>
+
+    <h4>Status Reservasi:</h4>
+    <ul>
+        <li><span class="badge badge-warning">🟡 Menunggu</span> - Masih dalam antrian</li>
+        <li><span class="badge badge-success">🔵 Tersedia</span> - Buku sudah kembali</li>
+        <li><span class="badge badge-success">✅ Selesai</span> - Sudah diambil</li>
+        <li><span class="badge badge-danger">❌ Dibatalkan</span> - Reservasi dibatalkan</li>
+    </ul>
+
+    <div class="info-box info">
+        <strong>Batas Waktu Pengambilan:</strong> 3 hari setelah status "Tersedia". Jika tidak diambil, reservasi otomatis dibatalkan.
+    </div>
+
+    <hr>
+
+    <h2 id="profil-saya">Profil Saya</h2>
+    <p>Kelola informasi profil dan akun Anda.</p>
+
+    <h4>Mengedit Profil:</h4>
+    <ol>
+        <li>Klik foto profil di pojok kanan atas</li>
+        <li>Klik <strong>Profil</strong></li>
+        <li>Klik <strong>Edit Profil</strong></li>
+        <li>Update informasi (nama, email, telepon, alamat)</li>
+        <li>Klik <strong>Simpan</strong></li>
+    </ol>
+
+    <h4>Mengubah Password:</h4>
+    <ol>
+        <li>Buka halaman <strong>Profil</strong></li>
+        <li>Scroll ke bagian <strong>Password</strong></li>
+        <li>Masukkan password lama dan baru</li>
+        <li>Klik <strong>Simpan</strong></li>
+    </ol>
+
+    <hr>
+
+    <h2 id="faq">FAQ - Pertanyaan Umum</h2>
+
+    <h3>Tentang Peminjaman</h3>
+    <p><strong>Q: Berapa lama masa peminjaman?</strong><br>
+    A: Mahasiswa 7 hari, Dosen 14 hari, Staf 7 hari</p>
+
+    <p><strong>Q: Apakah ada denda keterlambatan?</strong><br>
+    A: Ya, Rp 1.000 per hari per buku</p>
+
+    <h3>Tentang Reservasi</h3>
+    <p><strong>Q: Berapa lama saya harus menunggu?</strong><br>
+    A: Tergantung peminjam sebelumnya, biasanya 7-14 hari</p>
+
+    <hr>
+
+    <div class="info-box info">
+        <strong>Bantuan & Kontak</strong><br><br>
+        📍 Perpustakaan Tazkia<br>
+        📧 library@tazkia.ac.id<br>
+        📞 (0352) 1234567<br>
+        💬 0812-3456-7890<br><br>
+        ⏰ Jam Operasional:<br>
+        Senin - Jumat: 08.00 - 16.00 WIB<br>
+        Sabtu: 08.00 - 12.00 WIB
+    </div>
+
+    <hr>
+
+    <p style="text-align: center; color: #64748b; font-style: italic;">
+        Terakhir diperbarui: 2 Februari 2026<br>
+        Versi: 1.0
+    </p>
+
+    <p style="text-align: center; color: #64748b;">
+        © 2026 Perpustakaan Tazkia. All rights reserved.
+    </p>
+
+</body>
+</html>

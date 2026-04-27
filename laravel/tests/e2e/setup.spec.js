@@ -31,15 +31,15 @@ test.describe('Application Setup', () => {
   test('should display digital library page', async ({ page }) => {
     await page.goto('/digital-library');
 
-    // Check page loads
-    await expect(page.getByText(/Perpustakaan Digital|Digital Library/i)).toBeVisible();
+    // Check page loads - use h1 heading for more specific selector
+    await expect(page.getByRole('heading', { name: 'Perpustakaan Digital' })).toBeVisible();
   });
 
   test('should display repository page', async ({ page }) => {
     await page.goto('/repository');
 
-    // Check page loads
-    await expect(page.getByText(/Repository|Institutional/i)).toBeVisible();
+    // Check page loads - use h1 heading for more specific selector
+    await expect(page.getByRole('heading', { name: 'Institutional Repository' })).toBeVisible();
   });
 
   test('should display login page', async ({ page }) => {
@@ -51,7 +51,7 @@ test.describe('Application Setup', () => {
     // Check form elements
     await expect(page.getByLabel('Email')).toBeVisible();
     await expect(page.getByLabel('Password')).toBeVisible();
-    await expect(page.getByRole('button', { name: /Masuk|Log in/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Masuk' })).toBeVisible();
   });
 
   test('should be responsive on mobile viewport', async ({ page }) => {

@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Manual Aplikasi Perpustakaan</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    body {
+      font-family: Arial, 'Segoe UI', sans-serif;
+      font-size: 10pt;
+      line-height: 1.5;
+      color: #1f2937;
+      background: #fff;
+    }
+
+    .content-page {
+      position: relative;
+      padding: 60px 20mm 40px 20mm;
+      min-height: 750px;
+      page-break-after: always;
+    }
+
+    .content-page::before {
+      content: 'Manual Aplikasi Perpustakaan';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 30px;
+      background: #f8fafc;
+      border-bottom: 2px solid #1e40af;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20mm;
+      font-size: 8px;
+      font-weight: 600;
+      color: #1e40af;
+      z-index: 1000;
+    }
+
+    .content-page::after {
+      content: '© 2026 Perpustakaan';
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 25px;
+      background: #f8fafc;
+      border-top: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 7px;
+      color: #6b7280;
+      z-index: 1000;
+    }
+
+    .title-page {
+      text-align: center;
+      padding: 100px 30px;
+      min-height: 800px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      page-break-after: always;
+    }
+
+    .main-title {
+      font-family: Georgia, serif;
+      font-size: 32pt;
+      font-weight: 700;
+      color: #1e40af;
+      margin-bottom: 20px;
+    }
+
+    .subtitle {
+      font-size: 14pt;
+      color: #6b7280;
+      margin-bottom: 30px;
+    }
+
+    .version {
+      background: #1e40af;
+      color: white;
+      padding: 10px 25px;
+      border-radius: 25px;
+      font-size: 11pt;
+      font-weight: 600;
+      margin: 15px 0;
+    }
+
+    .date {
+      font-size: 10pt;
+      color: #9ca3af;
+      margin-top: 20px;
+    }
+
+    h2.section-title {
+      font-family: Georgia, serif;
+      font-size: 18pt;
+      font-weight: 700;
+      color: #1e40af;
+      margin: 15px 0 15px 0;
+      padding-bottom: 10px;
+      border-bottom: 3px solid #1e40af;
+      page-break-after: avoid;
+    }
+
+    .content-page > h2.section-title:first-child {
+      margin-top: 10px;
+    }
+
+    .section-num {
+      display: inline-block;
+      background: #1e40af;
+      color: white;
+      width: 32px;
+      height: 32px;
+      line-height: 32px;
+      text-align: center;
+      border-radius: 50%;
+      font-size: 13pt;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    .section-text {
+      vertical-align: middle;
+    }
+
+    h3.subsection-title {
+      font-size: 13pt;
+      font-weight: 600;
+      color: #1e3a8a;
+      margin: 20px 0 10px 0;
+      padding-left: 12px;
+      border-left: 4px solid #1e40af;
+      page-break-after: avoid;
+    }
+
+    p.content {
+      margin-bottom: 12px;
+      text-align: justify;
+      line-height: 1.6;
+    }
+
+    /* Add spacing after lists */
+    ul.feature-list + p.content {
+      margin-top: 12px;
+    }
+
+    /* Add spacing before subsections */
+    p.content + h3.subsection-title {
+      margin-top: 18px;
+    }
+
+    /* Add spacing after subsections */
+    h3.subsection-title + p.content {
+      margin-top: 8px;
+    }
+
+    ul.feature-list {
+      margin: 12px 0 12px 20px;
+      list-style: none;
+    }
+
+    ul.feature-list li {
+      position: relative;
+      margin-bottom: 10px;
+      padding-left: 22px;
+      line-height: 1.5;
+    }
+
+    ul.feature-list li:before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #1e40af;
+      font-weight: 700;
+    }
+
+    figure.screenshot {
+      display: block;
+      margin: 20px 0 25px 0;
+      text-align: center;
+      page-break-inside: avoid;
+    }
+
+    figure.screenshot img {
+      display: block;
+      max-width: 100%;
+      max-height: 500px;
+      height: auto;
+      margin: 0 auto;
+      border: 2px solid #d1d5db;
+      border-radius: 8px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    figure.screenshot figcaption {
+      display: block;
+      margin-top: 12px;
+      margin-bottom: 8px;
+      font-size: 9pt;
+      color: #6b7280;
+      font-style: italic;
+    }
+
+    /* Add spacing after images */
+    figure.screenshot + p.content {
+      margin-top: 15px;
+    }
+
+    figure.screenshot + h3.subsection-title {
+      margin-top: 20px;
+    }
+
+    code {
+      background: #f3f4f6;
+      color: #dc2626;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+      font-weight: 600;
+    }
+
+    a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    strong {
+      color: #1e40af;
+      font-weight: 600;
+    }
+
+    .doc-footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 2px solid #e5e7eb;
+      text-align: center;
+      font-size: 9pt;
+      color: #6b7280;
+    }
+
+    .doc-footer p {
+      margin: 8px 0;
+    }
+
+    @media print {
+      .content-page {
+        break-after: always;
+      }
+      figure.screenshot {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="title-page">
+        <h1 class="main-title">Manual Aplikasi Perpustakaan</h1>
+        <p class="subtitle">Library Management System - User Guide</p>
+        <div class="version">Versi 1.0.0</div>
+        <div class="date">3 Februari 2026</div>
+      </div><div class="content-page">
+</div><div class="content-page"><h2 class="section-title"><span class="section-num">1</span><span class="section-text">Library Management System - User Guide</span></h2>
+<br>
+<p class="content">---</p>
+<br>
+</div><div class="content-page"><h2 class="section-title"><span class="section-num">2</span><span class="section-text">Table of Contents</span></h2>
+<br>
+<p class="content">1. <a href="#pendahuluan" target="_blank">Pendahuluan</a></p>
+<p class="content">2. <a href="#halaman-publik-opac" target="_blank">Halaman Publik (OPAC)</a></p>
+<p class="content">3. <a href="#login" target="_blank">Login</a></p>
+<p class="content">4. <a href="#dashboard-admin" target="_blank">Dashboard Admin</a></p>
+<p class="content">5. <a href="#manajemen-koleksi" target="_blank">Manajemen Koleksi</a></p>
+<p class="content">6. <a href="#manajemen-anggota" target="_blank">Manajemen Anggota</a></p>
+<p class="content">7. <a href="#sirkulasi-peminjaman" target="_blank">Sirkulasi (Peminjaman)</a></p>
+<p class="content">8. <a href="#laporan" target="_blank">Laporan</a></p>
+<p class="content">9. <a href="#perpustakaan-digital" target="_blank">Perpustakaan Digital</a></p>
+<p class="content">10. <a href="#repositori-institusi" target="_blank">Repositori Institusi</a></p>
+<p class="content">11. <a href="#pengaturan" target="_blank">Pengaturan</a></p>
+<p class="content">12. <a href="#tampilan-mobile" target="_blank">Tampilan Mobile</a></p>
+<br>
+<p class="content">---</p>
+<br>
+</div><div class="content-page"><h2 class="section-title"><span class="section-num">3</span><span class="section-text">Pendahuluan</span></h2>
+<br>
+<p class="content">Aplikasi Perpustakaan adalah sistem manajemen perpustakaan terpadu yang mencakup:</p>
+<ul class="feature-list"><li><strong>OPAC (Online Public Access Catalog)</strong> - Katalog publik untuk pencarian koleksi</li><li><strong>Sirkulasi</strong> - Manajemen peminjaman dan pengembalian</li><li><strong>Manajemen Koleksi</strong> - Pengelolaan buku dan item perpustakaan</li><li><strong>Manajemen Anggota</strong> - Data anggota dan keanggotaan</li><li><strong>Laporan</strong> - Berbagai laporan statistik dan aktivitas</li><li><strong>Perpustakaan Digital</strong> - File digital dan e-resources</li><li><strong>Repositori</strong> - Karya ilmiah dan publikasi institusi</li></ul>
+<br>
+<p class="content">---</p>
+<br>
+</div><div class="content-page"><h2 class="section-title"><span class="section-num">4</span><span class="section-text">Halaman Publik (OPAC)</span></h2>
+<br>
+<h3 class="subsection-title">Homepage OPAC</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/01-opac-homepage.png" alt="OPAC Homepage">
+      <figcaption>OPAC Homepage</figcaption>
+    </figure></p>
+<br>
+<p class="content">Halaman utama OPAC menyediakan:</p>
+<ul class="feature-list"><li>Kolom pencarian cepat untuk koleksi</li><li>Akses ke pencarian lanjut</li><li>Link ke Perpustakaan Digital dan Repositori</li><li>Informasi perpustakaan</li></ul>
+<br>
+<h3 class="subsection-title">Pencarian Koleksi</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/02-opac-search-results.png" alt="OPAC Search Results">
+      <figcaption>OPAC Search Results</figcaption>
+    </figure></p>
+<br>
+<p class="content">Hasil pencarian menampilkan:</p>
+<ul class="feature-list"><li>Daftar koleksi yang sesuai dengan kata kunci</li><li>Informasi judul, penulis, dan penerbit</li><li>Status ketersediaan item</li><li>Nomor panggil (call number)</li></ul>
+<br>
+<h3 class="subsection-title">Pencarian Lanjut</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/03-opac-advanced-search.png" alt="OPAC Advanced Search">
+      <figcaption>OPAC Advanced Search</figcaption>
+    </figure></p>
+<br>
+<p class="content">Pencarian lanjut memungkinkan:</p>
+<ul class="feature-list"><li>Pencarian berdasarkan judul, penulis, penerbit</li><li>Filter berdasarkan tipe koleksi</li><li>Filter berdasarkan tahun terbit</li><li>Kombinasi beberapa kriteria pencarian</li></ul>
+<br>
+<p class="content">---</p>
+<br>
+</div><div class="content-page"><h2 class="section-title"><span class="section-num">5</span><span class="section-text">Perpustakaan Digital</span></h2>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/04-digital-library.png" alt="Perpustakaan Digital">
+      <figcaption>Perpustakaan Digital</figcaption>
+    </figure></p>
+<br>
+<p class="content">Perpustakaan Digital menyediakan:</p>
+<ul class="feature-list"><li>Akses ke file PDF, e-book, dan dokumen digital</li><li>Pencarian dokumen digital</li><li>Download dan preview dokumen</li><li>Kategorisasi berdasarkan subjek</li></ul>
+<br>
+<p class="content">---</p>
+<br>
+</div><div class="content-page"><h2 class="section-title"><span class="section-num">6</span><span class="section-text">Repositori Institusi</span></h2>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/05-repository.png" alt="Repositori">
+      <figcaption>Repositori</figcaption>
+    </figure></p>
+<br>
+<p class="content">Repositori Institusi berisi:</p>
+<ul class="feature-list"><li>Karya ilmiah dosen dan mahasiswa</li><li>Skripsi, tesis, dan disertasi</li><li>Jurnal dan prosiding</li><li>Publikasi penelitian</li></ul>
+<br>
+<p class="content">---</p>
+<br>
+</div><div class="content-page"><h2 class="section-title"><span class="section-num">7</span><span class="section-text">Login</span></h2>
+<br>
+<h3 class="subsection-title">Halaman Login</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/06-login-page.png" alt="Halaman Login">
+      <figcaption>Halaman Login</figcaption>
+    </figure></p>
+<br>
+<p class="content">Untuk login ke sistem admin:</p>
+<p class="content">1. Masukkan email terdaftar</p>
+<p class="content">2. Masukkan password</p>
+<p class="content">3. Klik tombol "Masuk"</p>
+<br>
+<p class="content"><strong>Akun Demo:</strong></p>
+<ul class="feature-list"><li>Email: <code>admin@kampus.ac.id</code></li><li>Password: <code>password</code></li></ul>
+<br>
+<p class="content">---</p>
+<br>
+</div><div class="content-page"><h2 class="section-title"><span class="section-num">8</span><span class="section-text">Dashboard Admin</span></h2>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/07-dashboard.png" alt="Dashboard">
+      <figcaption>Dashboard</figcaption>
+    </figure></p>
+<br>
+<p class="content">Dashboard menampilkan ringkasan aktivitas perpustakaan:</p>
+<ul class="feature-list"><li>Total anggota terdaftar</li><li>Total koleksi perpustakaan</li><li>Peminjaman yang aktif</li><li>Item yang terlambat dikembalikan</li></ul>
+<br>
+<h3 class="subsection-title">Statistik Dashboard</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/08-dashboard-stats.png" alt="Statistik Dashboard">
+      <figcaption>Statistik Dashboard</figcaption>
+    </figure></p>
+<br>
+<p class="content">Kartu statistik memberikan:</p>
+<ul class="feature-list"><li>Angka real-time untuk setiap metrik</li><li>Warna indikator (hijau=normal, kuning=peringatan, merah=masalah)</li><li>Link langsung ke detail</li></ul>
+<br>
+<h3 class="subsection-title">Grafik Tren</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/09-dashboard-charts.png" alt="Grafik Dashboard">
+      <figcaption>Grafik Dashboard</figcaption>
+    </figure></p>
+<br>
+<p class="content">Grafik interaktif menampilkan:</p>
+<ul class="feature-list"><li>Tren sirkulasi bulanan</li><li>Perbandingan peminjaman vs pengembalian</li><li>Koleksi terpopuler</li><li>Distribusi jenis koleksi</li></ul>
+<br>
+<p class="content">---</p>
+<br>
+</div><div class="content-page"><h2 class="section-title"><span class="section-num">9</span><span class="section-text">Manajemen Koleksi</span></h2>
+<br>
+<h3 class="subsection-title">Daftar Koleksi</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/10-collections-list.png" alt="Daftar Koleksi">
+      <figcaption>Daftar Koleksi</figcaption>
+    </figure></p>
+<br>
+<p class="content">Halaman koleksi menampilkan:</p>
+<ul class="feature-list"><li>Daftar semua koleksi buku</li><li>Fitur pencarian dan filter</li><li>Tombol tambah koleksi baru</li><li>Aksi edit dan hapus</li></ul>
+<br>
+<h3 class="subsection-title">Pencarian Koleksi</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/11-collections-search.png" alt="Pencarian Koleksi">
+      <figcaption>Pencarian Koleksi</figcaption>
+    </figure></p>
+<br>
+<p class="content">Hasil pencarian koleksi:</p>
+<ul class="feature-list"><li>Highlight kata kunci yang dicari</li><li>Filter berdasarkan kategori</li><li>Sortir berdasarkan berbagai kriteria</li></ul>
+<br>
+<h3 class="subsection-title">Tambah Koleksi Baru</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/12-collections-create.png" alt="Tambah Koleksi">
+      <figcaption>Tambah Koleksi</figcaption>
+    </figure></p>
+<br>
+<p class="content">Form tambah koleksi mencakup:</p>
+<ul class="feature-list"><li>Informasi judul dan penulis</li><li>Data penerbit dan tahun terbit</li><li>ISBN dan ISSN</li><li>Klasifikasi dan subjek</li><li>Upload sampul buku</li></ul>
+<br>
+<p class="content">---</p>
+<br>
+</div><div class="content-page"><h2 class="section-title"><span class="section-num">10</span><span class="section-text">Manajemen Anggota</span></h2>
+<br>
+<h3 class="subsection-title">Daftar Anggota</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/13-members-list.png" alt="Daftar Anggota">
+      <figcaption>Daftar Anggota</figcaption>
+    </figure></p>
+<br>
+<p class="content">Halaman anggota menampilkan:</p>
+<ul class="feature-list"><li>Daftar semua anggota terdaftar</li><li>Filter berdasarkan tipe anggota</li><li>Status keanggotaan (aktif/tidak aktif)</li><li>Masa berlaku keanggotaan</li></ul>
+<br>
+<h3 class="subsection-title">Filter Anggota</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/14-members-filter.png" alt="Filter Anggota">
+      <figcaption>Filter Anggota</figcaption>
+    </figure></p>
+<br>
+<p class="content">Filter anggota berdasarkan:</p>
+<ul class="feature-list"><li>Tipe anggota (mahasiswa, dosen, staff)</li><li>Status aktif/non-aktif</li><li>Fakultas/jurusan</li><li>Masa berlaku</li></ul>
+<br>
+<h3 class="subsection-title">Tambah Anggota Baru</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/15-members-create.png" alt="Tambah Anggota">
+      <figcaption>Tambah Anggota</figcaption>
+    </figure></p>
+<br>
+<p class="content">Form tambah anggota:</p>
+<ul class="feature-list"><li>Nomor anggota (otomatis/unik)</li><li>Nama lengkap dan email</li><li>Tipe anggota</li><li>Informasi kontak</li><li>Masa berlaku keanggotaan</li></ul>
+<br>
+<p class="content">---</p>
+<br>
+</div><div class="content-page"><h2 class="section-title"><span class="section-num">11</span><span class="section-text">Sirkulasi (Peminjaman)</span></h2>
+<br>
+<h3 class="subsection-title">Daftar Peminjaman</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/16-loans-list.png" alt="Daftar Peminjaman">
+      <figcaption>Daftar Peminjaman</figcaption>
+    </figure></p>
+<br>
+<p class="content">Halaman sirkulasi menampilkan:</p>
+<ul class="feature-list"><li>Daftar semua transaksi peminjaman</li><li>Filter berdasarkan status (aktif, dikembalikan, terlambat)</li><li>Tanggal jatuh tempo</li><li>Denda (jika ada)</li></ul>
+<br>
+<h3 class="subsection-title">Buat Peminjaman Baru</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/18-loans-create.png" alt="Buat Peminjaman">
+      <figcaption>Buat Peminjaman</figcaption>
+    </figure></p>
+<br>
+<p class="content">Form peminjaman:</p>
+<ul class="feature-list"><li>Scan/pilih nomor anggota</li><li>Scan/pilih barcode item</li><li>Tanggal peminjaman (default hari ini)</li><li>Perhitungan otomatis tanggal jatuh tempo</li></ul>
+<br>
+<p class="content">---</p>
+<br>
+</div><div class="content-page"><h2 class="section-title"><span class="section-num">12</span><span class="section-text">Laporan</span></h2>
+<br>
+<h3 class="subsection-title">Laporan Peminjaman</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/19-reports-loans.png" alt="Laporan Peminjaman">
+      <figcaption>Laporan Peminjaman</figcaption>
+    </figure></p>
+<br>
+<p class="content">Laporan statistik peminjaman:</p>
+<ul class="feature-list"><li>Total peminjaman per periode</li><li>Peminjaman per jenis koleksi</li><li>Peminjaman per anggota</li></ul>
+<br>
+<h3 class="subsection-title">Laporan Keterlambatan</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/20-reports-overdue.png" alt="Laporan Keterlambatan">
+      <figcaption>Laporan Keterlambatan</figcaption>
+    </figure></p>
+<br>
+<p class="content">Laporan item terlambat:</p>
+<ul class="feature-list"><li>Daftar item melewati jatuh tempo</li><li>Total hari keterlambatan</li><li>Perhitungan denda</li></ul>
+<br>
+<h3 class="subsection-title">Laporan Denda</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/21-reports-fines.png" alt="Laporan Denda">
+      <figcaption>Laporan Denda</figcaption>
+    </figure></p>
+<br>
+<p class="content">Laporan denda:</p>
+<ul class="feature-list"><li>Total denda terkumpul</li><li>Denda per anggota</li><li>Status pembayaran denda</li></ul>
+<br>
+<h3 class="subsection-title">Laporan Koleksi</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/22-reports-collections.png" alt="Laporan Koleksi">
+      <figcaption>Laporan Koleksi</figcaption>
+    </figure></p>
+<br>
+<p class="content">Laporan statistik koleksi:</p>
+<ul class="feature-list"><li>Koleksi per kategori</li><li>Koleksi per lokasi</li><li>Pertumbuhan koleksi</li></ul>
+<br>
+<h3 class="subsection-title">Laporan Anggota</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/23-reports-members.png" alt="Laporan Anggota">
+      <figcaption>Laporan Anggota</figcaption>
+    </figure></p>
+<br>
+<p class="content">Laporan keanggotaan:</p>
+<ul class="feature-list"><li>Pertumbuhan anggota</li><li>Distribusi tipe anggota</li><li>Anggota aktif vs non-aktif</li></ul>
+<br>
+<h3 class="subsection-title">Laporan Cabang</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/24-reports-branches.png" alt="Laporan Cabang">
+      <figcaption>Laporan Cabang</figcaption>
+    </figure></p>
+<br>
+<p class="content">Perbandingan antar cabang:</p>
+<ul class="feature-list"><li>Statistik per cabang</li><li>Distribusi koleksi</li><li>Aktivitas sirkulasi</li></ul>
+<br>
+<p class="content">---</p>
+<br>
+</div><div class="content-page"><h2 class="section-title"><span class="section-num">13</span><span class="section-text">File Digital</span></h2>
+<br>
+<h3 class="subsection-title">Daftar File Digital</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/29-digital-files-list.png" alt="Daftar File Digital">
+      <figcaption>Daftar File Digital</figcaption>
+    </figure></p>
+<br>
+<p class="content">Manajemen file digital:</p>
+<ul class="feature-list"><li>Daftar semua file yang diupload</li><li>Kategori dan jenis file</li><li>Ukuran file</li><li>Download counter</li></ul>
+<br>
+<h3 class="subsection-title">Upload File Digital</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/30-digital-files-create.png" alt="Upload File Digital">
+      <figcaption>Upload File Digital</figcaption>
+    </figure></p>
+<br>
+<p class="content">Form upload file:</p>
+<ul class="feature-list"><li>Pilih file dari komputer</li><li>Input metadata (judul, penulis, tahun)</li><li>Kategorisasi</li><li>Akses publik/terbatas</li></ul>
+<br>
+<p class="content">---</p>
+<br>
+</div><div class="content-page"><h2 class="section-title"><span class="section-num">14</span><span class="section-text">Repositori</span></h2>
+<br>
+<h3 class="subsection-title">Daftar Repositori</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/31-repositories-list.png" alt="Daftar Repositori">
+      <figcaption>Daftar Repositori</figcaption>
+    </figure></p>
+<br>
+<p class="content">Manajemen repositori:</p>
+<ul class="feature-list"><li>Daftar submission karya ilmiah</li><li>Status review (pending, approved, rejected)</li><li>Filter berdasarkan kategori</li></ul>
+<br>
+<h3 class="subsection-title">Tambah Repositori</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/32-repositories-create.png" alt="Tambah Repositori">
+      <figcaption>Tambah Repositori</figcaption>
+    </figure></p>
+<br>
+<p class="content">Form submission repositori:</p>
+<ul class="feature-list"><li>Upload file PDF</li><li>Metadata lengkap (judul, penulis, abstrak)</li><li>Kategori dan kata kunci</li><li>Informasi publikasi</li></ul>
+<br>
+<h3 class="subsection-title">Repositori Publik</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/33-repository-public.png" alt="Repositori Publik">
+      <figcaption>Repositori Publik</figcaption>
+    </figure></p>
+<br>
+<p class="content">Tampilan publik repositori:</p>
+<ul class="feature-list"><li>Pencarian karya ilmiah</li><li>Filter berdasarkan kategori</li><li>Download full-text</li></ul>
+<br>
+<p class="content">---</p>
+<br>
+</div><div class="content-page"><h2 class="section-title"><span class="section-num">15</span><span class="section-text">Pengaturan</span></h2>
+<br>
+<h3 class="subsection-title">Daftar Cabang</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/25-branches-list.png" alt="Daftar Cabang">
+      <figcaption>Daftar Cabang</figcaption>
+    </figure></p>
+<br>
+<p class="content">Manajemen cabang perpustakaan:</p>
+<ul class="feature-list"><li>Tambah/edit/hapus cabang</li><li>Lokasi dan kontak</li><li>Jam operasional</li></ul>
+<br>
+<h3 class="subsection-title">Aturan Peminjaman</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/26-loan-rules.png" alt="Aturan Peminjaman">
+      <figcaption>Aturan Peminjaman</figcaption>
+    </figure></p>
+<br>
+<p class="content">Konfigurasi aturan:</p>
+<ul class="feature-list"><li>Masa pinjam per tipe anggota</li><li>Masa pinjam per tipe koleksi</li><li>Batas jumlah pinjaman</li><li>Perpanjangan pinjaman</li></ul>
+<br>
+<h3 class="subsection-title">Pengaturan Sistem</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/27-settings.png" alt="Pengaturan Sistem">
+      <figcaption>Pengaturan Sistem</figcaption>
+    </figure></p>
+<br>
+<p class="content">Pengaturan aplikasi:</p>
+<ul class="feature-list"><li>Informasi perpustakaan</li><li>Konfigurasi denda</li><li>Pengaturan email</li><li>Pengaturan OPAC</li></ul>
+<br>
+<h3 class="subsection-title">Manajemen Pengguna</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/28-users-list.png" alt="Daftar Pengguna">
+      <figcaption>Daftar Pengguna</figcaption>
+    </figure></p>
+<br>
+<p class="content">Manajemen user sistem:</p>
+<ul class="feature-list"><li>Tambah/edit user admin/staff</li><li>Assign role dan permission</li><li>Status aktif user</li></ul>
+<br>
+<p class="content">---</p>
+<br>
+</div><div class="content-page"><h2 class="section-title"><span class="section-num">16</span><span class="section-text">Tampilan Mobile</span></h2>
+<br>
+<h3 class="subsection-title">OPAC Mobile</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/34-mobile-opac-home.png" alt="OPAC Mobile">
+      <figcaption>OPAC Mobile</figcaption>
+    </figure></p>
+<br>
+<p class="content">Tampilan OPAC yang responsif:</p>
+<ul class="feature-list"><li>Navigasi mobile-friendly</li><li>Pencarian cepat</li><li>Akses mudah dari smartphone</li></ul>
+<br>
+<h3 class="subsection-title">Digital Library Mobile</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/35-mobile-digital-library.png" alt="Digital Library Mobile">
+      <figcaption>Digital Library Mobile</figcaption>
+    </figure></p>
+<br>
+<p class="content">Akses perpustakaan digital dari mobile:</p>
+<ul class="feature-list"><li>Browse file digital</li><li>Download langsung ke device</li><li>Preview dokumen</li></ul>
+<br>
+<h3 class="subsection-title">Dashboard Mobile</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/36-mobile-dashboard.png" alt="Dashboard Mobile">
+      <figcaption>Dashboard Mobile</figcaption>
+    </figure></p>
+<br>
+<p class="content">Dashboard admin mobile:</p>
+<ul class="feature-list"><li>Ringkasan statistik</li><li>Quick actions</li><li>Navigasi hamburger menu</li></ul>
+<br>
+<h3 class="subsection-title">Koleksi Mobile</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/37-mobile-collections.png" alt="Koleksi Mobile">
+      <figcaption>Koleksi Mobile</figcaption>
+    </figure></p>
+<br>
+<p class="content">Daftar koleksi tampilan mobile:</p>
+<ul class="feature-list"><li>Scroll horizontal</li><li>Quick actions</li><li>Detail view</li></ul>
+<br>
+<h3 class="subsection-title">Peminjaman Mobile</h3>
+<br>
+<p class="content"><figure class="screenshot">
+      <img src="file:///home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/screenshots/38-mobile-loans.png" alt="Peminjaman Mobile">
+      <figcaption>Peminjaman Mobile</figcaption>
+    </figure></p>
+<br>
+<p class="content">Sirkulasi dari mobile:</p>
+<ul class="feature-list"><li>Scan barcode dengan kamera</li><li>Quick checkout</li><li>Status peminjaman</li></ul>
+<br>
+<p class="content">---</p>
+<br>
+</div><div class="content-page"><h2 class="section-title"><span class="section-num">17</span><span class="section-text">Support dan Bantuan</span></h2>
+<br>
+<p class="content">Untuk bantuan teknis atau pertanyaan:</p>
+<ul class="feature-list"><li><strong>Email:</strong> support@library.example.com</li><li><strong>Telepon:</strong> (021) 1234-5678</li><li><strong>Jam Operasional:</strong> Senin - Jumat, 08:00 - 16:00</li></ul>
+<br>
+<p class="content">---</p>
+<br>
+</div><div class="content-page"><h2 class="section-title"><span class="section-num">18</span><span class="section-text">Changelog</span></h2>
+<br>
+<h3 class="subsection-title">Versi 1.0.0</h3>
+<ul class="feature-list"><li>Rilis awal sistem manajemen perpustakaan</li><li>Modul OPAC dan Sirkulasi</li><li>Manajemen Koleksi dan Anggota</li><li>Laporan dan Statistik</li><li>Perpustakaan Digital dan Repositori</li><li>Tampilan Mobile Responsif</li></ul>
+<br>
+<p class="content">---</p>
+<br>
+<p class="content"><em>Dokumen ini dibuat otomatis oleh sistem dokumentasi Playwright Automation</em></p>
+<p class="content"><em>Last Updated: 3 Februari 2026</em></p>
+<br></div><div class="content-page">
+    <div class="doc-footer">
+      <p style="font-size: 11pt; font-weight: 600; color: #1e40af;">Dokumen Ini Dibuat Oleh Sistem Dokumentasi Otomatis</p>
+      <p><strong>Library Management System</strong> - Aplikasi Perpustakaan Digital Terpadu</p>
+      <p style="margin-top: 8px;">Tanggal: 3 Februari 2026</p>
+    </div>
+  </div>
+</body>
+</html>

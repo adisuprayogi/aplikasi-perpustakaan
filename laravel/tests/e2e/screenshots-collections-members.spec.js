@@ -16,7 +16,7 @@ async function login(page) {
   await page.goto(`${BASE_URL}/login`);
   await page.getByLabel('Email').fill('admin@library.test');
   await page.getByLabel('Password').fill('password123');
-  await page.getByRole('button', { name: /Masuk|Log/i }).click();
+  await page.getByRole('button', { name: 'Masuk' }).click();
   await page.waitForURL(/\/dashboard/, { timeout: 10000 });
   await page.waitForLoadState('networkidle');
 }
@@ -26,7 +26,9 @@ test.describe('Collections Screenshots', () => {
     console.log('\n📚 COLLECTIONS');
   });
 
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, context }) => {
+    // Clear cookies before each test
+    await context.clearCookies();
     await login(page);
   });
 
@@ -56,7 +58,9 @@ test.describe('Members Screenshots', () => {
     console.log('\n👥 MEMBERS');
   });
 
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, context }) => {
+    // Clear cookies before each test
+    await context.clearCookies();
     await login(page);
   });
 

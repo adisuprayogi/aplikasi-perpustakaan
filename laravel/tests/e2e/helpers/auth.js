@@ -12,7 +12,8 @@ export async function login(page, email = 'admin@library.test', password = 'pass
   await page.goto('/login');
   await page.getByLabel('Email').fill(email);
   await page.getByLabel('Password').fill(password);
-  await page.getByRole('button', { name: /Masuk|Log in|Sign in/i }).click();
+  // Use more specific selector - the button text is "Masuk"
+  await page.getByRole('button', { name: 'Masuk' }).click();
   await expect(page).toHaveURL(/\/dashboard/);
 }
 
@@ -24,16 +25,17 @@ export async function logout(page) {
   // Click on user menu
   const userMenuButton = page.getByRole('button').filter({ hasText: /Admin|Profile|User/i });
   if (await userMenuButton.count() > 0) {
-    await userMenuButton.click();
+    await userMenuButton.first().click();
   }
 
-  // Click logout
-  const logoutLink = page.getByRole('link', { name: /Logout|Keluar|Sign out/i });
-  if (await logoutLink.count() > 0) {
-    await logoutLink.click();
+  // Click logout button (submit form)
+  const logoutButton = page.locator('form button[type="submit"]').filter({ hasText: /Keluar/i });
+  if (await logoutButton.count() > 0) {
+    await logoutButton.click();
   }
 
-  await expect(page).toHaveURL(/\/login/);
+  // Redirect to login or opac
+  await expect(page).toHaveURL(/\/(login|opac)/);
 }
 
 /**

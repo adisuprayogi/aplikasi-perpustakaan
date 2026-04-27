@@ -100,7 +100,7 @@
             font-style: italic;
             color: #64748b;
             font-size: 0.9em;
-            margin-top: 10px;
+            margin-top: 5px;
         }
 
         table {
@@ -110,31 +110,126 @@
             page-break-inside: avoid;
         }
 
-        th, td {
-            border: 1px solid #e5e7eb;
-            padding: 12px;
-            text-align: left;
-        }
-
         th {
             background: #1e40af;
             color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 10px 12px;
+            border: 1px solid #e5e7eb;
         }
 
         tr:nth-child(even) {
             background: #f8fafc;
         }
 
-        .feature-list {
-            background: #fefce8;
-            padding: 20px;
-            border-left: 4px solid #eab308;
-            margin: 20px 0;
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
         }
 
-        .feature-list ul {
-            margin: 10px 0;
-            padding-left: 20px;
+        code {
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        pre code {
+            background: transparent;
+            padding: 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin: 0 2px;
+        }
+
+        .badge-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .badge-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .badge-warning {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .permission-tag {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin: 2px;
+        }
+
+        .role-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 10px;
+            page-break-inside: avoid;
+        }
+
+        .role-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .workflow-step {
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-left: 4px solid #3b82f6;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .workflow-step h4 {
+            margin-top: 0;
+            color: #3b82f6;
+        }
+
+        .info-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .info-box.warning {
+            background: #fee2e2;
+            border-left-color: #ef4444;
+        }
+
+        .info-box.info {
+            background: #dbeafe;
+            border-left-color: #3b82f6;
         }
 
         @media print {
@@ -142,7 +237,15 @@
                 padding: 20px;
             }
 
+            .role-section {
+                page-break-inside: avoid;
+            }
+
             .screenshot-container {
+                page-break-inside: avoid;
+            }
+
+            table {
                 page-break-inside: avoid;
             }
 
@@ -151,629 +254,680 @@
             }
         }
 
-        .page-break {
-            page-break-before: always;
+        .update-note {
+            background: #fef3c7;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            font-style: italic;
         }
     </style>
 </head>
 <body>
-
     <h1>MANUAL BOOK</h1>
     <div class="subtitle">Aplikasi Perpustakaan Digital</div>
-
+    <hr>
     <hr>
 
     <div class="toc">
         <h2>Daftar Isi</h2>
         <ul>
             <li><a href="#pendahuluan">1. Pendahuluan</a></li>
-            <li><a href="#halaman-publik">2. Halaman Publik</a>
-                <ul>
-                    <li><a href="#opac">OPAC (Online Public Access Catalog)</a></li>
-                    <li><a href="#digital-library">Digital Library</a></li>
-                    <li><a href="#repository">Repository</a></li>
-                    <li><a href="#login">Halaman Login</a></li>
+            <li><a href="#user-roles--login">2. User Roles & Login</a></li>
+            <li><a href="#panduan-per-role">3. Panduan Per Role</a>
+                <ul style="padding-left: 20px;">
+                    <li><a href="#super-admin">3.1 Super Admin</a></li>
+                    <li><a href="#admin">3.2 Admin</a></li>
+                    <li><a href="#branch-admin">3.3 Branch Admin</a></li>
+                    <li><a href="#circulation-staff">3.4 Circulation Staff</a></li>
+                    <li><a href="#catalog-staff">3.5 Catalog Staff</a></li>
+                    <li><a href="#report-viewer">3.6 Report Viewer</a></li>
                 </ul>
             </li>
-            <li><a href="#dashboard">3. Dashboard Admin</a></li>
-            <li><a href="#koleksi">4. Manajemen Koleksi</a></li>
-            <li><a href="#anggota">5. Manajemen Anggota</a></li>
-            <li><a href="#sirkulasi">6. Sirkulasi & Peminjaman</a></li>
-            <li><a href="#laporan">7. Laporan</a></li>
-            <li><a href="#pengaturan">8. Pengaturan & Admin</a></li>
-            <li><a href="#mobile">9. Tampilan Mobile</a></li>
-            <li><a href="#ringkasan">10. Ringkasan Screenshot</a></li>
+            <li><a href="#proses-bisnis">4. Proses Bisnis</a></li>
         </ul>
     </div>
 
+    <hr>
     <hr>
 
     <h2 id="pendahuluan">Pendahuluan</h2>
-    <p>Aplikasi Perpustakaan Digital adalah sistem manajemen perpustakaan terintegrasi yang mencakup:</p>
-    <ul>
-        <li>Katalog buku online (OPAC)</li>
-        <li>Manajemen koleksi fisik dan digital</li>
-        <li>Sistem sirkulasi (peminjaman & pengembalian)</li>
-        <li>Manajemen anggota dan denda</li>
-        <li>Laporan statistik dan analitik</li>
-        <li>Repository institusi</li>
-    </ul>
+    <p>Aplikasi Perpustakaan Digital adalah sistem manajemen perpustakaan terintegrasi dengan 7 role berbeda.</p>
 
     <hr>
+    <hr>
 
-    <h2 id="halaman-publik">Halaman Publik</h2>
+    <h2 id="user-roles--login">User Roles & Login</h2>
 
-    <h3 id="opac">OPAC (Online Public Access Catalog)</h3>
-    <p>OPAC memungkinkan pengunjung untuk mencari dan menelusuri katalog koleksi perpustakaan.</p>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/01-opac-homepage.png" alt="OPAC Homepage">
-        <div class="caption">Gambar 1: Halaman Beranda OPAC</div>
-    </div>
-
-    <div class="feature-list">
-        <strong>Fitur utama halaman OPAC:</strong>
-        <ul>
-            <li>Search bar untuk pencarian cepat</li>
-            <li>Akses ke pencarian lanjutan</li>
-            <li>Navigasi ke Digital Library dan Repository</li>
-        </ul>
-    </div>
-
-    <h4>Pencarian OPAC</h4>
-    <p>Pengguna dapat mencari koleksi berdasarkan judul, penulis, ISBN, atau kata kunci.</p>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/02-opac-search-results.png" alt="OPAC Search Results">
-        <div class="caption">Gambar 2: Hasil Pencarian OPAC</div>
-    </div>
-
-    <div class="feature-list">
-        <strong>Hasil pencarian menampilkan:</strong>
-        <ul>
-            <li>Daftar koleksi yang sesuai</li>
-            <li>Informasi judul, penulis, dan kategori</li>
-            <li>Status ketersediaan</li>
-        </ul>
-    </div>
-
-    <h4>Pencarian Lanjutan</h4>
-    <p>Untuk pencarian lebih spesifik, gunakan fitur Advanced Search.</p>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/03-opac-advanced-search.png" alt="OPAC Advanced Search">
-        <div class="caption">Gambar 3: Pencarian Lanjutan OPAC</div>
-    </div>
-
-    <div class="feature-list">
-        <strong>Filter pencarian lanjutan:</strong>
-        <ul>
-            <li>Kategori/koleksi</li>
-            <li>Bahasa</li>
-            <li>Tahun terbit</li>
-            <li>Penerbit</li>
-        </ul>
-    </div>
-
-    <h3 id="digital-library">Digital Library</h3>
-    <p>Digital Library menyediakan akses ke koleksi digital seperti e-book, jurnal, dan artikel.</p>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/04-digital-library.png" alt="Digital Library">
-        <div class="caption">Gambar 4: Halaman Digital Library</div>
-    </div>
-
-    <div class="feature-list">
-        <strong>Fitur:</strong>
-        <ul>
-            <li>Browser kategori digital</li>
-            <li>Download file digital</li>
-            <li>Preview dokumen</li>
-        </ul>
-    </div>
-
-    <h3 id="repository">Repository</h3>
-    <p>Repository menyimpan karya ilmiah, skripsi, tesis, dan publikasi institusi.</p>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/05-repository.png" alt="Repository">
-        <div class="caption">Gambar 5: Halaman Repository</div>
-    </div>
-
-    <div class="feature-list">
-        <strong>Kategori repository:</strong>
-        <ul>
-            <li>Skripsi</li>
-            <li>Tesis</li>
-            <li>Disertasi</li>
-            <li>Jurnal</li>
-            <li>Prosiding</li>
-        </ul>
-    </div>
-
-    <h3 id="login">Halaman Login</h3>
-    <p>Untuk mengakses fitur admin, staf harus login terlebih dahulu.</p>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/06-login-page.png" alt="Login Page">
-        <div class="caption">Gambar 6: Halaman Login</div>
-    </div>
-
-    <div class="feature-list">
-        <strong>Kredensial default:</strong>
-        <ul>
-            <li>Email: <code>admin@library.test</code></li>
-            <li>Password: <code>password123</code></li>
-        </ul>
-    </div>
-
-    <div class="page-break"></div>
-
-    <h2 id="dashboard">Dashboard Admin</h2>
-    <p>Dashboard menampilkan ringkasan statistik dan visualisasi data perpustakaan.</p>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/07-dashboard.png" alt="Dashboard">
-        <div class="caption">Gambar 7: Dashboard Admin</div>
-    </div>
-
-    <h3>Statistik Dashboard</h3>
-    <p>Ringkasan statistik penting ditampilkan dalam bentuk kartu:</p>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/08-dashboard-stats.png" alt="Dashboard Stats">
-        <div class="caption">Gambar 8: Kartu Statistik Dashboard</div>
-    </div>
-
-    <div class="feature-list">
-        <strong>Statistik yang ditampilkan:</strong>
-        <ul>
-            <li>Total Koleksi</li>
-            <li>Total Anggota</li>
-            <li>Peminjaman Aktif</li>
-            <li>Denda Tertunda</li>
-        </ul>
-    </div>
-
-    <h3>Grafik Dashboard</h3>
-    <p>Visualisasi data untuk analisis tren dan pola:</p>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/09-dashboard-charts.png" alt="Dashboard Charts">
-        <div class="caption">Gambar 9: Grafik Dashboard</div>
-    </div>
-
-    <div class="feature-list">
-        <strong>Grafik tersedia:</strong>
-        <ul>
-            <li>Tren Sirkulasi (Line Chart)</li>
-            <li>Koleksi berdasarkan Kategori (Doughnut Chart)</li>
-            <li>Anggota berdasarkan Tipe (Doughnut Chart)</li>
-            <li>Item Populer (Bar Chart)</li>
-        </ul>
-    </div>
-
-    <div class="page-break"></div>
-
-    <h2 id="koleksi">Manajemen Koleksi</h2>
-    <p>Menu Koleksi mengelola semua item fisik di perpustakaan (buku, majalah, multimedia).</p>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/10-collections-list.png" alt="Collections List">
-        <div class="caption">Gambar 10: Daftar Koleksi</div>
-    </div>
-
-    <div class="feature-list">
-        <strong>Fitur manajemen koleksi:</strong>
-        <ul>
-            <li>Pencarian dan filter</li>
-            <li>Import/Export data</li>
-            <li>Manajemen item (copy)</li>
-            <li>Label barcode</li>
-            <li>Status ketersediaan</li>
-        </ul>
-    </div>
-
-    <h4>Tambah Koleksi Baru</h4>
-    <p>Formulir untuk menambah koleksi baru ke sistem:</p>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/12-collections-create.png" alt="Collections Create">
-        <div class="caption">Gambar 11: Form Tambah Koleksi</div>
-    </div>
-
-    <div class="feature-list">
-        <strong>Field yang diisi:</strong>
-        <ul>
-            <li>Judul</li>
-            <li>Penulis/Pengarang</li>
-            <li>ISBN/ISSN</li>
-            <li>Penerbit</li>
-            <li>Tahun terbit</li>
-            <li>Kategori</li>
-            <li>Jumlah copy</li>
-            <li>Lokasi rak</li>
-        </ul>
-    </div>
-
-    <div class="page-break"></div>
-
-    <h2 id="anggota">Manajemen Anggota</h2>
-    <p>Menu Anggota mengelola data anggota perpustakaan.</p>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/13-members-list.png" alt="Members List">
-        <div class="caption">Gambar 12: Daftar Anggota</div>
-    </div>
-
-    <div class="feature-list">
-        <strong>Informasi anggota:</strong>
-        <ul>
-            <li>Nama dan ID anggota</li>
-            <li>Tipe anggota (Siswa, Guru, Staf)</li>
-            <li>Status keanggotaan</li>
-            <li>Masa berlaku</li>
-        </ul>
-    </div>
-
-    <h4>Tambah Anggota Baru</h4>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/15-members-create.png" alt="Members Create">
-        <div class="caption">Gambar 13: Form Tambah Anggota</div>
-    </div>
-
-    <div class="feature-list">
-        <strong>Data anggota:</strong>
-        <ul>
-            <li>Informasi pribadi (nama, email, telepon)</li>
-            <li>Tipe anggota</li>
-            <li>Tanggal bergabung</li>
-            <li>Batas peminjaman</li>
-        </ul>
-    </div>
-
-    <div class="page-break"></div>
-
-    <h2 id="sirkulasi">Sirkulasi & Peminjaman</h2>
-    <p>Sistem sirkulasi mengelola peminjaman dan pengembalian koleksi.</p>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/16-loans-list.png" alt="Loans List">
-        <div class="caption">Gambar 14: Daftar Peminjaman</div>
-    </div>
-
-    <div class="feature-list">
-        <strong>Status peminjaman:</strong>
-        <ul>
-            <li>Aktif: Sedang dipinjam</li>
-            <li>Kembali: Sudah dikembalikan</li>
-            <li>Terlambat: Lewat jatuh tempo</li>
-        </ul>
-    </div>
-
-    <h4>Buat Peminjaman Baru</h4>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/18-loans-create.png" alt="Loans Create">
-        <div class="caption">Gambar 15: Form Peminjaman Baru</div>
-    </div>
-
-    <div class="feature-list">
-        <strong>Langkah peminjaman:</strong>
-        <ol>
-            <li>Pilih anggota</li>
-            <li>Scan/input barcode koleksi</li>
-            <li>Sistem hitung tanggal jatuh tempo</li>
-            <li>Konfirmasi peminjaman</li>
-        </ol>
-    </div>
-
-    <div class="page-break"></div>
-
-    <h2 id="laporan">Laporan</h2>
-    <p>Sistem menyediakan berbagai laporan untuk analisis dan audit.</p>
-
-    <h3>Laporan Peminjaman</h3>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/19-reports-loans.png" alt="Reports Loans">
-        <div class="caption">Gambar 16: Laporan Peminjaman</div>
-    </div>
-
-    <div class="feature-list">
-        <strong>Laporan peminjaman dapat difilter berdasarkan:</strong>
-        <ul>
-            <li>Rentang tanggal</li>
-            <li>Status peminjaman</li>
-            <li>Kategori koleksi</li>
-            <li>Tipe anggota</li>
-        </ul>
-    </div>
-
-    <h3>Laporan Keterlambatan</h3>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/20-reports-overdue.png" alt="Reports Overdue">
-        <div class="caption">Gambar 17: Laporan Keterlambatan</div>
-    </div>
-
-    <div class="feature-list">
-        <strong>Laporan ini menampilkan:</strong>
-        <ul>
-            <li>Anggota yang terlambat mengembalikan</li>
-            <li>Hari keterlambatan</li>
-            <li>Denda yang harus dibayar</li>
-        </ul>
-    </div>
-
-    <h3>Laporan Denda</h3>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/21-reports-fines.png" alt="Reports Fines">
-        <div class="caption">Gambar 18: Laporan Denda</div>
-    </div>
-
-    <div class="feature-list">
-        <strong>Informasi denda:</strong>
-        <ul>
-            <li>Total denda per anggota</li>
-            <li>Status pembayaran</li>
-            <li>Riwayat pembayaran</li>
-        </ul>
-    </div>
-
-    <h3>Laporan Koleksi</h3>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/22-reports-collections.png" alt="Reports Collections">
-        <div class="caption">Gambar 19: Laporan Koleksi</div>
-    </div>
-
-    <div class="feature-list">
-        <strong>Statistik koleksi:</strong>
-        <ul>
-            <li>Koleksi per kategori</li>
-            <li>Koleksi tersedia vs dipinjam</li>
-            <li>Koleksi rusak/hilang</li>
-        </ul>
-    </div>
-
-    <h3>Laporan Anggota</h3>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/23-reports-members.png" alt="Reports Members">
-        <div class="caption">Gambar 20: Laporan Anggota</div>
-    </div>
-
-    <div class="feature-list">
-        <strong>Analisis anggota:</strong>
-        <ul>
-            <li>Pertumbuhan anggota</li>
-            <li>Anggota aktif vs tidak aktif</li>
-            <li>Peminjaman per anggota</li>
-        </ul>
-    </div>
-
-    <h3>Laporan Cabang</h3>
-    <p>Untuk sistem multi-cabang:</p>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/24-reports-branches.png" alt="Reports Branches">
-        <div class="caption">Gambar 21: Laporan Perbandingan Cabang</div>
-    </div>
-
-    <div class="feature-list">
-        <strong>Perbandingan performa antar cabang:</strong>
-        <ul>
-            <li>Total anggota</li>
-            <li>Peminjaman aktif</li>
-            <li>Kunjungan</li>
-            <li>Denda terkumpul</li>
-        </ul>
-    </div>
-
-    <div class="page-break"></div>
-
-    <h2 id="pengaturan">Pengaturan & Admin</h2>
-
-    <h3>Manajemen Cabang</h3>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/25-branches-list.png" alt="Branches List">
-        <div class="caption">Gambar 22: Daftar Cabang</div>
-    </div>
-
-    <p>Untuk perpustakaan dengan multiple cabang/lokasi.</p>
-
-    <h3>Aturan Peminjaman</h3>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/26-loan-rules.png" alt="Loan Rules">
-        <div class="caption">Gambar 23: Aturan Peminjaman</div>
-    </div>
-
-    <div class="feature-list">
-        <strong>Konfigurasi aturan:</strong>
-        <ul>
-            <li>Masa peminjaman per tipe anggota</li>
-            <li>Batas item yang dapat dipinjam</li>
-            <li>Denda per hari keterlambatan</li>
-            <li>Masa perpanjangan</li>
-        </ul>
-    </div>
-
-    <h3>Pengaturan Aplikasi</h3>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/27-settings.png" alt="Settings">
-        <div class="caption">Gambar 24: Pengaturan Aplikasi</div>
-    </div>
-
-    <div class="feature-list">
-        <strong>Konfigurasi sistem:</strong>
-        <ul>
-            <li>Nama perpustakaan</li>
-            <li>Alamat dan kontak</li>
-            <li>Aturan default</li>
-            <li>Pengaturan notifikasi</li>
-        </ul>
-    </div>
-
-    <h3>Manajemen Pengguna</h3>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/28-users-list.png" alt="Users List">
-        <div class="caption">Gambar 25: Daftar Pengguna Sistem</div>
-    </div>
-
-    <div class="feature-list">
-        <strong>Manajemen akses:</strong>
-        <ul>
-            <li>Administrator</li>
-            <li>Staff</li>
-            <li>Petugas</li>
-            <li>Assign permissions</li>
-        </ul>
-    </div>
-
-    <h3>File Digital</h3>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/29-digital-files-list.png" alt="Digital Files List">
-        <div class="caption">Gambar 26: Daftar File Digital</div>
-    </div>
-
-    <div class="feature-list">
-        <strong>Upload dan kelola file digital:</strong>
-        <ul>
-            <li>E-book</li>
-            <li>Jurnal</li>
-            <li>Audio/Video</li>
-        </ul>
-    </div>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/30-digital-files-create.png" alt="Digital Files Create">
-        <div class="caption">Gambar 27: Upload File Digital</div>
-    </div>
-
-    <h3>Repository</h3>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/31-repositories-list.png" alt="Repositories List">
-        <div class="caption">Gambar 28: Daftar Repository</div>
-    </div>
-
-    <p>Kelola karya ilmiah dan publikasi.</p>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/32-repositories-create.png" alt="Repositories Create">
-        <div class="caption">Gambar 29: Tambah Repository Baru</div>
-    </div>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/33-repository-public.png" alt="Repository Public">
-        <div class="caption">Gambar 30: Tampilan Repository Publik</div>
-    </div>
-
-    <div class="page-break"></div>
-
-    <h2 id="mobile">Tampilan Mobile</h2>
-    <p>Aplikasi responsif dan dapat diakses melalui berbagai perangkat mobile.</p>
-
-    <h3>OPAC Mobile</h3>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/34-mobile-opac-home.png" alt="Mobile OPAC">
-        <div class="caption">Gambar 31: OPAC Tampilan Mobile</div>
-    </div>
-
-    <h3>Digital Library Mobile</h3>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/35-mobile-digital-library.png" alt="Mobile Digital Library">
-        <div class="caption">Gambar 32: Digital Library Tampilan Mobile</div>
-    </div>
-
-    <h3>Dashboard Mobile</h3>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/36-mobile-dashboard.png" alt="Mobile Dashboard">
-        <div class="caption">Gambar 33: Dashboard Tampilan Mobile</div>
-    </div>
-
-    <h3>Koleksi Mobile</h3>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/37-mobile-collections.png" alt="Mobile Collections">
-        <div class="caption">Gambar 34: Koleksi Tampilan Mobile</div>
-    </div>
-
-    <h3>Peminjaman Mobile</h3>
-
-    <div class="screenshot-container">
-        <img src="laravel/screenshots/38-mobile-loans.png" alt="Mobile Loans">
-        <div class="caption">Gambar 35: Peminjaman Tampilan Mobile</div>
-    </div>
-
-    <div class="page-break"></div>
-
-    <h2 id="ringkasan">Ringkasan Screenshot</h2>
-
+    <h3>Role yang Tersedia</h3>
     <table>
         <thead>
             <tr>
-                <th>No</th>
-                <th>Screenshot</th>
+                <th>Role</th>
+                <th>Jumlah Permissions</th>
                 <th>Deskripsi</th>
             </tr>
         </thead>
         <tbody>
-            <tr><td>1</td><td>01-opac-homepage</td><td>Halaman beranda OPAC</td></tr>
-            <tr><td>2</td><td>02-opac-search-results</td><td>Hasil pencarian OPAC</td></tr>
-            <tr><td>3</td><td>03-opac-advanced-search</td><td>Pencarian lanjutan OPAC</td></tr>
-            <tr><td>4</td><td>04-digital-library</td><td>Halaman Digital Library</td></tr>
-            <tr><td>5</td><td>05-repository</td><td>Halaman Repository</td></tr>
-            <tr><td>6</td><td>06-login-page</td><td>Halaman Login</td></tr>
-            <tr><td>7</td><td>07-dashboard</td><td>Dashboard Admin</td></tr>
-            <tr><td>8</td><td>08-dashboard-stats</td><td>Statistik Dashboard</td></tr>
-            <tr><td>9</td><td>09-dashboard-charts</td><td>Grafik Dashboard</td></tr>
-            <tr><td>10</td><td>10-collections-list</td><td>Daftar Koleksi</td></tr>
-            <tr><td>11</td><td>12-collections-create</td><td>Tambah Koleksi</td></tr>
-            <tr><td>12</td><td>13-members-list</td><td>Daftar Anggota</td></tr>
-            <tr><td>13</td><td>15-members-create</td><td>Tambah Anggota</td></tr>
-            <tr><td>14</td><td>16-loans-list</td><td>Daftar Peminjaman</td></tr>
-            <tr><td>15</td><td>18-loans-create</td><td>Buat Peminjaman</td></tr>
-            <tr><td>16</td><td>19-reports-loans</td><td>Laporan Peminjaman</td></tr>
-            <tr><td>17</td><td>20-reports-overdue</td><td>Laporan Keterlambatan</td></tr>
-            <tr><td>18</td><td>21-reports-fines</td><td>Laporan Denda</td></tr>
-            <tr><td>19</td><td>22-reports-collections</td><td>Laporan Koleksi</td></tr>
-            <tr><td>20</td><td>23-reports-members</td><td>Laporan Anggota</td></tr>
-            <tr><td>21</td><td>24-reports-branches</td><td>Laporan Cabang</td></tr>
-            <tr><td>22</td><td>25-branches-list</td><td>Daftar Cabang</td></tr>
-            <tr><td>23</td><td>26-loan-rules</td><td>Aturan Peminjaman</td></tr>
-            <tr><td>24</td><td>27-settings</td><td>Pengaturan Aplikasi</td></tr>
-            <tr><td>25</td><td>28-users-list</td><td>Daftar Pengguna</td></tr>
-            <tr><td>26</td><td>29-digital-files-list</td><td>Daftar File Digital</td></tr>
-            <tr><td>27</td><td>30-digital-files-create</td><td>Upload File Digital</td></tr>
-            <tr><td>28</td><td>31-repositories-list</td><td>Daftar Repository</td></tr>
-            <tr><td>29</td><td>32-repositories-create</td><td>Tambah Repository</td></tr>
-            <tr><td>30</td><td>33-repository-public</td><td>Repository Publik</td></tr>
-            <tr><td>31</td><td>34-mobile-opac-home</td><td>OPAC Mobile</td></tr>
-            <tr><td>32</td><td>35-mobile-digital-library</td><td>Digital Library Mobile</td></tr>
-            <tr><td>33</td><td>36-mobile-dashboard</td><td>Dashboard Mobile</td></tr>
-            <tr><td>34</td><td>37-mobile-collections</td><td>Koleksi Mobile</td></tr>
-            <tr><td>35</td><td>38-mobile-loans</td><td>Peminjaman Mobile</td></tr>
+            <tr>
+                <td><strong>super_admin</strong></td>
+                <td><span class="permission-tag">77</span></td>
+                <td>Full akses ke seluruh sistem</td>
+            </tr>
+            <tr>
+                <td><strong>admin</strong></td>
+                <td><span class="permission-tag">77</span></td>
+                <td>Full akses sama seperti super_admin</td>
+            </tr>
+            <tr>
+                <td><strong>branch_admin</strong></td>
+                <td><span class="permission-tag">39</span></td>
+                <td>Admin cabang - kelola cabang, anggota, sirkulasi</td>
+            </tr>
+            <tr>
+                <td><strong>circulation_staff</strong></td>
+                <td><span class="permission-tag">13</span></td>
+                <td>Staff sirkulasi - peminjaman & pengembalian</td>
+            </tr>
+            <tr>
+                <td><strong>catalog_staff</strong></td>
+                <td><span class="permission-tag">19</span></td>
+                <td>Staff katalog - kelola koleksi & katalog</td>
+            </tr>
+            <tr>
+                <td><strong>report_viewer</strong></td>
+                <td><span class="permission-tag">6</span></td>
+                <td>Viewer laporan - hanya melihat laporan</td>
+            </tr>
+            <tr>
+                <td><strong>member</strong></td>
+                <td><span class="permission-tag">6</span></td>
+                <td>Anggota perpustakaan</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Login Credentials</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Role</th>
+                <th>Email</th>
+                <th>Password</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Super Admin</td>
+                <td><code>admin@kampus.ac.id</code></td>
+                <td><code>super123</code></td>
+            </tr>
+            <tr>
+                <td>Admin</td>
+                <td><code>admin@library.test</code></td>
+                <td><code>password123</code></td>
+            </tr>
+            <tr>
+                <td>Branch Admin</td>
+                <td><code>pusat@kampus.ac.id</code></td>
+                <td><code>branch123</code></td>
+            </tr>
+            <tr>
+                <td>Circulation Staff</td>
+                <td><code>lib-fkip@kampus.ac.id</code></td>
+                <td><code>circulation123</code></td>
+            </tr>
+            <tr>
+                <td>Catalog Staff</td>
+                <td><code>catalog@library.test</code></td>
+                <td><code>catalog123</code></td>
+            </tr>
+            <tr>
+                <td>Report Viewer</td>
+                <td><code>report@library.test</code></td>
+                <td><code>report123</code></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr>
+    <hr>
+
+    <h2 id="panduan-per-role">Panduan Per Role</h2>
+    <hr>
+
+    <div class="role-section">
+        <h3 id="super-admin">Super Admin</h3>
+        <p><strong>Role ID:</strong> 1 (super_admin)<br>
+        <strong>Permissions:</strong> <span class="permission-tag">77</span> (Full Access)</p>
+
+        <div class="screenshot-container">
+            <img src="screenshots/roles/role-super-admin-dashboard.png" alt="Super Admin Dashboard">
+            <div class="caption">Super Admin Dashboard</div>
+        </div>
+
+        <p><strong>Deskripsi:</strong> Administrator tertinggi dengan akses penuh ke seluruh sistem.</p>
+
+        <h4>Menu yang Dapat Diakses:</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Menu</th>
+                    <th>Akses</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Dashboard</td><td><span class="badge badge-success">✅</span></td></tr>
+                <tr><td>Sirkulasi (Peminjaman, Reservasi)</td><td><span class="badge badge-success">✅</span></td></tr>
+                <tr><td>Branch</td><td><span class="badge badge-success">✅</span></td></tr>
+                <tr><td>Anggota</td><td><span class="badge badge-success">✅</span></td></tr>
+                <tr><td>Koleksi</td><td><span class="badge badge-success">✅</span></td></tr>
+                <tr><td>Perpustakaan Digital</td><td><span class="badge badge-success">✅</span></td></tr>
+                <tr><td>Repository</td><td><span class="badge badge-success">✅</span></td></tr>
+                <tr><td>Aturan Peminjaman</td><td><span class="badge badge-success">✅</span></td></tr>
+                <tr><td>Manajemen User</td><td><span class="badge badge-success">✅</span></td></tr>
+                <tr><td>Laporan (semua)</td><td><span class="badge badge-success">✅</span></td></tr>
+                <tr><td>Transfer Antar Branch</td><td><span class="badge badge-success">✅</span></td></tr>
+                <tr><td>Pengaturan</td><td><span class="badge badge-success">✅</span></td></tr>
+            </tbody>
+        </table>
+
+        <h4>Tanggung Jawab:</h4>
+        <ul>
+            <li>Manajemen user dan role</li>
+            <li>Konfigurasi sistem</li>
+            <li>Manajemen cabang</li>
+            <li>Monitor semua aktivitas</li>
+            <li>Export laporan global</li>
+        </ul>
+    </div>
+
+    <div class="role-section">
+        <h3 id="admin">Admin</h3>
+        <p><strong>Role ID:</strong> 7 (admin)<br>
+        <strong>Permissions:</strong> <span class="permission-tag">77</span> (Full Access)</p>
+
+        <div class="screenshot-container">
+            <img src="screenshots/roles/role-admin-dashboard.png" alt="Admin Dashboard">
+            <div class="caption">Admin Dashboard</div>
+        </div>
+
+        <p><strong>Deskripsi:</strong> Administrator dengan akses penuh sama seperti Super Admin.</p>
+
+        <p><strong>Menu yang Dapat Diakses:</strong> Sama seperti Super Admin</p>
+    </div>
+
+    <div class="role-section">
+        <h3 id="branch-admin">Branch Admin</h3>
+        <p><strong>Role ID:</strong> 2 (branch_admin)<br>
+        <strong>Permissions:</strong> <span class="permission-tag">39</span></p>
+
+        <div class="screenshot-container">
+            <img src="screenshots/roles/role-branch-admin-dashboard.png" alt="Branch Admin Dashboard">
+            <div class="caption">Branch Admin Dashboard</div>
+        </div>
+
+        <p><strong>Deskripsi:</strong> Administrator yang mengelola satu cabang perpustakaan.</p>
+
+        <h4>Menu yang Dapat Diakses:</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Menu</th>
+                    <th>Akses</th>
+                    <th>Keterangan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Dashboard</td><td><span class="badge badge-success">✅</span></td><td></td></tr>
+                <tr><td>Sirkulasi (Peminjaman, Reservasi)</td><td><span class="badge badge-success">✅</span></td><td></td></tr>
+                <tr><td>Anggota</td><td><span class="badge badge-success">✅</span></td><td>Register, edit, renew, suspend</td></tr>
+                <tr><td>Koleksi</td><td><span class="badge badge-success">✅</span></td><td>View only (lihat data)</td></tr>
+                <tr><td>Perpustakaan Digital</td><td><span class="badge badge-success">✅</span></td><td>Kelola file digital</td></tr>
+                <tr><td>Repository</td><td><span class="badge badge-success">✅</span></td><td>Kelola repository</td></tr>
+                <tr><td>Laporan</td><td><span class="badge badge-success">✅</span></td><td>Semua laporan</td></tr>
+                <tr><td>Transfer Antar Branch</td><td><span class="badge badge-success">✅</span></td><td></td></tr>
+                <tr><td>Manajemen User</td><td><span class="badge badge-success">✅</span></td><td>Create, edit user (limited)</td></tr>
+                <tr><td>Pengaturan</td><td><span class="badge badge-success">✅</span></td><td>View settings</td></tr>
+                <tr><td>Branch</td><td><span class="badge badge-danger">❌</span></td><td>Tidak ada akses</td></tr>
+            </tbody>
+        </table>
+
+        <h4>Tanggung Jawab:</h4>
+        <ul>
+            <li>Manajemen anggota cabang</li>
+            <li>Monitor sirkulasi cabang</li>
+            <li>Laporan cabang</li>
+            <li>Manajemen file digital dan repository</li>
+        </ul>
+    </div>
+
+    <div class="role-section">
+        <h3 id="circulation-staff">Circulation Staff</h3>
+        <p><strong>Role ID:</strong> 3 (circulation_staff)<br>
+        <strong>Permissions:</strong> <span class="permission-tag">13</span></p>
+
+        <div class="screenshot-container">
+            <img src="screenshots/roles/role-circulation-staff-dashboard.png" alt="Circulation Staff Dashboard">
+            <div class="caption">Circulation Staff Dashboard</div>
+        </div>
+
+        <p><strong>Deskripsi:</strong> Staff yang menangani proses sirkulasi di front desk.</p>
+
+        <h4>Menu yang Dapat Diakses:</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Menu</th>
+                    <th>Akses</th>
+                    <th>Keterangan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Dashboard</td><td><span class="badge badge-success">✅</span></td><td></td></tr>
+                <tr><td>Sirkulasi (Peminjaman)</td><td><span class="badge badge-success">✅</span></td><td>Create, return, renew</td></tr>
+                <tr><td>Sirkulasi (Reservasi)</td><td><span class="badge badge-success">✅</span></td><td>View, create</td></tr>
+                <tr><td>Anggota</td><td><span class="badge badge-success">✅</span></td><td>View only</td></tr>
+                <tr><td>Koleksi</td><td><span class="badge badge-success">✅</span></td><td>View only</td></tr>
+                <tr><td>Laporan</td><td><span class="badge badge-danger">❌</span></td><td>Tidak ada akses</td></tr>
+            </tbody>
+        </table>
+
+        <div class="screenshot-container">
+            <img src="screenshots/roles/role-circulation-staff-loans.png" alt="Circulation Staff - Loans">
+            <div class="caption">Circulation Staff - Loans</div>
+        </div>
+
+        <div class="screenshot-container">
+            <img src="screenshots/roles/role-circulation-staff-members.png" alt="Circulation Staff - Members">
+            <div class="caption">Circulation Staff - Members</div>
+        </div>
+
+        <h4>Proses Bisnis Utama:</h4>
+
+        <div class="workflow-step">
+            <h4>1. Peminjaman (Checkout)</h4>
+            <ol>
+                <li>Masuk ke menu Sirkulasi → Peminjaman Baru</li>
+                <li>Pilih anggota (search berdasarkan nama/ID)</li>
+                <li>Scan/input barcode koleksi yang dipinjam</li>
+                <li>Sistem hitung tanggal jatuh tempo otomatis</li>
+                <li>Klik "Simpan" untuk proses peminjaman</li>
+            </ol>
+        </div>
+
+        <div class="workflow-step">
+            <h4>2. Pengembalian (Check-in)</h4>
+            <ol>
+                <li>Buka daftar peminjaman</li>
+                <li>Cari peminjaman yang akan dikembalikan</li>
+                <li>Klik "Kembalikan"</li>
+                <li>Cek kondisi buku (baik/rusak/hilang)</li>
+                <li>Sistem hitung denda (jika terlambat)</li>
+                <li>Proses pembayaran denda (jika ada)</li>
+                <li>Selesaikan pengembalian</li>
+            </ol>
+        </div>
+
+        <div class="workflow-step">
+            <h4>3. Perpanjangan</h4>
+            <ol>
+                <li>Buka daftar peminjaman</li>
+                <li>Cari peminjaman aktif</li>
+                <li>Klik "Perpanjang"</li>
+                <li>Sistem hitung tanggal baru</li>
+                <li><strong>Syarat:</strong> max 2x perpanjangan, tidak ada reservasi</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="role-section">
+        <h3 id="catalog-staff">Catalog Staff</h3>
+        <p><strong>Role ID:</strong> 4 (catalog_staff)<br>
+        <strong>Permissions:</strong> <span class="permission-tag">19</span></p>
+
+        <div class="screenshot-container">
+            <img src="screenshots/roles/role-catalog-staff-dashboard.png" alt="Catalog Staff Dashboard">
+            <div class="caption">Catalog Staff Dashboard</div>
+        </div>
+
+        <p><strong>Deskripsi:</strong> Staff yang mengelola katalog dan koleksi perpustakaan.</p>
+
+        <h4>Menu yang Dapat Diakses:</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Menu</th>
+                    <th>Akses</th>
+                    <th>Keterangan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Dashboard</td><td><span class="badge badge-success">✅</span></td><td></td></tr>
+                <tr><td>Koleksi</td><td><span class="badge badge-success">✅</span></td><td>Create, edit, import, export</td></tr>
+                <tr><td>Perpustakaan Digital</td><td><span class="badge badge-success">✅</span></td><td>Kelola file digital</td></tr>
+                <tr><td>Repository</td><td><span class="badge badge-success">✅</span></td><td>Kelola repository</td></tr>
+                <tr><td>Aturan Peminjaman</td><td><span class="badge badge-danger">❌</span></td><td>Tidak ada akses</td></tr>
+                <tr><td>Sirkulasi</td><td><span class="badge badge-danger">❌</span></td><td>Tidak ada akses</td></tr>
+                <tr><td>Laporan</td><td><span class="badge badge-danger">❌</span></td><td>Tidak ada akses</td></tr>
+            </tbody>
+        </table>
+
+        <div class="screenshot-container">
+            <img src="screenshots/roles/role-catalog-staff-collections.png" alt="Catalog Staff - Collections">
+            <div class="caption">Catalog Staff - Collections</div>
+        </div>
+
+        <h4>Proses Bisnis Utama:</h4>
+
+        <div class="workflow-step">
+            <h4>1. Entry Koleksi Baru</h4>
+            <ol>
+                <li>Masuk ke menu Koleksi</li>
+                <li>Klik "Tambah Koleksi"</li>
+                <li>Isi data bibliografis:
+                    <ul>
+                        <li>Judul, Penulis, ISBN/ISSN</li>
+                        <li>Penerbit, Tahun terbit, Bahasa</li>
+                        <li>GMD (Tipe media)</li>
+                    </ul>
+                </li>
+                <li>Isi klasifikasi:
+                    <ul>
+                        <li>Nomor DDC/LC</li>
+                        <li>Subject/topik</li>
+                    </ul>
+                </li>
+                <li>Isi detail koleksi:
+                    <ul>
+                        <li>Tipe koleksi, Kategori</li>
+                        <li>Lokasi rak, Jumlah copy</li>
+                    </ul>
+                </li>
+                <li>Klik "Simpan"</li>
+                <li>Sistem generate barcode otomatis</li>
+            </ol>
+        </div>
+
+        <div class="workflow-step">
+            <h4>2. Generate Barcode & Label</h4>
+            <ol>
+                <li>Buka detail koleksi</li>
+                <li>Klik "Generate Barcode"</li>
+                <li>Pilih jenis label:
+                    <ul>
+                        <li>Barcode label (untuk buku)</li>
+                        <li>Spine label (untuk punggung buku)</li>
+                        <li>QR Code (untuk mobile)</li>
+                    </ul>
+                </li>
+                <li>Print label</li>
+                <li>Tempel di buku</li>
+            </ol>
+        </div>
+
+        <div class="workflow-step">
+            <h4>3. Import/Export Koleksi</h4>
+            <p><strong>Import:</strong></p>
+            <ol>
+                <li>Koleksi → Import</li>
+                <li>Upload file CSV/Excel</li>
+                <li>Mapping kolom</li>
+                <li>Preview data</li>
+                <li>Import data</li>
+            </ol>
+
+            <p><strong>Export:</strong></p>
+            <ol>
+                <li>Koleksi → Export</li>
+                <li>Pilih filter data</li>
+                <li>Download CSV/Excel</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="role-section">
+        <h3 id="report-viewer">Report Viewer</h3>
+        <p><strong>Role ID:</strong> 5 (report_viewer)<br>
+        <strong>Permissions:</strong> <span class="permission-tag">6</span></p>
+
+        <div class="screenshot-container">
+            <img src="screenshots/roles/role-report-viewer-dashboard.png" alt="Report Viewer Dashboard">
+            <div class="caption">Report Viewer Dashboard</div>
+        </div>
+
+        <p><strong>Deskripsi:</strong> User yang hanya bisa melihat laporan dan statistik.</p>
+
+        <h4>Menu yang Dapat Diakses:</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Menu</th>
+                    <th>Akses</th>
+                    <th>Keterangan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Dashboard</td><td><span class="badge badge-success">✅</span></td><td>Statistik dasar</td></tr>
+                <tr><td>Laporan</td><td><span class="badge badge-success">✅</span></td><td>Semua laporan (read-only)</td></tr>
+                <tr><td>Lainnya</td><td><span class="badge badge-danger">❌</span></td><td>Menu lain tidak ada akses</td></tr>
+            </tbody>
+        </table>
+
+        <div class="screenshot-container">
+            <img src="screenshots/roles/role-report-viewer-reports.png" alt="Report Viewer - Reports">
+            <div class="caption">Report Viewer - Reports</div>
+        </div>
+
+        <h4>Laporan yang Tersedia:</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Laporan</th>
+                    <th>Deskripsi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Dashboard Laporan</td><td>Ringkasan semua statistik</td></tr>
+                <tr><td>Laporan Peminjaman</td><td>Data peminjaman per periode</td></tr>
+                <tr><td>Laporan Keterlambatan</td><td>Daftar peminjaman terlambat</td></tr>
+                <tr><td>Laporan Denda</td><td>Data denda dan pembayaran</td></tr>
+                <tr><td>Laporan Koleksi</td><td>Statistik koleksi</td></tr>
+                <tr><td>Laporan Anggota</td><td>Data anggota aktif</td></tr>
+                <tr><td>Perbandingan Cabang</td><td>Multi-cabang comparison</td></tr>
+            </tbody>
+        </table>
+
+        <h4>Fitur:</h4>
+        <ul>
+            <li>Filter rentang tanggal</li>
+            <li>Export ke CSV/Excel</li>
+            <li>View charts dan grafik</li>
+            <li>Print laporan</li>
+        </ul>
+    </div>
+
+    <hr>
+    <hr>
+
+    <h2 id="proses-bisnis">Proses Bisnis</h2>
+
+    <h3>Alur Kerja Lengkap</h3>
+    <pre style="background: #f8fafc; color: #333; border: 1px solid #e5e7eb;">
+┌─────────────────┐
+│ CATALOG STAFF   │
+│ (Entry Koleksi) │
+└────────┬────────┘
+         │
+         ▼
+    ┌─────────────┐
+    │  KOLEKSI   │
+    │   SHELF    │
+    └─────────────┘
+         │
+         ▼
+┌─────────────────────┐
+│ CIRCULATION STAFF   │
+│  (Proses Peminjaman) │
+└──────────┬──────────┘
+           │
+           ▼
+      ┌─────────┐
+      │ MEMBER  │
+      │ (Pinjam) │
+      └─────────┘
+    </pre>
+
+    <h3>Matrix Akses Menu</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Menu</th>
+                <th>Super Admin</th>
+                <th>Admin</th>
+                <th>Branch Admin</th>
+                <th>Circulation Staff</th>
+                <th>Catalog Staff</th>
+                <th>Report Viewer</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Dashboard</td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+            </tr>
+            <tr>
+                <td>Sirkulasi → Peminjaman</td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+            </tr>
+            <tr>
+                <td>Sirkulasi → Peminjaman Baru</td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+            </tr>
+            <tr>
+                <td>Sirkulasi → Reservasi</td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+            </tr>
+            <tr>
+                <td>Branch</td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+            </tr>
+            <tr>
+                <td>Anggota</td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span> <small>(view only)</small></td>
+                <td><span class="badge badge-danger">❌</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+            </tr>
+            <tr>
+                <td>Koleksi</td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span> <small>(view only)</small></td>
+                <td><span class="badge badge-success">✅</span> <small>(view only)</small></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+            </tr>
+            <tr>
+                <td>Perpustakaan Digital</td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+            </tr>
+            <tr>
+                <td>Repository</td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+            </tr>
+            <tr>
+                <td>Aturan Peminjaman</td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+            </tr>
+            <tr>
+                <td>Manajemen User</td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span> <small>(limited)</small></td>
+                <td><span class="badge badge-danger">❌</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+            </tr>
+            <tr>
+                <td>Laporan</td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+            </tr>
+            <tr>
+                <td>Transfer Antar Branch</td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+            </tr>
+            <tr>
+                <td>Pengaturan</td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span></td>
+                <td><span class="badge badge-success">✅</span> <small>(view only)</small></td>
+                <td><span class="badge badge-danger">❌</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+                <td><span class="badge badge-danger">❌</span></td>
+            </tr>
         </tbody>
     </table>
 
     <hr>
 
-    <p style="text-align: center; color: #64748b; font-style: italic;">
-        <em>Manual Book ini dibuat secara otomatis menggunakan Playwright Screenshot Automation</em><br><br>
-        <strong>Dokumentasi ini mencakup 35 screenshot dari seluruh fitur Aplikasi Perpustakaan Digital</strong>
-    </p>
+    <div class="update-note">
+        <p><em>Dokumentasi ini berdasarkan testing langsung aplikasi dengan 7 role berbeda</em></p>
+        <p><em>Update: 2 Februari 2026</em></p>
+    </div>
 
 </body>
 </html>

@@ -135,13 +135,13 @@
   },
   "suites": [
     {
-      "title": "html-to-pdf.spec.js",
-      "file": "html-to-pdf.spec.js",
+      "title": "manual-to-pdf.spec.js",
+      "file": "manual-to-pdf.spec.js",
       "column": 0,
       "line": 0,
       "specs": [
         {
-          "title": "convert manual book to pdf",
+          "title": "convert manual aplikasi to pdf",
           "ok": true,
           "tags": [],
           "tests": [
@@ -156,19 +156,25 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 10787,
+                  "duration": 7253,
                   "errors": [],
                   "stdout": [
                     {
-                      "text": "📄 Converting MANUAL_BOOK_WITH_IMAGES.html to PDF...\n"
+                      "text": "📄 Reading MANUAL_APLIKASI.md...\n"
                     },
                     {
-                      "text": "✅ PDF created: MANUAL_BOOK.pdf with all images embedded\n"
+                      "text": "✅ HTML created: /home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/MANUAL_APLIKASI.html\n"
+                    },
+                    {
+                      "text": "✅ PDF created: /home/zenbook/Documents/Data/Kerjaan/Yogi/aplikasi-perpustakaan/laravel/MANUAL_APLIKASI.pdf\n"
+                    },
+                    {
+                      "text": "📊 PDF size: 7.82 MB\n"
                     }
                   ],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-02-02T04:17:54.955Z",
+                  "startTime": "2026-02-03T09:11:48.541Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -176,9 +182,9 @@
               "status": "expected"
             }
           ],
-          "id": "90b5da9ba4d98d3233ff-676678c01d0e92cf58e7",
-          "file": "html-to-pdf.spec.js",
-          "line": 7,
+          "id": "e6d1a5b31fd5e21f28f2-92dce92cf07f1c52243a",
+          "file": "manual-to-pdf.spec.js",
+          "line": 9,
           "column": 5
         }
       ]
@@ -186,8 +192,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-02-02T04:17:53.417Z",
-    "duration": 12622.66,
+    "startTime": "2026-02-03T09:11:47.372Z",
+    "duration": 8559.637,
     "expected": 1,
     "skipped": 0,
     "unexpected": 0,

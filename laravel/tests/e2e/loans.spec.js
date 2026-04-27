@@ -5,22 +5,27 @@ import { test, expect } from '@playwright/test';
  * Tests for loan management functionality
  */
 
+const BASE_URL = process.env.BASE_URL || 'http://localhost:8000';
+
 // Helper function to login
 async function login(page) {
-  await page.goto('/login');
+  await page.goto(`${BASE_URL}/login`);
   await page.getByLabel('Email').fill('admin@library.test');
   await page.getByLabel('Password').fill('password123');
-  await page.getByRole('button', { name: /Masuk|Log/i }).click();
-  await expect(page).toHaveURL(/\/dashboard/);
+  await page.getByRole('button', { name: 'Masuk' }).click();
+  await page.waitForURL(/\/dashboard/, { timeout: 10000 });
+  await page.waitForLoadState('networkidle');
 }
 
 test.describe('Loans & Circulation', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, context }) => {
+    // Clear all cookies and storage before each test
+    await context.clearCookies();
     await login(page);
   });
 
   test('should display loans list', async ({ page }) => {
-    await page.goto('/loans');
+    await page.goto(`${BASE_URL}/loans`);
 
     // Check page title
     await expect(page).toHaveTitle(/Peminjaman|Loans/);
@@ -30,7 +35,7 @@ test.describe('Loans & Circulation', () => {
   });
 
   test('should create new loan', async ({ page }) => {
-    await page.goto('/loans');
+    await page.goto(`${BASE_URL}/loans`);
 
     // Click create button
     await page.getByRole('link', { name: /\+ Peminjaman|New Loan/i }).click();
@@ -44,7 +49,7 @@ test.describe('Loans & Circulation', () => {
   });
 
   test('should filter loans by status', async ({ page }) => {
-    await page.goto('/loans');
+    await page.goto(`${BASE_URL}/loans`);
 
     // Check for status filter
     const statusFilter = page.locator('select').filter({ hasText: /Status/i });
@@ -60,7 +65,7 @@ test.describe('Loans & Circulation', () => {
   });
 
   test('should search loans by member name', async ({ page }) => {
-    await page.goto('/loans');
+    await page.goto(`${BASE_URL}/loans`);
 
     // Type in search box
     const searchInput = page.getByPlaceholder(/Cari|Search/i);
@@ -74,7 +79,7 @@ test.describe('Loans & Circulation', () => {
   });
 
   test('should display loan details', async ({ page }) => {
-    await page.goto('/loans');
+    await page.goto(`${BASE_URL}/loans`);
 
     // Find first loan row
     const firstLoan = page.locator('tbody tr').first();
@@ -98,7 +103,7 @@ test.describe('Loans & Circulation', () => {
   });
 
   test('should return a book', async ({ page }) => {
-    await page.goto('/loans');
+    await page.goto(`${BASE_URL}/loans`);
 
     // Find active loan
     const activeLoan = page.locator('tbody tr').filter({ hasText: /Aktif|Active/i }).first();
@@ -125,7 +130,7 @@ test.describe('Loans & Circulation', () => {
   });
 
   test('should renew a loan', async ({ page }) => {
-    await page.goto('/loans');
+    await page.goto(`${BASE_URL}/loans`);
 
     // Find active loan
     const activeLoan = page.locator('tbody tr').filter({ hasText: /Aktif|Active/i }).first();
@@ -153,7 +158,7 @@ test.describe('Overdue Loans', () => {
 
   test('should display overdue loans report', async ({ page }) => {
     // Navigate to overdue report
-    await page.goto('/reports/overdue');
+    await page.goto(`${BASE_URL}/reports/overdue`);
 
     // Check page title
     await expect(page).toHaveTitle(/Keterlambatan|Overdue/);
@@ -163,7 +168,7 @@ test.describe('Overdue Loans', () => {
   });
 
   test('should export overdue report to CSV', async ({ page }) => {
-    await page.goto('/reports/overdue');
+    await page.goto(`${BASE_URL}/reports/overdue`);
 
     // Click export button
     const downloadPromise = page.waitForEvent('download');

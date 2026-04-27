@@ -34,11 +34,11 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
 
             // Members can be seeded after users
-            // MemberSeeder::class,
+            MemberSeeder::class,
 
             // Collections and items can be seeded after reference data
-            // CollectionSeeder::class,
-            // CollectionItemSeeder::class,
+            CollectionSeeder::class,
+            CollectionItemSeeder::class,
         ]);
     }
 }

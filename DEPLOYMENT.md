@@ -133,6 +133,27 @@ crontab -e
 
 ## Deployment ke Production
 
+### Quick Deployment (Automated)
+
+Gunakan script deployment untuk instalasi otomatis:
+
+```bash
+cd laravel
+./deploy.sh
+```
+
+Script ini akan menjalankan:
+1. Install dependencies (composer & npm)
+2. Build assets
+3. Clear & cache configurations
+4. Run migrations
+5. Seed database
+6. Create storage links
+7. Set permissions
+8. Restart queue workers
+
+### Manual Deployment (Step by Step)
+
 ### 1. Optimasi Composer
 
 ```bash
@@ -280,6 +301,35 @@ sudo supervisorctl status perpustakaan-worker:*
 ---
 
 ## Troubleshooting
+
+### Table not found (SQLSTATE[42S02])
+
+**Error:** `Base table or view not found: 1146 Table 'database.collections' doesn't exist`
+
+**Solusi:** Jalankan migration database:
+
+```bash
+# Jalankan semua migration
+php artisan migrate --force
+
+# Cek migration status
+php artisan migrate:status
+
+# Jika ada masalah dengan migration tertentu, rollback dan jalankan ulang
+php artisan migrate:refresh --force
+```
+
+**Penyebab Umum:**
+1. Belum menjalankan `php artisan migrate` setelah deploy
+2. Database yang terhubung berbeda dengan yang sudah di-migrate
+3. Migration gagal di tengah proses
+
+**Cek koneksi database:**
+```bash
+php artisan tinker
+>>> \DB::connection()->getDatabaseName();
+>>> \DB::table('migrations')->count();
+```
 
 ### 404 Error pada semua halaman
 - Pastikan `mod_rewrite` aktif (Apache)

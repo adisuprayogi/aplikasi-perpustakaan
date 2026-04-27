@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-guest-layout :pageTitle="'Login - ' . config('app.name', 'Perpustakaan')">
     <x-auth-session-status :status="session('status')" />
 
     <div class="mb-8">

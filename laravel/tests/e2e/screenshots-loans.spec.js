@@ -16,7 +16,7 @@ async function login(page) {
   await page.goto(`${BASE_URL}/login`);
   await page.getByLabel('Email').fill('admin@library.test');
   await page.getByLabel('Password').fill('password123');
-  await page.getByRole('button', { name: /Masuk|Log/i }).click();
+  await page.getByRole('button', { name: 'Masuk' }).click();
   await page.waitForURL(/\/dashboard/, { timeout: 10000 });
   await page.waitForLoadState('networkidle');
 }

@@ -5,22 +5,27 @@ import { test, expect } from '@playwright/test';
  * Tests for member management functionality
  */
 
+const BASE_URL = process.env.BASE_URL || 'http://localhost:8000';
+
 // Helper function to login
 async function login(page) {
-  await page.goto('/login');
+  await page.goto(`${BASE_URL}/login`);
   await page.getByLabel('Email').fill('admin@library.test');
   await page.getByLabel('Password').fill('password123');
-  await page.getByRole('button', { name: /Masuk|Log/i }).click();
-  await expect(page).toHaveURL(/\/dashboard/);
+  await page.getByRole('button', { name: 'Masuk' }).click();
+  await page.waitForURL(/\/dashboard/, { timeout: 10000 });
+  await page.waitForLoadState('networkidle');
 }
 
 test.describe('Members', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, context }) => {
+    // Clear all cookies and storage before each test
+    await context.clearCookies();
     await login(page);
   });
 
   test('should display members list', async ({ page }) => {
-    await page.goto('/members');
+    await page.goto(`${BASE_URL}/members`);
 
     // Check page title
     await expect(page).toHaveTitle(/Anggota|Members/);
@@ -31,7 +36,7 @@ test.describe('Members', () => {
   });
 
   test('should search members by name or member number', async ({ page }) => {
-    await page.goto('/members');
+    await page.goto(`${BASE_URL}/members`);
 
     // Type in search box
     await page.getByPlaceholder(/Cari|Search/i).fill('test');
@@ -44,7 +49,7 @@ test.describe('Members', () => {
   });
 
   test('should filter members by type', async ({ page }) => {
-    await page.goto('/members');
+    await page.goto(`${BASE_URL}/members`);
 
     // Check for type filter
     const typeFilter = page.getByLabel(/Tipe|Type/i);
@@ -60,7 +65,7 @@ test.describe('Members', () => {
   });
 
   test('should navigate to create member page', async ({ page }) => {
-    await page.goto('/members');
+    await page.goto(`${BASE_URL}/members`);
 
     // Click create button
     await page.getByRole('link', { name: /\+ Tambah|Add/i }).click();
@@ -76,7 +81,7 @@ test.describe('Members', () => {
   });
 
   test('should create new member', async ({ page }) => {
-    await page.goto('/members/create');
+    await page.goto(`${BASE_URL}/members/create`);
 
     // Generate unique test data
     const timestamp = Date.now();
@@ -103,7 +108,7 @@ test.describe('Members', () => {
   });
 
   test('should display member details', async ({ page }) => {
-    await page.goto('/members');
+    await page.goto(`${BASE_URL}/members`);
 
     // Find first member
     const firstMember = page.locator('tbody tr').first();
@@ -123,7 +128,7 @@ test.describe('Members', () => {
   });
 
   test('should extend member validity', async ({ page }) => {
-    await page.goto('/members');
+    await page.goto(`${BASE_URL}/members`);
 
     // Find first member
     const firstMember = page.locator('tbody tr').first();
@@ -152,7 +157,7 @@ test.describe('Members', () => {
   });
 
   test('should suspend member', async ({ page }) => {
-    await page.goto('/members');
+    await page.goto(`${BASE_URL}/members`);
 
     // Find first member
     const firstMember = page.locator('tbody tr').first();
@@ -181,7 +186,7 @@ test.describe('Members', () => {
   });
 
   test('should display member current loans', async ({ page }) => {
-    await page.goto('/members');
+    await page.goto(`${BASE_URL}/members`);
 
     // Find first member
     const firstMember = page.locator('tbody tr').first();
@@ -203,7 +208,7 @@ test.describe('Members', () => {
   });
 
   test('should be responsive on mobile', async ({ page }) => {
-    await page.goto('/members');
+    await page.goto(`${BASE_URL}/members`);
 
     // Set mobile viewport
     await page.setViewportSize({ width: 375, height: 667 });
@@ -211,8 +216,8 @@ test.describe('Members', () => {
     // Reload page
     await page.reload();
 
-    // Check that mobile view loads
-    await expect(page.getByText(/Anggota|Members/i)).toBeVisible();
+    // Check that mobile view loads - use h1 heading for more specific selector
+    await expect(page.getByRole('heading', { name: 'Anggota Perpustakaan' })).toBeVisible();
 
     // Check for mobile card view
     const mobileCards = page.locator('.mobile-card');

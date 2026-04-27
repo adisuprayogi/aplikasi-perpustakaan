@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panduan Lengkap Aplikasi Perpustakaan Digital</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px;
+            color: #333;
+            background: white;
+        }
+
+        .cover {
+            text-align: center;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            border-radius: 20px;
+            margin-bottom: 40px;
+        }
+
+        .cover h1 {
+            color: white;
+            font-size: 2.5em;
+            margin: 0;
+            border: none;
+        }
+
+        .cover .subtitle {
+            font-size: 1.3em;
+            margin-top: 20px;
+            opacity: 0.9;
+        }
+
+        .cover .info {
+            margin-top: 40px;
+            font-size: 0.95em;
+            opacity: 0.9;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px 0;
+        }
+
+        h1 {
+            color: #1e40af;
+            border-bottom: 3px solid #1e40af;
+            padding-bottom: 10px;
+            page-break-after: avoid;
+            font-size: 2em;
+            margin-top: 50px;
+        }
+
+        h2 {
+            color: #1e40af;
+            margin-top: 50px;
+            page-break-after: avoid;
+            font-size: 1.5em;
+            border-bottom: 2px solid #3b82f6;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #3b82f6;
+            margin-top: 30px;
+            page-break-after: avoid;
+            font-size: 1.3em;
+        }
+
+        h4 {
+            color: #64748b;
+            margin-top: 20px;
+            page-break-after: avoid;
+            font-size: 1.1em;
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            color: #64748b;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #e5e7eb;
+            margin: 30px 0;
+        }
+
+        .toc {
+            background: #f8fafc;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 1px solid #e2e8f0;
+        }
+
+        .toc h2 {
+            margin-top: 0;
+            color: #1e40af;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .toc > ul {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .toc li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .toc li:last-child {
+            border-bottom: none;
+        }
+
+        .toc a {
+            color: #3b82f6;
+            text-decoration: none;
+            display: block;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            page-break-inside: avoid;
+            font-size: 0.95em;
+        }
+
+        th {
+            background: #1e40af;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 10px 12px;
+            border: 1px solid #e5e7eb;
+        }
+
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        code {
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        pre code {
+            background: transparent;
+            padding: 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin: 0 2px;
+        }
+
+        .badge-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .badge-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .badge-warning {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 5px;
+        }
+
+        .screenshot-container {
+            margin: 30px 0;
+            page-break-inside: avoid;
+        }
+
+        .screenshot-container img {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .screenshot-caption {
+            font-style: italic;
+            color: #64748b;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        .info-box {
+            background: #fef3c7;
+            border-left: 5px solid #f59e0b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .info-box.warning {
+            background: #fee2e2;
+            border-left-color: #ef4444;
+        }
+
+        .info-box.info {
+            background: #dbeafe;
+            border-left-color: #3b82f6;
+        }
+
+        .info-box.success {
+            background: #d1fae5;
+            border-left-color: #10b981;
+        }
+
+        .step {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 5px solid #3b82f6;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 12px;
+            page-break-inside: avoid;
+        }
+
+        .step h4 {
+            margin-top: 0;
+            color: #3b82f6;
+            font-size: 1.1em;
+        }
+
+        .step-number {
+            display: inline-block;
+            background: #3b82f6;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .feature-card .emoji {
+            font-size: 2.5em;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .feature-card h4 {
+            color: #1e40af;
+            margin: 10px 0;
+        }
+
+        .role-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 25px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin: 5px 2px;
+        }
+
+        .role-super { background: #7c3aed; color: white; }
+        .role-admin { background: #2563eb; color: white; }
+        .role-branch { background: #0891b2; color: white; }
+        .role-circulation { background: #059669; color: white; }
+        .role-catalog { background: #d97706; color: white; }
+        .role-report { background: #dc2626; color: white; }
+        .role-member { background: #65a30d; color: white; }
+
+        @media print {
+            body {
+                padding: 20px;
+            }
+
+            h1, h2, h3, h4 {
+                page-break-after: avoid;
+            }
+
+            table {
+                page-break-inside: avoid;
+            }
+
+            pre {
+                page-break-inside: avoid;
+            }
+
+            .screenshot-container {
+                page-break-inside: avoid;
+            }
+
+            .step {
+                page-break-inside: avoid;
+            }
+
+            .cover {
+                page-break-after: always;
+            }
+        }
+
+        .update-note {
+            background: #fef3c7;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 30px 0;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="cover">
+        <h1>📚 PANDUAN LENGKAP</h1>
+        <div class="subtitle">Aplikasi Perpustakaan Digital</div>
+        <div class="info">
+            <p>Dokumentasi Penggunaan Lengkap dengan Screenshot</p>
+            <p>Versi 1.0 | 2 Februari 2026</p>
+        </div>
+    </div>
+
+    <hr>
+
+    <h1>DAFTAR ISI</h1>
+
+    <div class="toc">
+        <h2>Daftar Isi</h2>
+        <ul>
+            <li><a href="#pendahuluan">1. Pendahuluan</a></li>
+            <li><a href="#fitur-publik">2. Fitur Publik (Tanpa Login)</a>
+                <ul>
+                    <li><a href="#opac">2.1 OPAC - Pencarian Buku</a></li>
+                    <li><a href="#digital-library">2.2 Perpustakaan Digital</a></li>
+                    <li><a href="#repository">2.3 Repository Institusi</a></li>
+                </ul>
+            </li>
+            <li><a href="#login">3. Login & Registrasi</a></li>
+            <li><a href="#roles">4. Role & Permissions</a></li>
+            <li><a href="#panduan-role">5. Panduan Per Role</a>
+                <ul>
+                    <li><a href="#super-admin">5.1 Super Admin</a></li>
+                    <li><a href="#admin">5.2 Admin</a></li>
+                    <li><a href="#branch-admin">5.3 Branch Admin</a></li>
+                    <li><a href="#circulation-staff">5.4 Circulation Staff</a></li>
+                    <li><a href="#catalog-staff">5.5 Catalog Staff</a></li>
+                    <li><a href="#report-viewer">5.6 Report Viewer</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <h1 id="pendahuluan">1. PENDAHULUAN</h1>
+
+    <p><strong>Aplikasi Perpustakaan Digital</strong> adalah sistem manajemen perpustakaan terintegrasi dengan berbagai fitur untuk memudahkan pengelolaan dan akses koleksi perpustakaan.</p>
+
+    <h2>Fitur Utama:</h2>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <span class="emoji">🔍</span>
+            <h4>OPAC Online</h4>
+            <p>Pencarian buku real-time</p>
+        </div>
+        <div class="feature-card">
+            <span class="emoji">📚</span>
+            <h4>Sirkulasi</h4>
+            <p>Peminjaman & pengembalian</p>
+        </div>
+        <div class="feature-card">
+            <span class="emoji">📁</span>
+            <h4>Digital Library</h4>
+            <p>E-book & jurnal online</p>
+        </div>
+        <div class="feature-card">
+            <span class="emoji">📊</span>
+            <h4>Laporan</h4>
+            <p>Statistik & analisis</p>
+        </div>
+    </div>
+
+    <hr>
+
+    <h1 id="fitur-publik">2. FITUR PUBLIK (TANPA LOGIN)</h1>
+
+    <h2 id="opac">2.1 OPAC - Pencarian Buku</h2>
+
+<div class="screenshot-container">
+    <img src="tests/e2e/screenshots/manual-book/public/opac.png" alt="OPAC" loading="lazy">
+    <div class="screenshot-caption">Gambar: Halaman pencarian buku perpustakaan</div>
+</div>
+
+<div class="screenshot-container">
+    <img src="tests/e2e/screenshots/manual-book/public/opac-search.png" alt="OPAC Search" loading="lazy">
+    <div class="screenshot-caption">Gambar: Tampilan hasil pencarian</div>
+</div>
+
+    <p>OPAC (Online Public Access Catalog) memungkinkan Anda mencari koleksi buku tanpa perlu login.</p>
+
+    <div class="step">
+        <h4><span class="step-number">1</span>Cara Mencari Buku</h4>
+        <ol>
+            <li>Buka halaman OPAC</li>
+            <li>Ketik judul, penulis, atau kata kunci</li>
+            <li>Klik tombol <strong>Cari</strong></li>
+        </ol>
+    </div>
+
+    <h2 id="digital-library">2.2 Perpustakaan Digital</h2>
+
+<div class="screenshot-container">
+    <img src="tests/e2e/screenshots/manual-book/public/digital-library.png" alt="Digital Library" loading="lazy">
+    <div class="screenshot-caption">Gambar: Halaman perpustakaan digital</div>
+</div>
+
+    <p>Perpustakaan Digital menyediakan akses ke e-book, jurnal, skripsi, dan tesis.</p>
+
+    <h2 id="repository">2.3 Repository Institusi</h2>
+
+<div class="screenshot-container">
+    <img src="tests/e2e/screenshots/manual-book/public/repository.png" alt="Repository" loading="lazy">
+    <div class="screenshot-caption">Gambar: Halaman repository karya ilmiah</div>
+</div>
+
+    <p>Repository menyimpan karya ilmiah mahasiswa, dosen, dan staf institusi.</p>
+
+    <hr>
+
+    <h1 id="login">3. LOGIN & REGISTRASI</h1>
+
+<div class="screenshot-container">
+    <img src="tests/e2e/screenshots/manual-book/public/login.png" alt="Halaman Login" loading="lazy">
+    <div class="screenshot-caption">Gambar: Form login aplikasi</div>
+</div>
+
+    <div class="step">
+        <h4><span class="step-number">1</span>Cara Login</h4>
+        <ol>
+            <li>Buka halaman Login</li>
+            <li>Masukkan Email dan Password</li>
+            <li>Klik <strong>Masuk</strong></li>
+        </ol>
+    </div>
+
+    <hr>
+
+    <h1 id="roles">4. ROLE & PERMISSIONS</h1>
+
+    <h2>Role yang Tersedia:</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Role</th>
+                <th>Permissions</th>
+                <th>Deskripsi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><span class="role-badge role-super">super_admin</span></td>
+                <td>77</td>
+                <td>Full akses ke seluruh sistem</td>
+            </tr>
+            <tr>
+                <td><span class="role-badge role-admin">admin</span></td>
+                <td>77</td>
+                <td>Full akses sama seperti super_admin</td>
+            </tr>
+            <tr>
+                <td><span class="role-badge role-branch">branch_admin</span></td>
+                <td>39</td>
+                <td>Admin cabang - kelola anggota, sirkulasi</td>
+            </tr>
+            <tr>
+                <td><span class="role-badge role-circulation">circulation_staff</span></td>
+                <td>13</td>
+                <td>Staff sirkulasi - peminjaman & pengembalian</td>
+            </tr>
+            <tr>
+                <td><span class="role-badge role-catalog">catalog_staff</span></td>
+                <td>19</td>
+                <td>Staff katalog - kelola koleksi & katalog</td>
+            </tr>
+            <tr>
+                <td><span class="role-badge role-report">report_viewer</span></td>
+                <td>6</td>
+                <td>Viewer laporan - hanya melihat laporan</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr>
+
+    <h1 id="panduan-role">5. PANDUAN PER ROLE</h1>
+
+    <h2 id="super-admin">5.1 Super Admin</h2>
+    <p><span class="role-badge role-super">super_admin</span> - Administrator tertinggi dengan akses penuh.</p>
+
+<div class="screenshot-container">
+    <img src="tests/e2e/screenshots/manual-book/super_admin/01-dashboard.png" alt="Dashboard Super Admin" loading="lazy">
+    <div class="screenshot-caption">Gambar: Tampilan dashboard Super Admin</div>
+</div>
+
+    <h3>Menu yang Dapat Diakses:</h3>
+    <ul>
+        <li>✅ Dashboard</li>
+        <li>✅ Manajemen User</li>
+        <li>✅ Manajemen Branch (Cabang)</li>
+        <li>✅ Manajemen Anggota</li>
+        <li>✅ Koleksi</li>
+        <li>✅ Sirkulasi</li>
+        <li>✅ Laporan</li>
+        <li>✅ Pengaturan Sistem</li>
+    </ul>
+    <div class="page-break"></div>
+
+    <h2 id="admin">5.2 Admin</h2>
+    <p><span class="role-badge role-admin">admin</span> - Administrator dengan akses penuh.</p>
+
+<div class="screenshot-container">
+    <img src="tests/e2e/screenshots/manual-book/admin/01-dashboard.png" alt="Dashboard Admin" loading="lazy">
+    <div class="screenshot-caption">Gambar: Tampilan dashboard Admin</div>
+</div>
+
+    <p>Admin memiliki akses yang sama dengan Super Admin.</p>
+    <div class="page-break"></div>
+
+    <h2 id="branch-admin">5.3 Branch Admin</h2>
+    <p><span class="role-badge role-branch">branch_admin</span> - Administrator cabang dengan 39 permissions.</p>
+
+<div class="screenshot-container">
+    <img src="tests/e2e/screenshots/manual-book/branch_admin/01-dashboard.png" alt="Dashboard Branch Admin" loading="lazy">
+    <div class="screenshot-caption">Gambar: Tampilan dashboard Branch Admin</div>
+</div>
+
+    <h3>Menu yang Dapat Diakses:</h3>
+    <ul>
+        <li>✅ Dashboard</li>
+        <li>✅ Manajemen Anggota</li>
+        <li>✅ Sirkulasi (Peminjaman, Reservasi)</li>
+        <li>✅ Laporan Cabang</li>
+        <li>❌ Manajemen Branch</li>
+    </ul>
+    <div class="page-break"></div>
+
+    <h2 id="circulation-staff">5.4 Circulation Staff</h2>
+    <p><span class="role-badge role-circulation">circulation_staff</span> - Staff sirkulasi dengan 13 permissions.</p>
+
+<div class="screenshot-container">
+    <img src="tests/e2e/screenshots/manual-book/circulation_staff/01-dashboard.png" alt="Dashboard Circulation Staff" loading="lazy">
+    <div class="screenshot-caption">Gambar: Tampilan dashboard Circulation Staff</div>
+</div>
+
+    <h3>Fokus Utama:</h3>
+    <ul>
+        <li>✅ Peminjaman (Checkout)</li>
+        <li>✅ Pengembalian (Check-in)</li>
+        <li>✅ Perpanjangan</li>
+        <li>✅ Reservasi</li>
+    </ul>
+    <div class="page-break"></div>
+
+    <h2 id="catalog-staff">5.5 Catalog Staff</h2>
+    <p><span class="role-badge role-catalog">catalog_staff</span> - Staff katalog dengan 19 permissions.</p>
+
+<div class="screenshot-container">
+    <img src="tests/e2e/screenshots/manual-book/catalog_staff/01-dashboard.png" alt="Dashboard Catalog Staff" loading="lazy">
+    <div class="screenshot-caption">Gambar: Tampilan dashboard Catalog Staff</div>
+</div>
+
+    <h3>Fokus Utama:</h3>
+    <ul>
+        <li>✅ Entry Koleksi Baru</li>
+        <li>✅ Import/Export Koleksi</li>
+        <li>✅ Generate Barcode & Label</li>
+        <li>✅ Perpustakaan Digital</li>
+        <li>✅ Repository</li>
+    </ul>
+    <div class="page-break"></div>
+
+    <h2 id="report-viewer">5.6 Report Viewer</h2>
+    <p><span class="role-badge role-report">report_viewer</span> - Viewer laporan dengan 6 permissions.</p>
+
+<div class="screenshot-container">
+    <img src="tests/e2e/screenshots/manual-book/report_viewer/01-dashboard.png" alt="Dashboard Report Viewer" loading="lazy">
+    <div class="screenshot-caption">Gambar: Tampilan dashboard Report Viewer</div>
+</div>
+
+    <h3>Laporan yang Tersedia:</h3>
+    <ul>
+        <li>✅ Laporan Peminjaman</li>
+        <li>✅ Laporan Keterlambatan</li>
+        <li>✅ Laporan Denda</li>
+        <li>✅ Laporan Koleksi</li>
+        <li>✅ Laporan Anggota</li>
+    </ul>
+
+    <hr>
+
+    <div class="update-note">
+        <p><strong>Dokumentasi ini berdasarkan aplikasi perpustakaan digital dengan 7 role berbeda.</strong></p>
+        <p>Update: 2 Februari 2026 | Versi: 1.0</p>
+    </div>
+
+    <hr>
+
+    <p style="text-align: center; color: #64748b; margin-top: 50px;">
+        © 2026 Perpustakaan Tazkia. All rights reserved.
+    </p>
+
+</body>
+</html>

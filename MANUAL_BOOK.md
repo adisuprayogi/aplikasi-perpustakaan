@@ -8,18 +8,15 @@
 ## Daftar Isi
 
 1. [Pendahuluan](#pendahuluan)
-2. [Halaman Publik](#halaman-publik)
-   - [OPAC (Online Public Access Catalog)](#opac-online-public-access-catalog)
-   - [Digital Library](#digital-library)
-   - [Repository](#repository)
-   - [Halaman Login](#halaman-login)
-3. [Dashboard Admin](#dashboard-admin)
-4. [Manajemen Koleksi](#manajemen-koleksi)
-5. [Manajemen Anggota](#manajemen-anggota)
-6. [Sirkulasi & Peminjaman](#sirkulasi--peminjaman)
-7. [Laporan](#laporan)
-8. [Pengaturan & Admin](#pengaturan--admin)
-9. [Tampilan Mobile](#tampilan-mobile)
+2. [User Roles & Login](#user-roles--login)
+3. [Panduan Per Role](#panduan-per-role)
+   - [Super Admin](#super-admin)
+   - [Admin](#admin)
+   - [Branch Admin](#branch-admin)
+   - [Circulation Staff](#circulation-staff)
+   - [Catalog Staff](#catalog-staff)
+   - [Report Viewer](#report-viewer)
+4. [Proses Bisnis](#proses-bisnis)
 
 ---
 
@@ -27,535 +24,346 @@
 
 ## Pendahuluan
 
-Aplikasi Perpustakaan Digital adalah sistem manajemen perpustakaan terintegrasi yang mencakup:
-- Katalog buku online (OPAC)
-- Manajemen koleksi fisik dan digital
-- Sistem sirkulasi (peminjaman & pengembalian)
-- Manajemen anggota dan denda
-- Laporan statistik dan analitik
-- Repository institusi
+Aplikasi Perpustakaan Digital adalah sistem manajemen perpustakaan terintegrasi dengan 7 role berbeda.
 
 ---
 
 ---
 
-## Halaman Publik
+## User Roles & Login
 
-### OPAC (Online Public Access Catalog)
+### Role yang Tersedia
 
-OPAC memungkinkan pengunjung untuk mencari dan menelusuri katalog koleksi perpustakaan.
+| Role | Jumlah Permissions | Deskripsi |
+|------|-------------------|-----------|
+| **super_admin** | 77 | Full akses ke seluruh sistem |
+| **admin** | 77 | Full akses sama seperti super_admin |
+| **branch_admin** | 39 | Admin cabang - kelola cabang, anggota, sirkulasi |
+| **circulation_staff** | 13 | Staff sirkulasi - peminjaman & pengembalian |
+| **catalog_staff** | 19 | Staff katalog - kelola koleksi & katalog |
+| **report_viewer** | 6 | Viewer laporan - hanya melihat laporan |
+| **member** | 6 | Anggota perpustakaan |
 
-![OPAC Homepage](screenshots/01-opac-homepage.png)
+### Login Credentials
 
-**Gambar 1: Halaman Beranda OPAC**
-
-Fitur utama halaman OPAC:
-- Search bar untuk pencarian cepat
-- Akses ke pencarian lanjutan
-- Navigasi ke Digital Library dan Repository
-
----
-
-#### Pencarian OPAC
-
-Pengguna dapat mencari koleksi berdasarkan judul, penulis, ISBN, atau kata kunci.
-
-![OPAC Search Results](screenshots/02-opac-search-results.png)
-
-**Gambar 2: Hasil Pencarian OPAC**
-
-Hasil pencarian menampilkan:
-- Daftar koleksi yang sesuai
-- Informasi judul, penulis, dan kategori
-- Status ketersediaan
-
----
-
-#### Pencarian Lanjutan
-
-Untuk pencarian lebih spesifik, gunakan fitur Advanced Search.
-
-![OPAC Advanced Search](screenshots/03-opac-advanced-search.png)
-
-**Gambar 3: Pencarian Lanjutan OPAC**
-
-Filter pencarian lanjutan:
-- Kategori/koleksi
-- Bahasa
-- Tahun terbit
-- Penerbit
-
----
-
-### Digital Library
-
-Digital Library menyediakan akses ke koleksi digital seperti e-book, jurnal, dan artikel.
-
-![Digital Library](screenshots/04-digital-library.png)
-
-**Gambar 4: Halaman Digital Library**
-
-Fitur:
-- Browser kategori digital
-- Download file digital
-- Preview dokumen
-
----
-
-### Repository
-
-Repository menyimpan karya ilmiah, skripsi, tesis, dan publikasi institusi.
-
-![Repository](screenshots/05-repository.png)
-
-**Gambar 5: Halaman Repository**
-
-Kategori repository:
-- Skripsi
-- Tesis
-- Disertasi
-- Jurnal
-- Prosiding
-
----
-
-### Halaman Login
-
-Untuk mengakses fitur admin, staf harus login terlebih dahulu.
-
-![Login Page](screenshots/06-login-page.png)
-
-**Gambar 6: Halaman Login**
-
-Kredensial default:
-- Email: `admin@library.test`
-- Password: `password123`
+| Role | Email | Password |
+|------|-------|----------|
+| Super Admin | admin@kampus.ac.id | super123 |
+| Admin | admin@library.test | password123 |
+| Branch Admin | pusat@kampus.ac.id | branch123 |
+| Circulation Staff | lib-fkip@kampus.ac.id | circulation123 |
+| Catalog Staff | catalog@library.test | catalog123 |
+| Report Viewer | report@library.test | report123 |
 
 ---
 
 ---
 
-## Dashboard Admin
-
-Dashboard menampilkan ringkasan statistik dan visualisasi data perpustakaan.
-
-![Dashboard](screenshots/07-dashboard.png)
-
-**Gambar 7: Dashboard Admin**
+## Panduan Per Role
 
 ---
 
-### Statistik Dashboard
+### Super Admin
 
-Ringkasan statistik penting ditampilkan dalam bentuk kartu:
+**Role ID:** 1 (super_admin)
+**Permissions:** 77 (Full Access)
 
-![Dashboard Stats](screenshots/08-dashboard-stats.png)
+![Super Admin Dashboard](screenshots/roles/role-super-admin-dashboard.png)
 
-**Gambar 8: Kartu Statistik Dashboard**
+**Deskripsi:** Administrator tertinggi dengan akses penuh ke seluruh sistem.
 
-Statistik yang ditampilkan:
-- Total Koleksi
-- Total Anggota
-- Peminjaman Aktif
-- Denda Tertunda
+**Menu yang Dapat Diakses:**
 
----
+| Menu | Akses |
+|------|-------|
+| Dashboard | ✅ |
+| Sirkulasi (Peminjaman, Reservasi) | ✅ |
+| Branch | ✅ |
+| Anggota | ✅ |
+| Koleksi | ✅ |
+| Perpustakaan Digital | ✅ |
+| Repository | ✅ |
+| Aturan Peminjaman | ✅ |
+| Manajemen User | ✅ |
+| Laporan (semua) | ✅ |
+| Transfer Antar Branch | ✅ |
+| Pengaturan | ✅ |
 
-### Grafik Dashboard
-
-Visualisasi data untuk analisis tren dan pola:
-
-![Dashboard Charts](screenshots/09-dashboard-charts.png)
-
-**Gambar 9: Grafik Dashboard**
-
-Grafik tersedia:
-- Tren Sirkulasi (Line Chart)
-- Koleksi berdasarkan Kategori (Doughnut Chart)
-- Anggota berdasarkan Tipe (Doughnut Chart)
-- Item Populer (Bar Chart)
-
----
-
----
-
-## Manajemen Koleksi
-
-Menu Koleksi mengelola semua item fisik di perpustakaan (buku, majalah, multimedia).
-
-![Collections List](screenshots/10-collections-list.png)
-
-**Gambar 10: Daftar Koleksi**
-
-Fitur manajemen koleksi:
-- Pencarian dan filter
-- Import/Export data
-- Manajemen item (copy)
-- Label barcode
-- Status ketersediaan
+**Tanggung Jawab:**
+- Manajemen user dan role
+- Konfigurasi sistem
+- Manajemen cabang
+- Monitor semua aktivitas
+- Export laporan global
 
 ---
 
-#### Tambah Koleksi Baru
+### Admin
 
-Formulir untuk menambah koleksi baru ke sistem:
+**Role ID:** 7 (admin)
+**Permissions:** 77 (Full Access)
 
-![Collections Create](screenshots/12-collections-create.png)
+![Admin Dashboard](screenshots/roles/role-admin-dashboard.png)
 
-**Gambar 11: Form Tambah Koleksi**
+**Deskripsi:** Administrator dengan akses penuh sama seperti Super Admin.
 
-Field yang diisi:
-- Judul
-- Penulis/Pengarang
-- ISBN/ISSN
-- Penerbit
-- Tahun terbit
-- Kategori
-- Jumlah copy
-- Lokasi rak
+**Menu yang Dapat Diakses:** Sama seperti Super Admin
 
 ---
 
----
+### Branch Admin
 
-## Manajemen Anggota
+**Role ID:** 2 (branch_admin)
+**Permissions:** 39
 
-Menu Anggota mengelola data anggota perpustakaan.
+![Branch Admin Dashboard](screenshots/roles/role-branch-admin-dashboard.png)
 
-![Members List](screenshots/13-members-list.png)
+**Deskripsi:** Administrator yang mengelola satu cabang perpustakaan.
 
-**Gambar 12: Daftar Anggota**
+**Menu yang Dapat Diakses:**
 
-Informasi anggota:
-- Nama dan ID anggota
-- Tipe anggota (Siswa, Guru, Staf)
-- Status keanggotaan
-- Masa berlaku
+| Menu | Akses | Keterangan |
+|------|-------|-----------|
+| Dashboard | ✅ | |
+| Sirkulasi (Peminjaman, Reservasi) | ✅ | |
+| Anggota | ✅ | Register, edit, renew, suspend |
+| Koleksi | ✅ | View only (lihat data) |
+| Perpustakaan Digital | ✅ | Kelola file digital |
+| Repository | ✅ | Kelola repository |
+| Laporan | ✅ | Semua laporan |
+| Transfer Antar Branch | ✅ | |
+| Manajemen User | ✅ | Create, edit user (limited) |
+| Pengaturan | ✅ | View settings |
+| Branch | ❌ | Tidak ada akses |
 
----
-
-#### Tambah Anggota Baru
-
-![Members Create](screenshots/15-members-create.png)
-
-**Gambar 13: Form Tambah Anggota**
-
-Data anggota:
-- Informasi pribadi (nama, email, telepon)
-- Tipe anggota
-- Tanggal bergabung
-- Batas peminjaman
-
----
-
----
-
-## Sirkulasi & Peminjaman
-
-Sistem sirkulasi mengelola peminjaman dan pengembalian koleksi.
-
-![Loans List](screenshots/16-loans-list.png)
-
-**Gambar 14: Daftar Peminjaman**
-
-Status peminjaman:
-- Aktif: Sedang dipinjam
-- Kembali: Sudah dikembalikan
-- Terlambat: Lewat jatuh tempo
+**Tanggung Jawab:**
+- Manajemen anggota cabang
+- Monitor sirkulasi cabang
+- Laporan cabang
+- Manajemen file digital dan repository
 
 ---
 
-#### Buat Peminjaman Baru
+### Circulation Staff
 
-![Loans Create](screenshots/18-loans-create.png)
+**Role ID:** 3 (circulation_staff)
+**Permissions:** 13
 
-**Gambar 15: Form Peminjaman Baru**
+![Circulation Staff Dashboard](screenshots/roles/role-circulation-staff-dashboard.png)
 
-Langkah peminjaman:
-1. Pilih anggota
-2. Scan/input barcode koleksi
-3. Sistem hitung tanggal jatuh tempo
-4. Konfirmasi peminjaman
+**Deskripsi:** Staff yang menangani proses sirkulasi di front desk.
 
----
+**Menu yang Dapat Diakses:**
 
----
+| Menu | Akses | Keterangan |
+|------|-------|-----------|
+| Dashboard | ✅ | |
+| Sirkulasi (Peminjaman) | ✅ | Create, return, renew |
+| Sirkulasi (Reservasi) | ✅ | View, create |
+| Anggota | ✅ | View only |
+| Koleksi | ✅ | View only |
+| Laporan | ❌ | Tidak ada akses |
 
-## Laporan
+![Circulation Staff - Loans](screenshots/roles/role-circulation-staff-loans.png)
 
-Sistem menyediakan berbagai laporan untuk analisis dan audit.
+![Circulation Staff - Members](screenshots/roles/role-circulation-staff-members.png)
 
-### Laporan Peminjaman
+**Proses Bisnis Utama:**
 
-![Reports Loans](screenshots/19-reports-loans.png)
+#### 1. Peminjaman (Checkout)
+```
+1. Masuk ke menu Sirkulasi → Peminjaman Baru
+2. Pilih anggota (search berdasarkan nama/ID)
+3. Scan/input barcode koleksi yang dipinjam
+4. Sistem hitung tanggal jatuh tempo otomatis
+5. Klik "Simpan" untuk proses peminjaman
+```
 
-**Gambar 16: Laporan Peminjaman**
+#### 2. Pengembalian (Check-in)
+```
+1. Buka daftar peminjaman
+2. Cari peminjaman yang akan dikembalikan
+3. Klik "Kembalikan"
+4. Cek kondisi buku (baik/rusak/hilang)
+5. Sistem hitung denda (jika terlambat)
+6. Proses pembayaran denda (jika ada)
+7. Selesaikan pengembalian
+```
 
-Laporan peminjaman dapat difilter berdasarkan:
-- Rentang tanggal
-- Status peminjaman
-- Kategori koleksi
-- Tipe anggota
-
----
-
-### Laporan Keterlambatan
-
-![Reports Overdue](screenshots/20-reports-overdue.png)
-
-**Gambar 17: Laporan Keterlambatan**
-
-Laporan ini menampilkan:
-- Anggota yang terlambat mengembalikan
-- Hari keterlambatan
-- Denda yang harus dibayar
-
----
-
-### Laporan Denda
-
-![Reports Fines](screenshots/21-reports-fines.png)
-
-**Gambar 18: Laporan Denda**
-
-Informasi denda:
-- Total denda per anggota
-- Status pembayaran
-- Riwayat pembayaran
+#### 3. Perpanjangan
+```
+1. Buka daftar peminjaman
+2. Cari peminjaman aktif
+3. Klik "Perpanjang"
+4. Sistem hitung tanggal baru
+5. Syarat: max 2x perpanjangan, tidak ada reservasi
+```
 
 ---
 
-### Laporan Koleksi
+### Catalog Staff
 
-![Reports Collections](screenshots/22-reports-collections.png)
+**Role ID:** 4 (catalog_staff)
+**Permissions:** 19
 
-**Gambar 19: Laporan Koleksi**
+![Catalog Staff Dashboard](screenshots/roles/role-catalog-staff-dashboard.png)
 
-Statistik koleksi:
-- Koleksi per kategori
-- Koleksi tersedia vs dipinjam
-- Koleksi rusak/hilang
+**Deskripsi:** Staff yang mengelola katalog dan koleksi perpustakaan.
 
----
+**Menu yang Dapat Diakses:**
 
-### Laporan Anggota
+| Menu | Akses | Keterangan |
+|------|-------|-----------|
+| Dashboard | ✅ | |
+| Koleksi | ✅ | Create, edit, import, export |
+| Perpustakaan Digital | ✅ | Kelola file digital |
+| Repository | ✅ | Kelola repository |
+| Aturan Peminjaman | ❌ | Tidak ada akses |
+| Sirkulasi | ❌ | Tidak ada akses |
+| Laporan | ❌ | Tidak ada akses |
 
-![Reports Members](screenshots/23-reports-members.png)
+![Catalog Staff - Collections](screenshots/roles/role-catalog-staff-collections.png)
 
-**Gambar 20: Laporan Anggota**
+**Proses Bisnis Utama:**
 
-Analisis anggota:
-- Pertumbuhan anggota
-- Anggota aktif vs tidak aktif
-- Peminjaman per anggota
+#### 1. Entry Koleksi Baru
+```
+1. Masuk ke menu Koleksi
+2. Klik "Tambah Koleksi"
+3. Isi data bibliografis:
+   - Judul, Penulis, ISBN/ISSN
+   - Penerbit, Tahun terbit, Bahasa
+   - GMD (Tipe media)
+4. Isi klasifikasi:
+   - Nomor DDC/LC
+   - Subject/topik
+5. Isi detail koleksi:
+   - Tipe koleksi, Kategori
+   - Lokasi rak, Jumlah copy
+6. Klik "Simpan"
+7. Sistem generate barcode otomatis
+```
 
----
+#### 2. Generate Barcode & Label
+```
+1. Buka detail koleksi
+2. Klik "Generate Barcode"
+3. Pilih jenis label:
+   - Barcode label (untuk buku)
+   - Spine label (untuk punggung buku)
+   - QR Code (untuk mobile)
+4. Print label
+5. Tempel di buku
+```
 
-### Laporan Cabang
+#### 3. Import/Export Koleksi
+```
+Import:
+1. Koleksi → Import
+2. Upload file CSV/Excel
+3. Mapping kolom
+4. Preview data
+5. Import data
 
-Untuk sistem multi-cabang:
-
-![Reports Branches](screenshots/24-reports-branches.png)
-
-**Gambar 21: Laporan Perbandingan Cabang**
-
-Perbandingan performa antar cabang:
-- Total anggota
-- Peminjaman aktif
-- Kunjungan
-- Denda terkumpul
-
----
-
----
-
-## Pengaturan & Admin
-
-### Manajemen Cabang
-
-![Branches List](screenshots/25-branches-list.png)
-
-**Gambar 22: Daftar Cabang**
-
-Untuk perpustakaan dengan multiple cabang/lokasi.
-
----
-
-### Aturan Peminjaman
-
-![Loan Rules](screenshots/26-loan-rules.png)
-
-**Gambar 23: Aturan Peminjaman**
-
-Konfigurasi aturan:
-- Masa peminjaman per tipe anggota
-- Batas item yang dapat dipinjam
-- Denda per hari keterlambatan
-- Masa perpanjangan
-
----
-
-### Pengaturan Aplikasi
-
-![Settings](screenshots/27-settings.png)
-
-**Gambar 24: Pengaturan Aplikasi**
-
-Konfigurasi sistem:
-- Nama perpustakaan
-- Alamat dan kontak
-- Aturan default
-- Pengaturan notifikasi
+Export:
+1. Koleksi → Export
+2. Pilih filter data
+3. Download CSV/Excel
+```
 
 ---
 
-### Manajemen Pengguna
+### Report Viewer
 
-![Users List](screenshots/28-users-list.png)
+**Role ID:** 5 (report_viewer)
+**Permissions:** 6
 
-**Gambar 25: Daftar Pengguna Sistem**
+![Report Viewer Dashboard](screenshots/roles/role-report-viewer-dashboard.png)
 
-Manajemen akses:
-- Administrator
-- Staff
-- Petugas
-- Assign permissions
+**Deskripsi:** User yang hanya bisa melihat laporan dan statistik.
 
----
+**Menu yang Dapat Diakses:**
 
-### File Digital
+| Menu | Akses | Keterangan |
+|------|-------|-----------|
+| Dashboard | ✅ | Statistik dasar |
+| Laporan | ✅ | Semua laporan (read-only) |
+| Lainnya | ❌ | Menu lain tidak ada akses |
 
-![Digital Files List](screenshots/29-digital-files-list.png)
+![Report Viewer - Reports](screenshots/roles/role-report-viewer-reports.png)
 
-**Gambar 26: Daftar File Digital**
+**Laporan yang Tersedia:**
 
-Upload dan kelola file digital:
-- E-book
-- Jurnal
-- Audio/Video
+| Laporan | Deskripsi |
+|---------|-----------|
+| Dashboard Laporan | Ringkasan semua statistik |
+| Laporan Peminjaman | Data peminjaman per periode |
+| Laporan Keterlambatan | Daftar peminjaman terlambat |
+| Laporan Denda | Data denda dan pembayaran |
+| Laporan Koleksi | Statistik koleksi |
+| Laporan Anggota | Data anggota aktif |
+| Perbandingan Cabang | Multi-cabang comparison |
 
----
-
-![Digital Files Create](screenshots/30-digital-files-create.png)
-
-**Gambar 27: Upload File Digital**
-
----
-
-### Repository
-
-![Repositories List](screenshots/31-repositories-list.png)
-
-**Gambar 28: Daftar Repository**
-
-Kelola karya ilmiah dan publikasi.
-
----
-
-![Repositories Create](screenshots/32-repositories-create.png)
-
-**Gambar 29: Tambah Repository Baru**
-
----
-
-![Repository Public](screenshots/33-repository-public.png)
-
-**Gambar 30: Tampilan Repository Publik**
+**Fitur:**
+- Filter rentang tanggal
+- Export ke CSV/Excel
+- View charts dan grafik
+- Print laporan
 
 ---
 
 ---
 
-## Tampilan Mobile
+## Proses Bisnis
 
-Aplikasi responsif dan dapat diakses melalui berbagai perangkat mobile.
+### Alur Kerja Lengkap
 
-### OPAC Mobile
+```
+┌─────────────────┐
+│ CATALOG STAFF   │
+│ (Entry Koleksi) │
+└────────┬────────┘
+         │
+         ▼
+    ┌─────────────┐
+    │  KOLEKSI   │
+    │   SHELF    │
+    └─────────────┘
+         │
+         ▼
+┌─────────────────────┐
+│ CIRCULATION STAFF   │
+│  (Proses Peminjaman) │
+└──────────┬──────────┘
+           │
+           ▼
+      ┌─────────┐
+      │ MEMBER  │
+      │ (Pinjam) │
+      └─────────┘
+```
 
-![Mobile OPAC](screenshots/34-mobile-opac-home.png)
+### Matrix Akses Menu
 
-**Gambar 31: OPAC Tampilan Mobile**
-
----
-
-### Digital Library Mobile
-
-![Mobile Digital Library](screenshots/35-mobile-digital-library.png)
-
-**Gambar 32: Digital Library Tampilan Mobile**
-
----
-
-### Dashboard Mobile
-
-![Mobile Dashboard](screenshots/36-mobile-dashboard.png)
-
-**Gambar 33: Dashboard Tampilan Mobile**
-
----
-
-### Koleksi Mobile
-
-![Mobile Collections](screenshots/37-mobile-collections.png)
-
-**Gambar 34: Koleksi Tampilan Mobile**
-
----
-
-### Peminjaman Mobile
-
-![Mobile Loans](screenshots/38-mobile-loans.png)
-
-**Gambar 35: Peminjaman Tampilan Mobile**
-
----
-
----
-
-## Ringkasan Screenshot
-
-| No | Screenshot | Deskripsi |
-|---|-----------|-----------|
-| 1 | 01-opac-homepage | Halaman beranda OPAC |
-| 2 | 02-opac-search-results | Hasil pencarian OPAC |
-| 3 | 03-opac-advanced-search | Pencarian lanjutan OPAC |
-| 4 | 04-digital-library | Halaman Digital Library |
-| 5 | 05-repository | Halaman Repository |
-| 6 | 06-login-page | Halaman Login |
-| 7 | 07-dashboard | Dashboard Admin |
-| 8 | 08-dashboard-stats | Statistik Dashboard |
-| 9 | 09-dashboard-charts | Grafik Dashboard |
-| 10 | 10-collections-list | Daftar Koleksi |
-| 11 | 12-collections-create | Tambah Koleksi |
-| 12 | 13-members-list | Daftar Anggota |
-| 13 | 15-members-create | Tambah Anggota |
-| 14 | 16-loans-list | Daftar Peminjaman |
-| 15 | 18-loans-create | Buat Peminjaman |
-| 16 | 19-reports-loans | Laporan Peminjaman |
-| 17 | 20-reports-overdue | Laporan Keterlambatan |
-| 18 | 21-reports-fines | Laporan Denda |
-| 19 | 22-reports-collections | Laporan Koleksi |
-| 20 | 23-reports-members | Laporan Anggota |
-| 21 | 24-reports-branches | Laporan Cabang |
-| 22 | 25-branches-list | Daftar Cabang |
-| 23 | 26-loan-rules | Aturan Peminjaman |
-| 24 | 27-settings | Pengaturan Aplikasi |
-| 25 | 28-users-list | Daftar Pengguna |
-| 26 | 29-digital-files-list | Daftar File Digital |
-| 27 | 30-digital-files-create | Upload File Digital |
-| 28 | 31-repositories-list | Daftar Repository |
-| 29 | 32-repositories-create | Tambah Repository |
-| 30 | 33-repository-public | Repository Publik |
-| 31 | 34-mobile-opac-home | OPAC Mobile |
-| 32 | 35-mobile-digital-library | Digital Library Mobile |
-| 33 | 36-mobile-dashboard | Dashboard Mobile |
-| 34 | 37-mobile-collections | Koleksi Mobile |
-| 35 | 38-mobile-loans | Peminjaman Mobile |
+| Menu | Super Admin | Admin | Branch Admin | Circulation Staff | Catalog Staff | Report Viewer |
+|------|------------|-------|--------------|-------------------|---------------|----------------|
+| Dashboard | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Sirkulasi → Peminjaman | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ |
+| Sirkulasi → Peminjaman Baru | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ |
+| Sirkulasi → Reservasi | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ |
+| Branch | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ |
+| Anggota | ✅ | ✅ | ✅ | ✅ (view only) | ❌ | ❌ |
+| Koleksi | ✅ | ✅ | ✅ (view only) | ✅ (view only) | ✅ | ❌ |
+| Perpustakaan Digital | ✅ | ✅ | ✅ | ❌ | ✅ | ❌ |
+| Repository | ✅ | ✅ | ✅ | ❌ | ✅ | ❌ |
+| Aturan Peminjaman | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ |
+| Manajemen User | ✅ | ✅ | ✅ (limited) | ❌ | ❌ | ❌ |
+| Laporan | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ |
+| Transfer Antar Branch | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ |
+| Pengaturan | ✅ | ✅ | ✅ (view only) | ❌ | ❌ | ❌ |
 
 ---
 
----
+*Dokumentasi ini berdasarkan testing langsung aplikasi dengan 7 role berbeda*
 
-*Manual Book ini dibuat secara otomatis menggunakan Playwright Screenshot Automation*
-
-*Dokumentasi ini mencakup 35 screenshot dari seluruh fitur Aplikasi Perpustakaan Digital*
+*Update: 2 Februari 2026*
